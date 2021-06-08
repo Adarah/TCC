@@ -1,0 +1,45 @@
+#+TITLE: Uso de IoT para controle e monitoramento de energia em aparelhos eletrônicos
+#+AUTHOR: Lucas Yuji Harada
+
+#+INCLUDE: abntex2.org            :only-contents t
+#+INCLUDE: abntex2-meta.org       :only-contents t
+#+INCLUDE: abntex2-pretextual.org :only-contents t
+
+* Introdução
+** Motivação
+TODO Colocar refencias exemplificando esses usos de IoT
+
+Aplicações IoT representam uma fonte de dados essenciais para otimização de sistemas e processos em uma gama de indústrias, como na industria de saúde com aparelhos de monitoramento de pacientes, na agricultura de precisão com sensores em tempo real de solo e chuva, sistemas autonômos de entrega, e na refrigeração de /data centers/. No espaco do consumidor, existem produtos IoT que servem para trazer conveniências à vida de seus clientes como tomadas e lâmpadas inteligentes, fornos e geladeiras conectadas à internet, e assistentes virtuais para automação de rotinas. Apesar disso, ainda existem muitos dispositivos eletrônicos sendo usados atualmente que não possuem nenhum tipo de inteligência e nem perspectiva de coleta de dados, mas que são críticos para infraestruturas e fluxos de trabalhos de inúmeras pessoas.
+** Objetivos
+Utilizar dispositivos IoT para monitorar e controlar o uso de energia de aparelhos domésticos. Trazar conectividade e inteligência para dispostivos convencionais que não as possuem. Abrir a possibilidade de coleta de dados para que consumidores finais possam analizar e otimizar seus processos, seja manualmente ou via inteligência artificial. Obter histórico de consumo de energia para posterior modelagem de predição e otimização de consumo energético com modelos de machine learning.
+** Justificativa
+Com a crescente integração da sociedade com a tecnologia, surge cada vez mais uma demanda por modernizar ambientes domésticos e de trabalho. Proporcionalmente à esta demanda, a demanda energética mundial tem crescido consistentemente nas últimas décadas.
+Nesse contexto, os dispositivos IoT podem ser uma maneira prática e conveniente de empregar novas tecnologias como computação em nuvem para reduzir o consumo energético de residências e escritórios.
+Paralelamente, a pandemia SARS-CoV-2 causou a modernização de salas de aula e espaços de trabalho, porém empregos e aulas que dependem do uso de aparelhos eletrônicos especializados foram bastante prejudicados com as necessidades do distanciamento social. Dispositivos IoT que facilitam o controle remoto desses aparelhos eletrônicos não-inteligentes podem vir a sanar algumas das dores que esses usuários enfrentam.
+** Organização do trabalho
+TODO Descrição de como os outros capítulos do TCC estão organizados.
+
+O Capítulo 2 contém informações concentuais necessárias para o entendimento da solução empregada.
+O capítulo 3 traz um detalhamento de tecnologias como o protocolo MQTT que foram utilizadas no projeto.
+O capítulo 4 traz o processo de desenvolvimento do sistema de forma detalhada.
+* Aspectos Conceituais
+* Tecnologias Usadas
+* Metodologia do Trabalho
+* Especificações de Requisitos do Sistema
+* Projeto e implementação
+* Testes e Avaliação
+* Considerações Finais
+** Conclusão
+** Contribuições
+** Pespectivas de Continuidade
+TODO elaborar mais
+
+Fazer a modelagem dos dados gerados pelo laboratorio
+
+TODO Ver o que faltou implementar
+* Bibliografia
+\postextual
+TODO arrumar citacoes
+<<bibliography link>>
+https://journals.sagepub.com/doi/abs/10.1177/0361198119849398
+bibliography:references.bib

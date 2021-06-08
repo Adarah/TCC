@@ -1,0 +1,124 @@
+#   abntex2-pretextual.org
+#   Parte do projeto org-abntex.
+#   Copyright (c) 2019 Lucas Vieira.
+#   Este arquivo é provido sob a licença BSD 2-Clause (simplificada).
+#   Leia o arquivo LICENSE para mais informações.
+
+
+
+#   Elementos pré-textuais   #
+# ATENÇÃO: Altere estes elementos como necessário. Por padrão, serão
+# geradas todas as estruturas do modelo canônico.
+
+# Espaçamento de 1.5 entre linhas
+\OnehalfSpacing
+
+# Sinaliza início dos elementos pré-textuais
+\pretextual
+
+# Capa do trabalho
+\imprimircapa
+
+# Folha de rosto
+\imprimirfolhaderosto
+\newpage
+
+# Ficha catalográfica
+# \fichacatalografica
+# \newpage
+
+# # Errata
+# #+begin_errata
+# \vspace*{\fill}
+# \lipsum[1]
+# \vspace*{\fill}
+# #+end_errata
+# \newpage
+
+# Folha de aprovação
+# \folhadeaprovacao
+
+# # Dedicatória
+# #+begin_dedicatoria
+# \vspace*{\fill}
+# Esta é uma dedicatória.
+
+# \lipsum[1]
+# \vspace*{\fill}
+# #+end_dedicatoria
+# \newpage
+
+# # Agradecimentos
+# #+begin_agradecimentos
+# \vspace*{\fill}
+# \lipsum[1]
+# \vspace*{\fill}
+# #+end_agradecimentos
+# \newpage
+
+# # Epígrafe
+# #+begin_epigrafe
+# \vspace*{\fill}
+# \lipsum[1]
+# \vspace*{\fill}
+# #+end_epigrafe
+# \newpage
+
+# Resumos
+#+begin_resumo
+\vspace{\onelineskip}
+Com a crescente integração da sociedade com a tecnologia, surge cada vez mais uma demanda por modernizar ambientes domésticos e de trabalho. Proporcionalmente à esta demanda, a demanda energética mundial tem crescido consistentemente nas últimas décadas.
+Nesse contexto, os dispositivos IoT podem ser uma maneira prática e conveniente de empregar novas tecnologias como computação em nuvem para reduzir o consumo energético de residências e escritórios. Este tipo de solução já possui demonstrações reais na indústria como em data centers do Google, onde IoT e Machine Learning são ambos utilizados para redução do custo de refrigeração, porém nada ainda existe no espaço do consumidor comum.
+O ambiente de prototipação para o desenvolvimento do projeto será o Laboratório Digital da Escola Politécnica da USP.
+
+\noindent
+*Palavras-chave:* IoT, consumo energético, monitoramento, controle
+#+end_resumo
+
+#+begin_resumo
+[Abstract]
+\vspace{\onelineskip}
+With the increasing integration between society and technology, there's a growing demand for the modernization of domestic and work environments. Propotionally to this demand, the global enegy consumption has been consistently growing in the past few decades.
+In this context, IoT devices can be a practical and convenient manner to employ new technologies such as cloud computing to reduce the energy consumption of residences and offices alike. This kind of solution already has real-world applications in the industrial sector such as in Google's datacenters, where IoT and Machine Learning are both used to reduce refrigeration costs, however there's no such equivalent in the end-consumer space.
+This prototyping environment for the development of this project will be the Digital Laboratory of the Polytechnic School of the University of São Paulo.
+
+\noindent
+*Keywords:* IoT, energy consumption, monitoring, control
+#+end_resumo
+\newpage
+
+# Sumário
+\tableofcontents
+\newpage
+
+
+# Lista de tabelas e de ilustrações
+\listoftables
+\vspace{\onelineskip}
+\listoffigures
+\vspace{\onelineskip}
+
+# Lista de abreviaturas e siglas
+#+begin_siglas
+\item[IoT] Internet das coisas (Internet of Things)
+\item[QoS] Qualidade de serviço (Quality of Service)
+\item[MQTT] Message Queueing Telemetry Transport
+\item[HTTP] Hypertext Transfer Protocol
+#+end_siglas
+\vspace{\onelineskip}
+
+# Lista de simbolos
+#+begin_simbolos
+\item[$\lambda$] Palavra vazia.
+#+end_simbolos
+\vspace{\onelineskip}
+
+
+
+\newpage
+
+
+
+# Muda para os elementos textuais do trabalho. Você pode não querer
+# remover isto.
+\textual
