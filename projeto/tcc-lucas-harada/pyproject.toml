@@ -6,6 +6,7 @@ authors = ["Lucas Harada <lucasyharada@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+paho-mqtt = "^1.5.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
