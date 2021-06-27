@@ -1,0 +1,8 @@
+Temas a serem escritos:
+- casos de uso e requisitos.
+- Timescale DB (pq usar um banco de series temporais, falar sobre hypertables, talvez fazer uma comparacao entre produtos?);
+- Hasura(?)
+- GraphQL?
+- Flutter?
+- Mostrar benchmarks de escrita e leitura de dados no banco?
+- Falar sobre SAML e pq n consegui integrar (precisa de permissao da usp)

@@ -1,0 +1,6 @@
+- table:
+    schema: public
+    name: smart_plug_metrics
+- table:
+    schema: public
+    name: smart_plugs
