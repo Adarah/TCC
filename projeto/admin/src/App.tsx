@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import buildHasuraProvider from 'ra-data-hasura';
-import {Admin, Resource, ListGuesser, Loading} from 'react-admin';
+import {Admin, Resource, Loading, EditGuesser, ShowGuesser, ListGuesser} from 'react-admin';
+import {LabCreate, LabEdit, LabList, LabShow } from "./components/lab";
+import {LabStationCreate, LabStationEdit, LabStationList, LabStationShow,} from "./components/labStation";
 
 const hasuraUrl = 'http://localhost:8080/v1/graphql';
 
@@ -22,8 +24,18 @@ const App = () => {
     return (
         <Admin dataProvider={dataProvider}>
             <Resource
-                name="smart_plugs"
-                list={ListGuesser}
+                name="lab"
+                list={LabList}
+                create={LabCreate}
+                show={LabShow}
+                edit={LabEdit}
+            />
+            <Resource
+                name="lab_station"
+                list={LabStationList}
+                create={LabStationCreate}
+                show={LabStationShow}
+                edit={LabStationEdit}
             />
         </Admin>
     );
