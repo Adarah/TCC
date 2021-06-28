@@ -1,21 +1,36 @@
 - table:
     schema: public
-    name: laboratory
+    name: lab
   array_relationships:
-  - name: workbenches
+  - name: lab_stations
     using:
       foreign_key_constraint_on:
-        column: laboratory_id
+        column: lab_id
         table:
           schema: public
-          name: workbench
+          name: lab_station
+- table:
+    schema: public
+    name: lab_station
+  object_relationships:
+  - name: lab
+    using:
+      foreign_key_constraint_on: lab_id
+  array_relationships:
+  - name: smart_plugs
+    using:
+      foreign_key_constraint_on:
+        column: lab_station_id
+        table:
+          schema: public
+          name: smart_plug
 - table:
     schema: public
     name: smart_plug
   object_relationships:
-  - name: workbench
+  - name: lab_station
     using:
-      foreign_key_constraint_on: workbench_id
+      foreign_key_constraint_on: lab_station_id
   array_relationships:
   - name: smart_plug_metrics
     using:
@@ -31,18 +46,3 @@
   - name: smart_plug
     using:
       foreign_key_constraint_on: smart_plug_id
-- table:
-    schema: public
-    name: workbench
-  object_relationships:
-  - name: laboratory
-    using:
-      foreign_key_constraint_on: laboratory_id
-  array_relationships:
-  - name: smart_plugs
-    using:
-      foreign_key_constraint_on:
-        column: workbench_id
-        table:
-          schema: public
-          name: smart_plug
