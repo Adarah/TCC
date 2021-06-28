@@ -1,0 +1,15 @@
+table:
+  name: lab_station
+  schema: public
+object_relationships:
+- name: lab
+  using:
+    foreign_key_constraint_on: lab_id
+array_relationships:
+- name: smart_plugs
+  using:
+    foreign_key_constraint_on:
+      column: lab_station_id
+      table:
+        name: smart_plug
+        schema: public

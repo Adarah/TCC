@@ -1,0 +1,11 @@
+table:
+  name: lab
+  schema: public
+array_relationships:
+- name: lab_stations
+  using:
+    foreign_key_constraint_on:
+      column: lab_id
+      table:
+        name: lab_station
+        schema: public

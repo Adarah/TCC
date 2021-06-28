@@ -1,0 +1,4 @@
+- "!include public_lab.yaml"
+- "!include public_lab_station.yaml"
+- "!include public_smart_plug.yaml"
+- "!include public_smart_plug_metrics.yaml"
