@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import buildHasuraProvider from 'ra-data-hasura';
+import {Admin, Resource, ListGuesser, Loading} from 'react-admin';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const hasuraUrl = 'http://localhost:8080/v1/graphql';
+
+const App = () => {
+    const [dataProvider, setDataProvider] = useState<any>(null);
+
+    useEffect(() => {
+        const buildDataProvider = async () => {
+            const dataProvider = await buildHasuraProvider({
+                clientOptions: {uri: hasuraUrl}
+            });
+            setDataProvider(() => dataProvider);
+        };
+        buildDataProvider();
+    }, []);
+
+    if (!dataProvider) return <Loading/>;
+
+    return (
+        <Admin dataProvider={dataProvider}>
+            <Resource
+                name="smart_plugs"
+                list={ListGuesser}
+            />
+        </Admin>
+    );
+};
 
 export default App;
