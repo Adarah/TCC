@@ -1,0 +1,22 @@
+Coisas que fiz:
+- Li sobre o protocolo SAML e descobri que nao vou conseguir integrar com o Identity Provider (idcafe) da usp sem ter permissao da universidade.
+  Optei por apenas aceitar emails da usp ao inves de integrar diretamente.
+- Preparei um banco de dados de series temporais (TimescaleDB) para guardar os dados dos sensores e permitir fazer queries em cima delas.
+- Comecei uma interface the administracao para o operador enviar comandos e gerencias os dispositivos.
+- Comecei um aplicativo pros alunos fazerem "check-in" para coletar eventos de utilizacao dos dispositivos (e reserva de horarios pra openlab)
+
+Perguntas:
+0. Como eh feito a identificacao dos dispositivos? É pelo endereço MAC da placa?
+ uma string unica pra cada ESP8266. Ja esta tabelado.
+2. Quais os tópicos MQTT que eu devo acessar? Existem outros alem daqueles no repositorio? (https://github.com/vthayashi/labead-dashboard/blob/main/Bancadas.htm)
+    eh flexivel, power eh o principal.
+3. O dispositivo emite mensagens sobre o estado atual dele (ligado/desligado)? Se sim, ele continua emitindo se estiver "desligado"?
+
+4. Queria entender com mais detalhes como foi feito a captura de eventos gerados pelos alunos (acho que tinha a ver com o Blynk e tem a ver com a compilacao de novos arquivos?)
+5. Quais as credenciais e o endereco do MQTT broker?
+
+6. Eu vi no aplicativo que o Vitor gerou pro artigo Webmidia que a placa FPGA desligava automaticamente apos um certo tempo. Essa logica de auto-desligamente era feita no proprio firmware,
+   ou tem um controlador que emite um comando na hora certa?
+
+7. Novamente no aplicativo, como foi implementada aquela logica para aluno pedir ajuda pro professor? Eu vi que tem um topico pra isso no MQTT, mas como que a mensagem eh escrita nesse topico?
+   Quando ele clica o botão no app, isso escreve uma mensagem no tópico mqtt?

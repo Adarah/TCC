@@ -1,9 +1,11 @@
 import {
     Create,
     Datagrid,
+    DateField,
     Edit,
     Filter,
     List,
+    minLength,
     required,
     Show,
     SimpleForm,
@@ -36,8 +38,8 @@ export const LabCreate = (props: any) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="name" validate={required()}/>
-            <TextInput source="description" />
-            <TextInput source="location" />
+            <TextInput source="description"/>
+            <TextInput source="location"/>
         </SimpleForm>
     </Create>
 );
@@ -49,16 +51,18 @@ export const LabShow = (props: any) => (
             <TextField source="name"/>
             <TextField source="description"/>
             <TextField source="location"/>
+            <DateField source="created_at"/>
+            <DateField source="updated_at"/>
         </SimpleShowLayout>
     </Show>
 );
 export const LabEdit = (props: any) => (
     <Edit {...props}>
         <SimpleForm toolbar={<PessimisticToolbar/>}>
-            <TextInput source="id" disabled />
-            <TextInput source="name" />
-            <TextInput source="description" />
-            <TextInput source="location" />
+            <TextInput source="id" disabled/>
+            <TextInput source="name" validate={required()}/>
+            <TextInput source="description"/>
+            <TextInput source="location"/>
         </SimpleForm>
     </Edit>
 );

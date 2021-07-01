@@ -30,7 +30,7 @@ class SignInPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              _signInButton(),
+              _signInButton(context),
               _signUpButton(),
             ],
           ),
@@ -41,7 +41,7 @@ class SignInPage extends StatelessWidget {
 
   Widget _signInButton(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () => Navigator.of(context).push('/'),
+      onPressed: () {},
       icon: Icon(Icons.login),
       label: Text(
         'Cadastrar',
@@ -49,7 +49,6 @@ class SignInPage extends StatelessWidget {
           fontSize: 20.0,
         ),
       ),
-      style: ButtonStyle(backgroundColor: jkkkk),
     );
   }
 
@@ -64,7 +63,7 @@ class SignInPage extends StatelessWidget {
           fontSize: 20.0,
         ),
       ),
-      style: ButtonStyle(backgroundColor: jkkkk),
+      // style: ButtonStyle(backgroundColor: jkkkk),
     );
   }
 }
