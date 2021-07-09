@@ -2,6 +2,13 @@ table:
   name: lab
   schema: public
 array_relationships:
+- name: lab_operators
+  using:
+    foreign_key_constraint_on:
+      column: lab_id
+      table:
+        name: lab_operator
+        schema: public
 - name: lab_stations
   using:
     foreign_key_constraint_on:
@@ -16,15 +23,6 @@ array_relationships:
       table:
         name: student_group
         schema: public
-insert_permissions:
-- permission:
-    backend_only: false
-    check: {}
-    columns:
-    - description
-    - location
-    - name
-  role: operator
 select_permissions:
 - permission:
     columns:
@@ -42,7 +40,7 @@ select_permissions:
     - created_at
     - updated_at
     filter: {}
-  role: operator
+  role: lab_operator
 - permission:
     columns:
     - description
@@ -54,12 +52,9 @@ update_permissions:
 - permission:
     check: {}
     columns:
+    - deleted_at
     - description
     - location
     - name
     filter: {}
-  role: operator
-delete_permissions:
-- permission:
-    filter: {}
-  role: operator
+  role: lab_operator

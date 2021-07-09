@@ -10,6 +10,10 @@ INSERT INTO public.smart_plug (id, name, created_at, updated_at, lab_station_id)
 INSERT INTO public.smart_plug (id, name, created_at, updated_at, lab_station_id) VALUES (3, 'Tomada 3 - Laser', '2021-06-28 03:52:36.175932+00', '2021-06-28 03:52:36.175932+00', 2);
 INSERT INTO public.smart_plug (id, name, created_at, updated_at, lab_station_id) VALUES (4, 'Computador do professor', '2021-06-28 03:52:36.175932+00', '2021-06-28 03:52:36.175932+00', 3);
 INSERT INTO public.smart_plug (id, name, created_at, updated_at, lab_station_id) VALUES (5, 'Microonadas dos funcionários', '2021-06-28 03:52:36.175932+00', '2021-06-28 03:52:36.175932+00', 4);
+INSERT INTO public.smart_plug_metrics (time, current, smart_plug_id) VALUES
+(now(), 1, 1),
+(now() + INTERVAL '1 minute', 2, 1),
+(now() + INTERVAL '2 minute', 3, 1);
 SELECT pg_catalog.setval('public.laboratory_id_seq', 1, false);
 SELECT pg_catalog.setval('public.smart_plug_id_seq', 1, false);
 SELECT pg_catalog.setval('public.workbench_id_seq', 1, false);

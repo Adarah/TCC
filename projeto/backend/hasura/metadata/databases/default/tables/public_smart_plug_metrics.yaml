@@ -19,4 +19,4 @@ select_permissions:
     - smart_plug_id
     - time
     filter: {}
-  role: operator
+  role: lab_operator

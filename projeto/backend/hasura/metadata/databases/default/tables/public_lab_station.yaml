@@ -20,7 +20,7 @@ insert_permissions:
     columns:
     - lab_id
     - name
-  role: operator
+  role: lab_operator
 select_permissions:
 - permission:
     columns:
@@ -36,7 +36,7 @@ select_permissions:
     - created_at
     - updated_at
     filter: {}
-  role: operator
+  role: lab_operator
 - permission:
     columns:
     - lab_id
@@ -47,11 +47,8 @@ update_permissions:
 - permission:
     check: {}
     columns:
+    - deleted_at
     - lab_id
     - name
     filter: {}
-  role: operator
-delete_permissions:
-- permission:
-    filter: {}
-  role: operator
+  role: lab_operator

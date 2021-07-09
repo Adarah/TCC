@@ -6,6 +6,13 @@ object_relationships:
   using:
     foreign_key_constraint_on: role_title
 array_relationships:
+- name: lab_operators
+  using:
+    foreign_key_constraint_on:
+      column: operator_id
+      table:
+        name: lab_operator
+        schema: public
 - name: student_groups
   using:
     foreign_key_constraint_on:
@@ -24,7 +31,7 @@ select_permissions:
     filter:
       deleted_at:
         _is_null: true
-  role: operator
+  role: lab_operator
 - permission:
     columns:
     - email
@@ -46,7 +53,7 @@ update_permissions:
     - name
     - usp_id
     filter: {}
-  role: operator
+  role: lab_operator
 - permission:
     check:
       _and:
