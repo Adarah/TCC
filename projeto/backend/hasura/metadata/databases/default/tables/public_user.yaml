@@ -1,0 +1,68 @@
+table:
+  name: user
+  schema: public
+object_relationships:
+- name: user_role
+  using:
+    foreign_key_constraint_on: role_title
+array_relationships:
+- name: student_groups
+  using:
+    foreign_key_constraint_on:
+      column: student_id
+      table:
+        name: student_group
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - deleted_at
+    - email
+    - id
+    - name
+    - usp_id
+    filter:
+      deleted_at:
+        _is_null: true
+  role: operator
+- permission:
+    columns:
+    - email
+    - name
+    - usp_id
+    filter:
+      _and:
+      - id:
+          _eq: X-Hasura-User-Id
+      - deleted_at:
+          _is_null: true
+  role: student
+update_permissions:
+- permission:
+    check: {}
+    columns:
+    - deleted_at
+    - email
+    - name
+    - usp_id
+    filter: {}
+  role: operator
+- permission:
+    check:
+      _and:
+      - id:
+          _eq: X-Hasura-User-Id
+      - name:
+          _is_null: false
+      - usp_id:
+          _is_null: false
+    columns:
+    - name
+    - usp_id
+    filter:
+      _and:
+      - id:
+          _eq: X-Hasura-User-Id
+      - deleted_at:
+          _is_null: false
+  role: student

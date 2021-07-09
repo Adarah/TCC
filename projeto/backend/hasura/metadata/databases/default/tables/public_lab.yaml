@@ -9,3 +9,57 @@ array_relationships:
       table:
         name: lab_station
         schema: public
+- name: student_groups
+  using:
+    foreign_key_constraint_on:
+      column: lab_id
+      table:
+        name: student_group
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - description
+    - location
+    - name
+  role: operator
+select_permissions:
+- permission:
+    columns:
+    - description
+    - location
+    - name
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - id
+    - name
+    - description
+    - location
+    - created_at
+    - updated_at
+    filter: {}
+  role: operator
+- permission:
+    columns:
+    - description
+    - location
+    - name
+    filter: {}
+  role: student
+update_permissions:
+- permission:
+    check: {}
+    columns:
+    - description
+    - location
+    - name
+    filter: {}
+  role: operator
+delete_permissions:
+- permission:
+    filter: {}
+  role: operator

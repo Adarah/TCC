@@ -1,0 +1,10 @@
+table:
+  name: student_group
+  schema: public
+object_relationships:
+- name: lab
+  using:
+    foreign_key_constraint_on: lab_id
+- name: user
+  using:
+    foreign_key_constraint_on: student_id

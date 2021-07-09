@@ -5,3 +5,18 @@ object_relationships:
 - name: smart_plug
   using:
     foreign_key_constraint_on: smart_plug_id
+select_permissions:
+- permission:
+    columns:
+    - current
+    - smart_plug_id
+    - time
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - current
+    - smart_plug_id
+    - time
+    filter: {}
+  role: operator

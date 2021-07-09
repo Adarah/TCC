@@ -2,3 +2,6 @@
 - "!include public_lab_station.yaml"
 - "!include public_smart_plug.yaml"
 - "!include public_smart_plug_metrics.yaml"
+- "!include public_student_group.yaml"
+- "!include public_user.yaml"
+- "!include public_user_role.yaml"
