@@ -1,0 +1,3061 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: query_root
+    mutation: mutation_root
+    subscription: subscription_root
+}
+
+type AddOperatorToLabOutput {
+    id: Int!
+}
+
+"columns and relationships of \"lab\""
+type lab {
+    created_at: timestamptz!
+    deleted_at: timestamptz
+    description: String
+    id: Int!
+    "An array relationship"
+    lab_operators(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): [lab_operator!]!
+    "An aggregate relationship"
+    lab_operators_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): lab_operator_aggregate!
+    "An array relationship"
+    lab_stations(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): [lab_station!]!
+    "An aggregate relationship"
+    lab_stations_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): lab_station_aggregate!
+    location: String
+    name: String!
+    "An array relationship"
+    student_groups(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): [student_group!]!
+    "An aggregate relationship"
+    student_groups_aggregate(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): student_group_aggregate!
+    updated_at: timestamptz!
+}
+
+"aggregated selection of \"lab\""
+type lab_aggregate {
+    aggregate: lab_aggregate_fields
+    nodes: [lab!]!
+}
+
+"aggregate fields of \"lab\""
+type lab_aggregate_fields {
+    avg: lab_avg_fields
+    count(columns: [lab_select_column!], distinct: Boolean): Int!
+    max: lab_max_fields
+    min: lab_min_fields
+    stddev: lab_stddev_fields
+    stddev_pop: lab_stddev_pop_fields
+    stddev_samp: lab_stddev_samp_fields
+    sum: lab_sum_fields
+    var_pop: lab_var_pop_fields
+    var_samp: lab_var_samp_fields
+    variance: lab_variance_fields
+}
+
+"aggregate avg on columns"
+type lab_avg_fields {
+    id: Float
+}
+
+"aggregate max on columns"
+type lab_max_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    description: String
+    id: Int
+    location: String
+    name: String
+    updated_at: timestamptz
+}
+
+"aggregate min on columns"
+type lab_min_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    description: String
+    id: Int
+    location: String
+    name: String
+    updated_at: timestamptz
+}
+
+"response of any mutation on the table \"lab\""
+type lab_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [lab!]!
+}
+
+"columns and relationships of \"lab_operator\""
+type lab_operator {
+    created_at: timestamptz!
+    id: Int!
+    "An object relationship"
+    lab: lab!
+    lab_id: Int!
+    operator_id: String!
+    updated_at: timestamptz!
+    "An object relationship"
+    user: user!
+}
+
+"aggregated selection of \"lab_operator\""
+type lab_operator_aggregate {
+    aggregate: lab_operator_aggregate_fields
+    nodes: [lab_operator!]!
+}
+
+"aggregate fields of \"lab_operator\""
+type lab_operator_aggregate_fields {
+    avg: lab_operator_avg_fields
+    count(columns: [lab_operator_select_column!], distinct: Boolean): Int!
+    max: lab_operator_max_fields
+    min: lab_operator_min_fields
+    stddev: lab_operator_stddev_fields
+    stddev_pop: lab_operator_stddev_pop_fields
+    stddev_samp: lab_operator_stddev_samp_fields
+    sum: lab_operator_sum_fields
+    var_pop: lab_operator_var_pop_fields
+    var_samp: lab_operator_var_samp_fields
+    variance: lab_operator_variance_fields
+}
+
+"aggregate avg on columns"
+type lab_operator_avg_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate max on columns"
+type lab_operator_max_fields {
+    created_at: timestamptz
+    id: Int
+    lab_id: Int
+    operator_id: String
+    updated_at: timestamptz
+}
+
+"aggregate min on columns"
+type lab_operator_min_fields {
+    created_at: timestamptz
+    id: Int
+    lab_id: Int
+    operator_id: String
+    updated_at: timestamptz
+}
+
+"response of any mutation on the table \"lab_operator\""
+type lab_operator_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [lab_operator!]!
+}
+
+"aggregate stddev on columns"
+type lab_operator_stddev_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type lab_operator_stddev_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type lab_operator_stddev_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate sum on columns"
+type lab_operator_sum_fields {
+    id: Int
+    lab_id: Int
+}
+
+"aggregate var_pop on columns"
+type lab_operator_var_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate var_samp on columns"
+type lab_operator_var_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate variance on columns"
+type lab_operator_variance_fields {
+    id: Float
+    lab_id: Float
+}
+
+"columns and relationships of \"lab_station\""
+type lab_station {
+    created_at: timestamptz!
+    deleted_at: timestamptz
+    id: Int!
+    "An object relationship"
+    lab: lab!
+    lab_id: Int!
+    name: String!
+    "An array relationship"
+    smart_plugs(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): [smart_plug!]!
+    "An aggregate relationship"
+    smart_plugs_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): smart_plug_aggregate!
+    updated_at: timestamptz!
+}
+
+"aggregated selection of \"lab_station\""
+type lab_station_aggregate {
+    aggregate: lab_station_aggregate_fields
+    nodes: [lab_station!]!
+}
+
+"aggregate fields of \"lab_station\""
+type lab_station_aggregate_fields {
+    avg: lab_station_avg_fields
+    count(columns: [lab_station_select_column!], distinct: Boolean): Int!
+    max: lab_station_max_fields
+    min: lab_station_min_fields
+    stddev: lab_station_stddev_fields
+    stddev_pop: lab_station_stddev_pop_fields
+    stddev_samp: lab_station_stddev_samp_fields
+    sum: lab_station_sum_fields
+    var_pop: lab_station_var_pop_fields
+    var_samp: lab_station_var_samp_fields
+    variance: lab_station_variance_fields
+}
+
+"aggregate avg on columns"
+type lab_station_avg_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate max on columns"
+type lab_station_max_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"aggregate min on columns"
+type lab_station_min_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"response of any mutation on the table \"lab_station\""
+type lab_station_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [lab_station!]!
+}
+
+"aggregate stddev on columns"
+type lab_station_stddev_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type lab_station_stddev_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type lab_station_stddev_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate sum on columns"
+type lab_station_sum_fields {
+    id: Int
+    lab_id: Int
+}
+
+"aggregate var_pop on columns"
+type lab_station_var_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate var_samp on columns"
+type lab_station_var_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate variance on columns"
+type lab_station_variance_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev on columns"
+type lab_stddev_fields {
+    id: Float
+}
+
+"aggregate stddev_pop on columns"
+type lab_stddev_pop_fields {
+    id: Float
+}
+
+"aggregate stddev_samp on columns"
+type lab_stddev_samp_fields {
+    id: Float
+}
+
+"aggregate sum on columns"
+type lab_sum_fields {
+    id: Int
+}
+
+"aggregate var_pop on columns"
+type lab_var_pop_fields {
+    id: Float
+}
+
+"aggregate var_samp on columns"
+type lab_var_samp_fields {
+    id: Float
+}
+
+"aggregate variance on columns"
+type lab_variance_fields {
+    id: Float
+}
+
+"mutation root"
+type mutation_root {
+    AddOperatorToLab(labId: Int!, operatorId: String!): AddOperatorToLabOutput
+    "delete data from the table: \"lab\""
+    delete_lab(
+        "filter the rows which have to be deleted"
+        where: lab_bool_exp!
+    ): lab_mutation_response
+    "delete single row from the table: \"lab\""
+    delete_lab_by_pk(id: Int!): lab
+    "delete data from the table: \"lab_operator\""
+    delete_lab_operator(
+        "filter the rows which have to be deleted"
+        where: lab_operator_bool_exp!
+    ): lab_operator_mutation_response
+    "delete single row from the table: \"lab_operator\""
+    delete_lab_operator_by_pk(id: Int!): lab_operator
+    "delete data from the table: \"lab_station\""
+    delete_lab_station(
+        "filter the rows which have to be deleted"
+        where: lab_station_bool_exp!
+    ): lab_station_mutation_response
+    "delete single row from the table: \"lab_station\""
+    delete_lab_station_by_pk(id: Int!): lab_station
+    "delete data from the table: \"role\""
+    delete_role(
+        "filter the rows which have to be deleted"
+        where: role_bool_exp!
+    ): role_mutation_response
+    "delete single row from the table: \"role\""
+    delete_role_by_pk(title: String!): role
+    "delete data from the table: \"smart_plug\""
+    delete_smart_plug(
+        "filter the rows which have to be deleted"
+        where: smart_plug_bool_exp!
+    ): smart_plug_mutation_response
+    "delete single row from the table: \"smart_plug\""
+    delete_smart_plug_by_pk(id: Int!): smart_plug
+    "delete data from the table: \"smart_plug_metrics\""
+    delete_smart_plug_metrics(
+        "filter the rows which have to be deleted"
+        where: smart_plug_metrics_bool_exp!
+    ): smart_plug_metrics_mutation_response
+    "delete data from the table: \"student_group\""
+    delete_student_group(
+        "filter the rows which have to be deleted"
+        where: student_group_bool_exp!
+    ): student_group_mutation_response
+    "delete single row from the table: \"student_group\""
+    delete_student_group_by_pk(id: Int!): student_group
+    "delete data from the table: \"user\""
+    delete_user(
+        "filter the rows which have to be deleted"
+        where: user_bool_exp!
+    ): user_mutation_response
+    "delete single row from the table: \"user\""
+    delete_user_by_pk(
+        "This id is generated by firebase."
+        id: String!
+    ): user
+    "insert data into the table: \"lab\""
+    insert_lab(
+        "the rows to be inserted"
+        objects: [lab_insert_input!]!,
+        "on conflict condition"
+        on_conflict: lab_on_conflict
+    ): lab_mutation_response
+    "insert a single row into the table: \"lab\""
+    insert_lab_one(
+        "the row to be inserted"
+        object: lab_insert_input!,
+        "on conflict condition"
+        on_conflict: lab_on_conflict
+    ): lab
+    "insert data into the table: \"lab_operator\""
+    insert_lab_operator(
+        "the rows to be inserted"
+        objects: [lab_operator_insert_input!]!,
+        "on conflict condition"
+        on_conflict: lab_operator_on_conflict
+    ): lab_operator_mutation_response
+    "insert a single row into the table: \"lab_operator\""
+    insert_lab_operator_one(
+        "the row to be inserted"
+        object: lab_operator_insert_input!,
+        "on conflict condition"
+        on_conflict: lab_operator_on_conflict
+    ): lab_operator
+    "insert data into the table: \"lab_station\""
+    insert_lab_station(
+        "the rows to be inserted"
+        objects: [lab_station_insert_input!]!,
+        "on conflict condition"
+        on_conflict: lab_station_on_conflict
+    ): lab_station_mutation_response
+    "insert a single row into the table: \"lab_station\""
+    insert_lab_station_one(
+        "the row to be inserted"
+        object: lab_station_insert_input!,
+        "on conflict condition"
+        on_conflict: lab_station_on_conflict
+    ): lab_station
+    "insert data into the table: \"role\""
+    insert_role(
+        "the rows to be inserted"
+        objects: [role_insert_input!]!,
+        "on conflict condition"
+        on_conflict: role_on_conflict
+    ): role_mutation_response
+    "insert a single row into the table: \"role\""
+    insert_role_one(
+        "the row to be inserted"
+        object: role_insert_input!,
+        "on conflict condition"
+        on_conflict: role_on_conflict
+    ): role
+    "insert data into the table: \"smart_plug\""
+    insert_smart_plug(
+        "the rows to be inserted"
+        objects: [smart_plug_insert_input!]!,
+        "on conflict condition"
+        on_conflict: smart_plug_on_conflict
+    ): smart_plug_mutation_response
+    "insert data into the table: \"smart_plug_metrics\""
+    insert_smart_plug_metrics(
+        "the rows to be inserted"
+        objects: [smart_plug_metrics_insert_input!]!
+    ): smart_plug_metrics_mutation_response
+    "insert a single row into the table: \"smart_plug_metrics\""
+    insert_smart_plug_metrics_one(
+        "the row to be inserted"
+        object: smart_plug_metrics_insert_input!
+    ): smart_plug_metrics
+    "insert a single row into the table: \"smart_plug\""
+    insert_smart_plug_one(
+        "the row to be inserted"
+        object: smart_plug_insert_input!,
+        "on conflict condition"
+        on_conflict: smart_plug_on_conflict
+    ): smart_plug
+    "insert data into the table: \"student_group\""
+    insert_student_group(
+        "the rows to be inserted"
+        objects: [student_group_insert_input!]!,
+        "on conflict condition"
+        on_conflict: student_group_on_conflict
+    ): student_group_mutation_response
+    "insert a single row into the table: \"student_group\""
+    insert_student_group_one(
+        "the row to be inserted"
+        object: student_group_insert_input!,
+        "on conflict condition"
+        on_conflict: student_group_on_conflict
+    ): student_group
+    "insert data into the table: \"user\""
+    insert_user(
+        "the rows to be inserted"
+        objects: [user_insert_input!]!,
+        "on conflict condition"
+        on_conflict: user_on_conflict
+    ): user_mutation_response
+    "insert a single row into the table: \"user\""
+    insert_user_one(
+        "the row to be inserted"
+        object: user_insert_input!,
+        "on conflict condition"
+        on_conflict: user_on_conflict
+    ): user
+    "update data of the table: \"lab\""
+    update_lab(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_set_input,
+        "filter the rows which have to be updated"
+        where: lab_bool_exp!
+    ): lab_mutation_response
+    "update single row of the table: \"lab\""
+    update_lab_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_set_input,
+        pk_columns: lab_pk_columns_input!
+    ): lab
+    "update data of the table: \"lab_operator\""
+    update_lab_operator(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_operator_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_operator_set_input,
+        "filter the rows which have to be updated"
+        where: lab_operator_bool_exp!
+    ): lab_operator_mutation_response
+    "update single row of the table: \"lab_operator\""
+    update_lab_operator_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_operator_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_operator_set_input,
+        pk_columns: lab_operator_pk_columns_input!
+    ): lab_operator
+    "update data of the table: \"lab_station\""
+    update_lab_station(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_station_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_station_set_input,
+        "filter the rows which have to be updated"
+        where: lab_station_bool_exp!
+    ): lab_station_mutation_response
+    "update single row of the table: \"lab_station\""
+    update_lab_station_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: lab_station_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: lab_station_set_input,
+        pk_columns: lab_station_pk_columns_input!
+    ): lab_station
+    "update data of the table: \"role\""
+    update_role(
+        "sets the columns of the filtered rows to the given values"
+        _set: role_set_input,
+        "filter the rows which have to be updated"
+        where: role_bool_exp!
+    ): role_mutation_response
+    "update single row of the table: \"role\""
+    update_role_by_pk(
+        "sets the columns of the filtered rows to the given values"
+        _set: role_set_input,
+        pk_columns: role_pk_columns_input!
+    ): role
+    "update data of the table: \"smart_plug\""
+    update_smart_plug(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: smart_plug_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: smart_plug_set_input,
+        "filter the rows which have to be updated"
+        where: smart_plug_bool_exp!
+    ): smart_plug_mutation_response
+    "update single row of the table: \"smart_plug\""
+    update_smart_plug_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: smart_plug_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: smart_plug_set_input,
+        pk_columns: smart_plug_pk_columns_input!
+    ): smart_plug
+    "update data of the table: \"smart_plug_metrics\""
+    update_smart_plug_metrics(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: smart_plug_metrics_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: smart_plug_metrics_set_input,
+        "filter the rows which have to be updated"
+        where: smart_plug_metrics_bool_exp!
+    ): smart_plug_metrics_mutation_response
+    "update data of the table: \"student_group\""
+    update_student_group(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: student_group_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: student_group_set_input,
+        "filter the rows which have to be updated"
+        where: student_group_bool_exp!
+    ): student_group_mutation_response
+    "update single row of the table: \"student_group\""
+    update_student_group_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: student_group_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: student_group_set_input,
+        pk_columns: student_group_pk_columns_input!
+    ): student_group
+    "update data of the table: \"user\""
+    update_user(
+        "sets the columns of the filtered rows to the given values"
+        _set: user_set_input,
+        "filter the rows which have to be updated"
+        where: user_bool_exp!
+    ): user_mutation_response
+    "update single row of the table: \"user\""
+    update_user_by_pk(
+        "sets the columns of the filtered rows to the given values"
+        _set: user_set_input,
+        pk_columns: user_pk_columns_input!
+    ): user
+}
+
+type query_root {
+    "fetch data from the table: \"lab\""
+    lab(
+        "distinct select on columns"
+        distinct_on: [lab_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_order_by!],
+        "filter the rows returned"
+        where: lab_bool_exp
+    ): [lab!]!
+    "fetch aggregated fields from the table: \"lab\""
+    lab_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_order_by!],
+        "filter the rows returned"
+        where: lab_bool_exp
+    ): lab_aggregate!
+    "fetch data from the table: \"lab\" using primary key columns"
+    lab_by_pk(id: Int!): lab
+    "fetch data from the table: \"lab_operator\""
+    lab_operator(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): [lab_operator!]!
+    "fetch aggregated fields from the table: \"lab_operator\""
+    lab_operator_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): lab_operator_aggregate!
+    "fetch data from the table: \"lab_operator\" using primary key columns"
+    lab_operator_by_pk(id: Int!): lab_operator
+    "fetch data from the table: \"lab_station\""
+    lab_station(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): [lab_station!]!
+    "fetch aggregated fields from the table: \"lab_station\""
+    lab_station_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): lab_station_aggregate!
+    "fetch data from the table: \"lab_station\" using primary key columns"
+    lab_station_by_pk(id: Int!): lab_station
+    "fetch data from the table: \"role\""
+    role(
+        "distinct select on columns"
+        distinct_on: [role_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [role_order_by!],
+        "filter the rows returned"
+        where: role_bool_exp
+    ): [role!]!
+    "fetch aggregated fields from the table: \"role\""
+    role_aggregate(
+        "distinct select on columns"
+        distinct_on: [role_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [role_order_by!],
+        "filter the rows returned"
+        where: role_bool_exp
+    ): role_aggregate!
+    "fetch data from the table: \"role\" using primary key columns"
+    role_by_pk(title: String!): role
+    "fetch data from the table: \"smart_plug\""
+    smart_plug(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): [smart_plug!]!
+    "fetch aggregated fields from the table: \"smart_plug\""
+    smart_plug_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): smart_plug_aggregate!
+    "fetch data from the table: \"smart_plug\" using primary key columns"
+    smart_plug_by_pk(id: Int!): smart_plug
+    "An array relationship"
+    smart_plug_metrics(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): [smart_plug_metrics!]!
+    "An aggregate relationship"
+    smart_plug_metrics_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): smart_plug_metrics_aggregate!
+    "fetch data from the table: \"student_group\""
+    student_group(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): [student_group!]!
+    "fetch aggregated fields from the table: \"student_group\""
+    student_group_aggregate(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): student_group_aggregate!
+    "fetch data from the table: \"student_group\" using primary key columns"
+    student_group_by_pk(id: Int!): student_group
+    "fetch data from the table: \"user\""
+    user(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): [user!]!
+    "fetch aggregated fields from the table: \"user\""
+    user_aggregate(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): user_aggregate!
+    "fetch data from the table: \"user\" using primary key columns"
+    user_by_pk(
+        "This id is generated by firebase."
+        id: String!
+    ): user
+}
+
+"columns and relationships of \"role\""
+type role {
+    comment: String!
+    title: String!
+    "An array relationship"
+    users(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): [user!]!
+    "An aggregate relationship"
+    users_aggregate(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): user_aggregate!
+}
+
+"aggregated selection of \"role\""
+type role_aggregate {
+    aggregate: role_aggregate_fields
+    nodes: [role!]!
+}
+
+"aggregate fields of \"role\""
+type role_aggregate_fields {
+    count(columns: [role_select_column!], distinct: Boolean): Int!
+    max: role_max_fields
+    min: role_min_fields
+}
+
+"aggregate max on columns"
+type role_max_fields {
+    comment: String
+    title: String
+}
+
+"aggregate min on columns"
+type role_min_fields {
+    comment: String
+    title: String
+}
+
+"response of any mutation on the table \"role\""
+type role_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [role!]!
+}
+
+"""
+
+A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT.
+
+
+columns and relationships of "smart_plug"
+"""
+type smart_plug {
+    created_at: timestamptz!
+    deleted_at: timestamptz
+    id: Int!
+    "An object relationship"
+    lab_station: lab_station!
+    lab_station_id: Int!
+    name: String!
+    "An array relationship"
+    smart_plug_metrics(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): [smart_plug_metrics!]!
+    "An aggregate relationship"
+    smart_plug_metrics_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): smart_plug_metrics_aggregate!
+    updated_at: timestamptz!
+}
+
+"aggregated selection of \"smart_plug\""
+type smart_plug_aggregate {
+    aggregate: smart_plug_aggregate_fields
+    nodes: [smart_plug!]!
+}
+
+"aggregate fields of \"smart_plug\""
+type smart_plug_aggregate_fields {
+    avg: smart_plug_avg_fields
+    count(columns: [smart_plug_select_column!], distinct: Boolean): Int!
+    max: smart_plug_max_fields
+    min: smart_plug_min_fields
+    stddev: smart_plug_stddev_fields
+    stddev_pop: smart_plug_stddev_pop_fields
+    stddev_samp: smart_plug_stddev_samp_fields
+    sum: smart_plug_sum_fields
+    var_pop: smart_plug_var_pop_fields
+    var_samp: smart_plug_var_samp_fields
+    variance: smart_plug_variance_fields
+}
+
+"aggregate avg on columns"
+type smart_plug_avg_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate max on columns"
+type smart_plug_max_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_station_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"columns and relationships of \"smart_plug_metrics\""
+type smart_plug_metrics {
+    current: float8!
+    "An object relationship"
+    smart_plug: smart_plug!
+    smart_plug_id: Int!
+    time: timestamptz!
+}
+
+"aggregated selection of \"smart_plug_metrics\""
+type smart_plug_metrics_aggregate {
+    aggregate: smart_plug_metrics_aggregate_fields
+    nodes: [smart_plug_metrics!]!
+}
+
+"aggregate fields of \"smart_plug_metrics\""
+type smart_plug_metrics_aggregate_fields {
+    avg: smart_plug_metrics_avg_fields
+    count(columns: [smart_plug_metrics_select_column!], distinct: Boolean): Int!
+    max: smart_plug_metrics_max_fields
+    min: smart_plug_metrics_min_fields
+    stddev: smart_plug_metrics_stddev_fields
+    stddev_pop: smart_plug_metrics_stddev_pop_fields
+    stddev_samp: smart_plug_metrics_stddev_samp_fields
+    sum: smart_plug_metrics_sum_fields
+    var_pop: smart_plug_metrics_var_pop_fields
+    var_samp: smart_plug_metrics_var_samp_fields
+    variance: smart_plug_metrics_variance_fields
+}
+
+"aggregate avg on columns"
+type smart_plug_metrics_avg_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate max on columns"
+type smart_plug_metrics_max_fields {
+    current: float8
+    smart_plug_id: Int
+    time: timestamptz
+}
+
+"aggregate min on columns"
+type smart_plug_metrics_min_fields {
+    current: float8
+    smart_plug_id: Int
+    time: timestamptz
+}
+
+"response of any mutation on the table \"smart_plug_metrics\""
+type smart_plug_metrics_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [smart_plug_metrics!]!
+}
+
+"aggregate stddev on columns"
+type smart_plug_metrics_stddev_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type smart_plug_metrics_stddev_pop_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type smart_plug_metrics_stddev_samp_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate sum on columns"
+type smart_plug_metrics_sum_fields {
+    current: float8
+    smart_plug_id: Int
+}
+
+"aggregate var_pop on columns"
+type smart_plug_metrics_var_pop_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate var_samp on columns"
+type smart_plug_metrics_var_samp_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate variance on columns"
+type smart_plug_metrics_variance_fields {
+    current: Float
+    smart_plug_id: Float
+}
+
+"aggregate min on columns"
+type smart_plug_min_fields {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_station_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"response of any mutation on the table \"smart_plug\""
+type smart_plug_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [smart_plug!]!
+}
+
+"aggregate stddev on columns"
+type smart_plug_stddev_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type smart_plug_stddev_pop_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type smart_plug_stddev_samp_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate sum on columns"
+type smart_plug_sum_fields {
+    id: Int
+    lab_station_id: Int
+}
+
+"aggregate var_pop on columns"
+type smart_plug_var_pop_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate var_samp on columns"
+type smart_plug_var_samp_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"aggregate variance on columns"
+type smart_plug_variance_fields {
+    id: Float
+    lab_station_id: Float
+}
+
+"""
+
+Students are always grouped in groups of one or more students for each lab. Each group is usually assigned a lab_station.
+
+
+columns and relationships of "student_group"
+"""
+type student_group {
+    group_name: String!
+    id: Int!
+    "An object relationship"
+    lab: lab!
+    lab_id: Int!
+    student_id: String!
+    "An object relationship"
+    user: user!
+}
+
+"aggregated selection of \"student_group\""
+type student_group_aggregate {
+    aggregate: student_group_aggregate_fields
+    nodes: [student_group!]!
+}
+
+"aggregate fields of \"student_group\""
+type student_group_aggregate_fields {
+    avg: student_group_avg_fields
+    count(columns: [student_group_select_column!], distinct: Boolean): Int!
+    max: student_group_max_fields
+    min: student_group_min_fields
+    stddev: student_group_stddev_fields
+    stddev_pop: student_group_stddev_pop_fields
+    stddev_samp: student_group_stddev_samp_fields
+    sum: student_group_sum_fields
+    var_pop: student_group_var_pop_fields
+    var_samp: student_group_var_samp_fields
+    variance: student_group_variance_fields
+}
+
+"aggregate avg on columns"
+type student_group_avg_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate max on columns"
+type student_group_max_fields {
+    group_name: String
+    id: Int
+    lab_id: Int
+    student_id: String
+}
+
+"aggregate min on columns"
+type student_group_min_fields {
+    group_name: String
+    id: Int
+    lab_id: Int
+    student_id: String
+}
+
+"response of any mutation on the table \"student_group\""
+type student_group_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [student_group!]!
+}
+
+"aggregate stddev on columns"
+type student_group_stddev_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type student_group_stddev_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type student_group_stddev_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate sum on columns"
+type student_group_sum_fields {
+    id: Int
+    lab_id: Int
+}
+
+"aggregate var_pop on columns"
+type student_group_var_pop_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate var_samp on columns"
+type student_group_var_samp_fields {
+    id: Float
+    lab_id: Float
+}
+
+"aggregate variance on columns"
+type student_group_variance_fields {
+    id: Float
+    lab_id: Float
+}
+
+type subscription_root {
+    "fetch data from the table: \"lab\""
+    lab(
+        "distinct select on columns"
+        distinct_on: [lab_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_order_by!],
+        "filter the rows returned"
+        where: lab_bool_exp
+    ): [lab!]!
+    "fetch aggregated fields from the table: \"lab\""
+    lab_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_order_by!],
+        "filter the rows returned"
+        where: lab_bool_exp
+    ): lab_aggregate!
+    "fetch data from the table: \"lab\" using primary key columns"
+    lab_by_pk(id: Int!): lab
+    "fetch data from the table: \"lab_operator\""
+    lab_operator(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): [lab_operator!]!
+    "fetch aggregated fields from the table: \"lab_operator\""
+    lab_operator_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): lab_operator_aggregate!
+    "fetch data from the table: \"lab_operator\" using primary key columns"
+    lab_operator_by_pk(id: Int!): lab_operator
+    "fetch data from the table: \"lab_station\""
+    lab_station(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): [lab_station!]!
+    "fetch aggregated fields from the table: \"lab_station\""
+    lab_station_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_station_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_station_order_by!],
+        "filter the rows returned"
+        where: lab_station_bool_exp
+    ): lab_station_aggregate!
+    "fetch data from the table: \"lab_station\" using primary key columns"
+    lab_station_by_pk(id: Int!): lab_station
+    "fetch data from the table: \"role\""
+    role(
+        "distinct select on columns"
+        distinct_on: [role_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [role_order_by!],
+        "filter the rows returned"
+        where: role_bool_exp
+    ): [role!]!
+    "fetch aggregated fields from the table: \"role\""
+    role_aggregate(
+        "distinct select on columns"
+        distinct_on: [role_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [role_order_by!],
+        "filter the rows returned"
+        where: role_bool_exp
+    ): role_aggregate!
+    "fetch data from the table: \"role\" using primary key columns"
+    role_by_pk(title: String!): role
+    "fetch data from the table: \"smart_plug\""
+    smart_plug(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): [smart_plug!]!
+    "fetch aggregated fields from the table: \"smart_plug\""
+    smart_plug_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_order_by!],
+        "filter the rows returned"
+        where: smart_plug_bool_exp
+    ): smart_plug_aggregate!
+    "fetch data from the table: \"smart_plug\" using primary key columns"
+    smart_plug_by_pk(id: Int!): smart_plug
+    "An array relationship"
+    smart_plug_metrics(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): [smart_plug_metrics!]!
+    "An aggregate relationship"
+    smart_plug_metrics_aggregate(
+        "distinct select on columns"
+        distinct_on: [smart_plug_metrics_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [smart_plug_metrics_order_by!],
+        "filter the rows returned"
+        where: smart_plug_metrics_bool_exp
+    ): smart_plug_metrics_aggregate!
+    "fetch data from the table: \"student_group\""
+    student_group(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): [student_group!]!
+    "fetch aggregated fields from the table: \"student_group\""
+    student_group_aggregate(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): student_group_aggregate!
+    "fetch data from the table: \"student_group\" using primary key columns"
+    student_group_by_pk(id: Int!): student_group
+    "fetch data from the table: \"user\""
+    user(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): [user!]!
+    "fetch aggregated fields from the table: \"user\""
+    user_aggregate(
+        "distinct select on columns"
+        distinct_on: [user_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [user_order_by!],
+        "filter the rows returned"
+        where: user_bool_exp
+    ): user_aggregate!
+    "fetch data from the table: \"user\" using primary key columns"
+    user_by_pk(
+        "This id is generated by firebase."
+        id: String!
+    ): user
+}
+
+"""
+
+All fields are nullable so we can comply with LGPD (a brazilian version of europe's GDPR). The only entity allowed to create users in this table is firebase itself, otherwise we risk running into syncing issues between the auth provider and our own user table.
+
+
+columns and relationships of "user"
+"""
+type user {
+    deleted_at: timestamptz
+    email: String
+    "This id is generated by firebase."
+    id: String!
+    "An array relationship"
+    lab_operators(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): [lab_operator!]!
+    "An aggregate relationship"
+    lab_operators_aggregate(
+        "distinct select on columns"
+        distinct_on: [lab_operator_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [lab_operator_order_by!],
+        "filter the rows returned"
+        where: lab_operator_bool_exp
+    ): lab_operator_aggregate!
+    name: String
+    role_title: role_enum!
+    "An array relationship"
+    student_groups(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): [student_group!]!
+    "An aggregate relationship"
+    student_groups_aggregate(
+        "distinct select on columns"
+        distinct_on: [student_group_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [student_group_order_by!],
+        "filter the rows returned"
+        where: student_group_bool_exp
+    ): student_group_aggregate!
+    "An object relationship"
+    user_role: role!
+    usp_id: String
+}
+
+"aggregated selection of \"user\""
+type user_aggregate {
+    aggregate: user_aggregate_fields
+    nodes: [user!]!
+}
+
+"aggregate fields of \"user\""
+type user_aggregate_fields {
+    count(columns: [user_select_column!], distinct: Boolean): Int!
+    max: user_max_fields
+    min: user_min_fields
+}
+
+"aggregate max on columns"
+type user_max_fields {
+    deleted_at: timestamptz
+    email: String
+    "This id is generated by firebase."
+    id: String
+    name: String
+    usp_id: String
+}
+
+"aggregate min on columns"
+type user_min_fields {
+    deleted_at: timestamptz
+    email: String
+    "This id is generated by firebase."
+    id: String
+    name: String
+    usp_id: String
+}
+
+"response of any mutation on the table \"user\""
+type user_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [user!]!
+}
+
+"unique or primary key constraints on table \"lab\""
+enum lab_constraint {
+    "unique or primary key constraint"
+    laboratory_pkey
+}
+
+"unique or primary key constraints on table \"lab_operator\""
+enum lab_operator_constraint {
+    "unique or primary key constraint"
+    lab_operator_operator_id_lab_id_key
+    "unique or primary key constraint"
+    lab_operator_pkey
+}
+
+"select columns of table \"lab_operator\""
+enum lab_operator_select_column {
+    "column name"
+    created_at
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    operator_id
+    "column name"
+    updated_at
+}
+
+"update columns of table \"lab_operator\""
+enum lab_operator_update_column {
+    "column name"
+    created_at
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    operator_id
+    "column name"
+    updated_at
+}
+
+"select columns of table \"lab\""
+enum lab_select_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    description
+    "column name"
+    id
+    "column name"
+    location
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"unique or primary key constraints on table \"lab_station\""
+enum lab_station_constraint {
+    "unique or primary key constraint"
+    workbench_pkey
+}
+
+"select columns of table \"lab_station\""
+enum lab_station_select_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"update columns of table \"lab_station\""
+enum lab_station_update_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"update columns of table \"lab\""
+enum lab_update_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    description
+    "column name"
+    id
+    "column name"
+    location
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"column ordering options"
+enum order_by {
+    "in ascending order, nulls last"
+    asc
+    "in ascending order, nulls first"
+    asc_nulls_first
+    "in ascending order, nulls last"
+    asc_nulls_last
+    "in descending order, nulls first"
+    desc
+    "in descending order, nulls first"
+    desc_nulls_first
+    "in descending order, nulls last"
+    desc_nulls_last
+}
+
+"unique or primary key constraints on table \"role\""
+enum role_constraint {
+    "unique or primary key constraint"
+    user_roles_pkey
+}
+
+enum role_enum {
+    "Anonymous viewer. Can only see non-private data from students and smart_plug metrics"
+    anonymous
+    "An employee of the university that works in the lab."
+    lab_operator
+    "A student of a lab."
+    student
+}
+
+"select columns of table \"role\""
+enum role_select_column {
+    "column name"
+    comment
+    "column name"
+    title
+}
+
+"update columns of table \"role\""
+enum role_update_column {
+    "column name"
+    comment
+    "column name"
+    title
+}
+
+"unique or primary key constraints on table \"smart_plug\""
+enum smart_plug_constraint {
+    "unique or primary key constraint"
+    smart_plug_pkey
+}
+
+"select columns of table \"smart_plug_metrics\""
+enum smart_plug_metrics_select_column {
+    "column name"
+    current
+    "column name"
+    smart_plug_id
+    "column name"
+    time
+}
+
+"select columns of table \"smart_plug\""
+enum smart_plug_select_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    id
+    "column name"
+    lab_station_id
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"update columns of table \"smart_plug\""
+enum smart_plug_update_column {
+    "column name"
+    created_at
+    "column name"
+    deleted_at
+    "column name"
+    id
+    "column name"
+    lab_station_id
+    "column name"
+    name
+    "column name"
+    updated_at
+}
+
+"unique or primary key constraints on table \"student_group\""
+enum student_group_constraint {
+    "unique or primary key constraint"
+    student_group_pkey
+}
+
+"select columns of table \"student_group\""
+enum student_group_select_column {
+    "column name"
+    group_name
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    student_id
+}
+
+"update columns of table \"student_group\""
+enum student_group_update_column {
+    "column name"
+    group_name
+    "column name"
+    id
+    "column name"
+    lab_id
+    "column name"
+    student_id
+}
+
+"unique or primary key constraints on table \"user\""
+enum user_constraint {
+    "unique or primary key constraint"
+    lab_users_email_key
+    "unique or primary key constraint"
+    lab_users_pkey
+    "unique or primary key constraint"
+    lab_users_usp_id_key
+}
+
+"select columns of table \"user\""
+enum user_select_column {
+    "column name"
+    deleted_at
+    "column name"
+    email
+    "column name"
+    id
+    "column name"
+    name
+    "column name"
+    role_title
+    "column name"
+    usp_id
+}
+
+"update columns of table \"user\""
+enum user_update_column {
+    "column name"
+    deleted_at
+    "column name"
+    email
+    "column name"
+    id
+    "column name"
+    name
+    "column name"
+    role_title
+    "column name"
+    usp_id
+}
+
+"Boolean expression to compare columns of type \"Int\". All fields are combined with logical 'AND'."
+input Int_comparison_exp {
+    _eq: Int
+    _gt: Int
+    _gte: Int
+    _in: [Int!]
+    _is_null: Boolean
+    _lt: Int
+    _lte: Int
+    _neq: Int
+    _nin: [Int!]
+}
+
+"Boolean expression to compare columns of type \"String\". All fields are combined with logical 'AND'."
+input String_comparison_exp {
+    _eq: String
+    _gt: String
+    _gte: String
+    "does the column match the given case-insensitive pattern"
+    _ilike: String
+    _in: [String!]
+    "does the column match the given POSIX regular expression, case insensitive"
+    _iregex: String
+    _is_null: Boolean
+    "does the column match the given pattern"
+    _like: String
+    _lt: String
+    _lte: String
+    _neq: String
+    "does the column NOT match the given case-insensitive pattern"
+    _nilike: String
+    _nin: [String!]
+    "does the column NOT match the given POSIX regular expression, case insensitive"
+    _niregex: String
+    "does the column NOT match the given pattern"
+    _nlike: String
+    "does the column NOT match the given POSIX regular expression, case sensitive"
+    _nregex: String
+    "does the column NOT match the given SQL regular expression"
+    _nsimilar: String
+    "does the column match the given POSIX regular expression, case sensitive"
+    _regex: String
+    "does the column match the given SQL regular expression"
+    _similar: String
+}
+
+"Boolean expression to compare columns of type \"float8\". All fields are combined with logical 'AND'."
+input float8_comparison_exp {
+    _eq: float8
+    _gt: float8
+    _gte: float8
+    _in: [float8!]
+    _is_null: Boolean
+    _lt: float8
+    _lte: float8
+    _neq: float8
+    _nin: [float8!]
+}
+
+"Boolean expression to filter rows from the table \"lab\". All fields are combined with a logical 'AND'."
+input lab_bool_exp {
+    _and: [lab_bool_exp!]
+    _not: lab_bool_exp
+    _or: [lab_bool_exp!]
+    created_at: timestamptz_comparison_exp
+    deleted_at: timestamptz_comparison_exp
+    description: String_comparison_exp
+    id: Int_comparison_exp
+    lab_operators: lab_operator_bool_exp
+    lab_stations: lab_station_bool_exp
+    location: String_comparison_exp
+    name: String_comparison_exp
+    student_groups: student_group_bool_exp
+    updated_at: timestamptz_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"lab\""
+input lab_inc_input {
+    id: Int
+}
+
+"input type for inserting data into table \"lab\""
+input lab_insert_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    description: String
+    id: Int
+    lab_operators: lab_operator_arr_rel_insert_input
+    lab_stations: lab_station_arr_rel_insert_input
+    location: String
+    name: String
+    student_groups: student_group_arr_rel_insert_input
+    updated_at: timestamptz
+}
+
+"input type for inserting object relation for remote table \"lab\""
+input lab_obj_rel_insert_input {
+    data: lab_insert_input!
+    "on conflict condition"
+    on_conflict: lab_on_conflict
+}
+
+"on conflict condition type for table \"lab\""
+input lab_on_conflict {
+    constraint: lab_constraint!
+    update_columns: [lab_update_column!]! = []
+    where: lab_bool_exp
+}
+
+"order by aggregate values of table \"lab_operator\""
+input lab_operator_aggregate_order_by {
+    avg: lab_operator_avg_order_by
+    count: order_by
+    max: lab_operator_max_order_by
+    min: lab_operator_min_order_by
+    stddev: lab_operator_stddev_order_by
+    stddev_pop: lab_operator_stddev_pop_order_by
+    stddev_samp: lab_operator_stddev_samp_order_by
+    sum: lab_operator_sum_order_by
+    var_pop: lab_operator_var_pop_order_by
+    var_samp: lab_operator_var_samp_order_by
+    variance: lab_operator_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"lab_operator\""
+input lab_operator_arr_rel_insert_input {
+    data: [lab_operator_insert_input!]!
+    "on conflict condition"
+    on_conflict: lab_operator_on_conflict
+}
+
+"order by avg() on columns of table \"lab_operator\""
+input lab_operator_avg_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"lab_operator\". All fields are combined with a logical 'AND'."
+input lab_operator_bool_exp {
+    _and: [lab_operator_bool_exp!]
+    _not: lab_operator_bool_exp
+    _or: [lab_operator_bool_exp!]
+    created_at: timestamptz_comparison_exp
+    id: Int_comparison_exp
+    lab: lab_bool_exp
+    lab_id: Int_comparison_exp
+    operator_id: String_comparison_exp
+    updated_at: timestamptz_comparison_exp
+    user: user_bool_exp
+}
+
+"input type for incrementing numeric columns in table \"lab_operator\""
+input lab_operator_inc_input {
+    id: Int
+    lab_id: Int
+}
+
+"input type for inserting data into table \"lab_operator\""
+input lab_operator_insert_input {
+    created_at: timestamptz
+    id: Int
+    lab: lab_obj_rel_insert_input
+    lab_id: Int
+    operator_id: String
+    updated_at: timestamptz
+    user: user_obj_rel_insert_input
+}
+
+"order by max() on columns of table \"lab_operator\""
+input lab_operator_max_order_by {
+    created_at: order_by
+    id: order_by
+    lab_id: order_by
+    operator_id: order_by
+    updated_at: order_by
+}
+
+"order by min() on columns of table \"lab_operator\""
+input lab_operator_min_order_by {
+    created_at: order_by
+    id: order_by
+    lab_id: order_by
+    operator_id: order_by
+    updated_at: order_by
+}
+
+"on conflict condition type for table \"lab_operator\""
+input lab_operator_on_conflict {
+    constraint: lab_operator_constraint!
+    update_columns: [lab_operator_update_column!]! = []
+    where: lab_operator_bool_exp
+}
+
+"Ordering options when selecting data from \"lab_operator\"."
+input lab_operator_order_by {
+    created_at: order_by
+    id: order_by
+    lab: lab_order_by
+    lab_id: order_by
+    operator_id: order_by
+    updated_at: order_by
+    user: user_order_by
+}
+
+"primary key columns input for table: lab_operator"
+input lab_operator_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"lab_operator\""
+input lab_operator_set_input {
+    created_at: timestamptz
+    id: Int
+    lab_id: Int
+    operator_id: String
+    updated_at: timestamptz
+}
+
+"order by stddev() on columns of table \"lab_operator\""
+input lab_operator_stddev_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"lab_operator\""
+input lab_operator_stddev_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"lab_operator\""
+input lab_operator_stddev_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by sum() on columns of table \"lab_operator\""
+input lab_operator_sum_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_pop() on columns of table \"lab_operator\""
+input lab_operator_var_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_samp() on columns of table \"lab_operator\""
+input lab_operator_var_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by variance() on columns of table \"lab_operator\""
+input lab_operator_variance_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Ordering options when selecting data from \"lab\"."
+input lab_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    description: order_by
+    id: order_by
+    lab_operators_aggregate: lab_operator_aggregate_order_by
+    lab_stations_aggregate: lab_station_aggregate_order_by
+    location: order_by
+    name: order_by
+    student_groups_aggregate: student_group_aggregate_order_by
+    updated_at: order_by
+}
+
+"primary key columns input for table: lab"
+input lab_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"lab\""
+input lab_set_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    description: String
+    id: Int
+    location: String
+    name: String
+    updated_at: timestamptz
+}
+
+"order by aggregate values of table \"lab_station\""
+input lab_station_aggregate_order_by {
+    avg: lab_station_avg_order_by
+    count: order_by
+    max: lab_station_max_order_by
+    min: lab_station_min_order_by
+    stddev: lab_station_stddev_order_by
+    stddev_pop: lab_station_stddev_pop_order_by
+    stddev_samp: lab_station_stddev_samp_order_by
+    sum: lab_station_sum_order_by
+    var_pop: lab_station_var_pop_order_by
+    var_samp: lab_station_var_samp_order_by
+    variance: lab_station_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"lab_station\""
+input lab_station_arr_rel_insert_input {
+    data: [lab_station_insert_input!]!
+    "on conflict condition"
+    on_conflict: lab_station_on_conflict
+}
+
+"order by avg() on columns of table \"lab_station\""
+input lab_station_avg_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"lab_station\". All fields are combined with a logical 'AND'."
+input lab_station_bool_exp {
+    _and: [lab_station_bool_exp!]
+    _not: lab_station_bool_exp
+    _or: [lab_station_bool_exp!]
+    created_at: timestamptz_comparison_exp
+    deleted_at: timestamptz_comparison_exp
+    id: Int_comparison_exp
+    lab: lab_bool_exp
+    lab_id: Int_comparison_exp
+    name: String_comparison_exp
+    smart_plugs: smart_plug_bool_exp
+    updated_at: timestamptz_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"lab_station\""
+input lab_station_inc_input {
+    id: Int
+    lab_id: Int
+}
+
+"input type for inserting data into table \"lab_station\""
+input lab_station_insert_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab: lab_obj_rel_insert_input
+    lab_id: Int
+    name: String
+    smart_plugs: smart_plug_arr_rel_insert_input
+    updated_at: timestamptz
+}
+
+"order by max() on columns of table \"lab_station\""
+input lab_station_max_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab_id: order_by
+    name: order_by
+    updated_at: order_by
+}
+
+"order by min() on columns of table \"lab_station\""
+input lab_station_min_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab_id: order_by
+    name: order_by
+    updated_at: order_by
+}
+
+"input type for inserting object relation for remote table \"lab_station\""
+input lab_station_obj_rel_insert_input {
+    data: lab_station_insert_input!
+    "on conflict condition"
+    on_conflict: lab_station_on_conflict
+}
+
+"on conflict condition type for table \"lab_station\""
+input lab_station_on_conflict {
+    constraint: lab_station_constraint!
+    update_columns: [lab_station_update_column!]! = []
+    where: lab_station_bool_exp
+}
+
+"Ordering options when selecting data from \"lab_station\"."
+input lab_station_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab: lab_order_by
+    lab_id: order_by
+    name: order_by
+    smart_plugs_aggregate: smart_plug_aggregate_order_by
+    updated_at: order_by
+}
+
+"primary key columns input for table: lab_station"
+input lab_station_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"lab_station\""
+input lab_station_set_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"order by stddev() on columns of table \"lab_station\""
+input lab_station_stddev_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"lab_station\""
+input lab_station_stddev_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"lab_station\""
+input lab_station_stddev_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by sum() on columns of table \"lab_station\""
+input lab_station_sum_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_pop() on columns of table \"lab_station\""
+input lab_station_var_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_samp() on columns of table \"lab_station\""
+input lab_station_var_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by variance() on columns of table \"lab_station\""
+input lab_station_variance_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"role\". All fields are combined with a logical 'AND'."
+input role_bool_exp {
+    _and: [role_bool_exp!]
+    _not: role_bool_exp
+    _or: [role_bool_exp!]
+    comment: String_comparison_exp
+    title: String_comparison_exp
+    users: user_bool_exp
+}
+
+"Boolean expression to compare columns of type \"role_enum\". All fields are combined with logical 'AND'."
+input role_enum_comparison_exp {
+    _eq: role_enum
+    _in: [role_enum!]
+    _is_null: Boolean
+    _neq: role_enum
+    _nin: [role_enum!]
+}
+
+"input type for inserting data into table \"role\""
+input role_insert_input {
+    comment: String
+    title: String
+    users: user_arr_rel_insert_input
+}
+
+"input type for inserting object relation for remote table \"role\""
+input role_obj_rel_insert_input {
+    data: role_insert_input!
+    "on conflict condition"
+    on_conflict: role_on_conflict
+}
+
+"on conflict condition type for table \"role\""
+input role_on_conflict {
+    constraint: role_constraint!
+    update_columns: [role_update_column!]! = []
+    where: role_bool_exp
+}
+
+"Ordering options when selecting data from \"role\"."
+input role_order_by {
+    comment: order_by
+    title: order_by
+    users_aggregate: user_aggregate_order_by
+}
+
+"primary key columns input for table: role"
+input role_pk_columns_input {
+    title: String!
+}
+
+"input type for updating data in table \"role\""
+input role_set_input {
+    comment: String
+    title: String
+}
+
+"order by aggregate values of table \"smart_plug\""
+input smart_plug_aggregate_order_by {
+    avg: smart_plug_avg_order_by
+    count: order_by
+    max: smart_plug_max_order_by
+    min: smart_plug_min_order_by
+    stddev: smart_plug_stddev_order_by
+    stddev_pop: smart_plug_stddev_pop_order_by
+    stddev_samp: smart_plug_stddev_samp_order_by
+    sum: smart_plug_sum_order_by
+    var_pop: smart_plug_var_pop_order_by
+    var_samp: smart_plug_var_samp_order_by
+    variance: smart_plug_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"smart_plug\""
+input smart_plug_arr_rel_insert_input {
+    data: [smart_plug_insert_input!]!
+    "on conflict condition"
+    on_conflict: smart_plug_on_conflict
+}
+
+"order by avg() on columns of table \"smart_plug\""
+input smart_plug_avg_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"smart_plug\". All fields are combined with a logical 'AND'."
+input smart_plug_bool_exp {
+    _and: [smart_plug_bool_exp!]
+    _not: smart_plug_bool_exp
+    _or: [smart_plug_bool_exp!]
+    created_at: timestamptz_comparison_exp
+    deleted_at: timestamptz_comparison_exp
+    id: Int_comparison_exp
+    lab_station: lab_station_bool_exp
+    lab_station_id: Int_comparison_exp
+    name: String_comparison_exp
+    smart_plug_metrics: smart_plug_metrics_bool_exp
+    updated_at: timestamptz_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"smart_plug\""
+input smart_plug_inc_input {
+    id: Int
+    lab_station_id: Int
+}
+
+"input type for inserting data into table \"smart_plug\""
+input smart_plug_insert_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_station: lab_station_obj_rel_insert_input
+    lab_station_id: Int
+    name: String
+    smart_plug_metrics: smart_plug_metrics_arr_rel_insert_input
+    updated_at: timestamptz
+}
+
+"order by max() on columns of table \"smart_plug\""
+input smart_plug_max_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab_station_id: order_by
+    name: order_by
+    updated_at: order_by
+}
+
+"order by aggregate values of table \"smart_plug_metrics\""
+input smart_plug_metrics_aggregate_order_by {
+    avg: smart_plug_metrics_avg_order_by
+    count: order_by
+    max: smart_plug_metrics_max_order_by
+    min: smart_plug_metrics_min_order_by
+    stddev: smart_plug_metrics_stddev_order_by
+    stddev_pop: smart_plug_metrics_stddev_pop_order_by
+    stddev_samp: smart_plug_metrics_stddev_samp_order_by
+    sum: smart_plug_metrics_sum_order_by
+    var_pop: smart_plug_metrics_var_pop_order_by
+    var_samp: smart_plug_metrics_var_samp_order_by
+    variance: smart_plug_metrics_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"smart_plug_metrics\""
+input smart_plug_metrics_arr_rel_insert_input {
+    data: [smart_plug_metrics_insert_input!]!
+}
+
+"order by avg() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_avg_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"smart_plug_metrics\". All fields are combined with a logical 'AND'."
+input smart_plug_metrics_bool_exp {
+    _and: [smart_plug_metrics_bool_exp!]
+    _not: smart_plug_metrics_bool_exp
+    _or: [smart_plug_metrics_bool_exp!]
+    current: float8_comparison_exp
+    smart_plug: smart_plug_bool_exp
+    smart_plug_id: Int_comparison_exp
+    time: timestamptz_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"smart_plug_metrics\""
+input smart_plug_metrics_inc_input {
+    current: float8
+    smart_plug_id: Int
+}
+
+"input type for inserting data into table \"smart_plug_metrics\""
+input smart_plug_metrics_insert_input {
+    current: float8
+    smart_plug: smart_plug_obj_rel_insert_input
+    smart_plug_id: Int
+    time: timestamptz
+}
+
+"order by max() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_max_order_by {
+    current: order_by
+    smart_plug_id: order_by
+    time: order_by
+}
+
+"order by min() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_min_order_by {
+    current: order_by
+    smart_plug_id: order_by
+    time: order_by
+}
+
+"Ordering options when selecting data from \"smart_plug_metrics\"."
+input smart_plug_metrics_order_by {
+    current: order_by
+    smart_plug: smart_plug_order_by
+    smart_plug_id: order_by
+    time: order_by
+}
+
+"input type for updating data in table \"smart_plug_metrics\""
+input smart_plug_metrics_set_input {
+    current: float8
+    smart_plug_id: Int
+    time: timestamptz
+}
+
+"order by stddev() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_stddev_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_stddev_pop_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_stddev_samp_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by sum() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_sum_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by var_pop() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_var_pop_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by var_samp() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_var_samp_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by variance() on columns of table \"smart_plug_metrics\""
+input smart_plug_metrics_variance_order_by {
+    current: order_by
+    smart_plug_id: order_by
+}
+
+"order by min() on columns of table \"smart_plug\""
+input smart_plug_min_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab_station_id: order_by
+    name: order_by
+    updated_at: order_by
+}
+
+"input type for inserting object relation for remote table \"smart_plug\""
+input smart_plug_obj_rel_insert_input {
+    data: smart_plug_insert_input!
+    "on conflict condition"
+    on_conflict: smart_plug_on_conflict
+}
+
+"on conflict condition type for table \"smart_plug\""
+input smart_plug_on_conflict {
+    constraint: smart_plug_constraint!
+    update_columns: [smart_plug_update_column!]! = []
+    where: smart_plug_bool_exp
+}
+
+"Ordering options when selecting data from \"smart_plug\"."
+input smart_plug_order_by {
+    created_at: order_by
+    deleted_at: order_by
+    id: order_by
+    lab_station: lab_station_order_by
+    lab_station_id: order_by
+    name: order_by
+    smart_plug_metrics_aggregate: smart_plug_metrics_aggregate_order_by
+    updated_at: order_by
+}
+
+"primary key columns input for table: smart_plug"
+input smart_plug_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"smart_plug\""
+input smart_plug_set_input {
+    created_at: timestamptz
+    deleted_at: timestamptz
+    id: Int
+    lab_station_id: Int
+    name: String
+    updated_at: timestamptz
+}
+
+"order by stddev() on columns of table \"smart_plug\""
+input smart_plug_stddev_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"smart_plug\""
+input smart_plug_stddev_pop_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"smart_plug\""
+input smart_plug_stddev_samp_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by sum() on columns of table \"smart_plug\""
+input smart_plug_sum_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by var_pop() on columns of table \"smart_plug\""
+input smart_plug_var_pop_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by var_samp() on columns of table \"smart_plug\""
+input smart_plug_var_samp_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by variance() on columns of table \"smart_plug\""
+input smart_plug_variance_order_by {
+    id: order_by
+    lab_station_id: order_by
+}
+
+"order by aggregate values of table \"student_group\""
+input student_group_aggregate_order_by {
+    avg: student_group_avg_order_by
+    count: order_by
+    max: student_group_max_order_by
+    min: student_group_min_order_by
+    stddev: student_group_stddev_order_by
+    stddev_pop: student_group_stddev_pop_order_by
+    stddev_samp: student_group_stddev_samp_order_by
+    sum: student_group_sum_order_by
+    var_pop: student_group_var_pop_order_by
+    var_samp: student_group_var_samp_order_by
+    variance: student_group_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"student_group\""
+input student_group_arr_rel_insert_input {
+    data: [student_group_insert_input!]!
+    "on conflict condition"
+    on_conflict: student_group_on_conflict
+}
+
+"order by avg() on columns of table \"student_group\""
+input student_group_avg_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"student_group\". All fields are combined with a logical 'AND'."
+input student_group_bool_exp {
+    _and: [student_group_bool_exp!]
+    _not: student_group_bool_exp
+    _or: [student_group_bool_exp!]
+    group_name: String_comparison_exp
+    id: Int_comparison_exp
+    lab: lab_bool_exp
+    lab_id: Int_comparison_exp
+    student_id: String_comparison_exp
+    user: user_bool_exp
+}
+
+"input type for incrementing numeric columns in table \"student_group\""
+input student_group_inc_input {
+    id: Int
+    lab_id: Int
+}
+
+"input type for inserting data into table \"student_group\""
+input student_group_insert_input {
+    group_name: String
+    id: Int
+    lab: lab_obj_rel_insert_input
+    lab_id: Int
+    student_id: String
+    user: user_obj_rel_insert_input
+}
+
+"order by max() on columns of table \"student_group\""
+input student_group_max_order_by {
+    group_name: order_by
+    id: order_by
+    lab_id: order_by
+    student_id: order_by
+}
+
+"order by min() on columns of table \"student_group\""
+input student_group_min_order_by {
+    group_name: order_by
+    id: order_by
+    lab_id: order_by
+    student_id: order_by
+}
+
+"on conflict condition type for table \"student_group\""
+input student_group_on_conflict {
+    constraint: student_group_constraint!
+    update_columns: [student_group_update_column!]! = []
+    where: student_group_bool_exp
+}
+
+"Ordering options when selecting data from \"student_group\"."
+input student_group_order_by {
+    group_name: order_by
+    id: order_by
+    lab: lab_order_by
+    lab_id: order_by
+    student_id: order_by
+    user: user_order_by
+}
+
+"primary key columns input for table: student_group"
+input student_group_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"student_group\""
+input student_group_set_input {
+    group_name: String
+    id: Int
+    lab_id: Int
+    student_id: String
+}
+
+"order by stddev() on columns of table \"student_group\""
+input student_group_stddev_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"student_group\""
+input student_group_stddev_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"student_group\""
+input student_group_stddev_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by sum() on columns of table \"student_group\""
+input student_group_sum_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_pop() on columns of table \"student_group\""
+input student_group_var_pop_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by var_samp() on columns of table \"student_group\""
+input student_group_var_samp_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"order by variance() on columns of table \"student_group\""
+input student_group_variance_order_by {
+    id: order_by
+    lab_id: order_by
+}
+
+"Boolean expression to compare columns of type \"timestamptz\". All fields are combined with logical 'AND'."
+input timestamptz_comparison_exp {
+    _eq: timestamptz
+    _gt: timestamptz
+    _gte: timestamptz
+    _in: [timestamptz!]
+    _is_null: Boolean
+    _lt: timestamptz
+    _lte: timestamptz
+    _neq: timestamptz
+    _nin: [timestamptz!]
+}
+
+"order by aggregate values of table \"user\""
+input user_aggregate_order_by {
+    count: order_by
+    max: user_max_order_by
+    min: user_min_order_by
+}
+
+"input type for inserting array relation for remote table \"user\""
+input user_arr_rel_insert_input {
+    data: [user_insert_input!]!
+    "on conflict condition"
+    on_conflict: user_on_conflict
+}
+
+"Boolean expression to filter rows from the table \"user\". All fields are combined with a logical 'AND'."
+input user_bool_exp {
+    _and: [user_bool_exp!]
+    _not: user_bool_exp
+    _or: [user_bool_exp!]
+    deleted_at: timestamptz_comparison_exp
+    email: String_comparison_exp
+    id: String_comparison_exp
+    lab_operators: lab_operator_bool_exp
+    name: String_comparison_exp
+    role_title: role_enum_comparison_exp
+    student_groups: student_group_bool_exp
+    user_role: role_bool_exp
+    usp_id: String_comparison_exp
+}
+
+"input type for inserting data into table \"user\""
+input user_insert_input {
+    deleted_at: timestamptz
+    email: String
+    "This id is generated by firebase."
+    id: String
+    lab_operators: lab_operator_arr_rel_insert_input
+    name: String
+    role_title: role_enum
+    student_groups: student_group_arr_rel_insert_input
+    user_role: role_obj_rel_insert_input
+    usp_id: String
+}
+
+"order by max() on columns of table \"user\""
+input user_max_order_by {
+    deleted_at: order_by
+    email: order_by
+    "This id is generated by firebase."
+    id: order_by
+    name: order_by
+    usp_id: order_by
+}
+
+"order by min() on columns of table \"user\""
+input user_min_order_by {
+    deleted_at: order_by
+    email: order_by
+    "This id is generated by firebase."
+    id: order_by
+    name: order_by
+    usp_id: order_by
+}
+
+"input type for inserting object relation for remote table \"user\""
+input user_obj_rel_insert_input {
+    data: user_insert_input!
+    "on conflict condition"
+    on_conflict: user_on_conflict
+}
+
+"on conflict condition type for table \"user\""
+input user_on_conflict {
+    constraint: user_constraint!
+    update_columns: [user_update_column!]! = []
+    where: user_bool_exp
+}
+
+"Ordering options when selecting data from \"user\"."
+input user_order_by {
+    deleted_at: order_by
+    email: order_by
+    id: order_by
+    lab_operators_aggregate: lab_operator_aggregate_order_by
+    name: order_by
+    role_title: order_by
+    student_groups_aggregate: student_group_aggregate_order_by
+    user_role: role_order_by
+    usp_id: order_by
+}
+
+"primary key columns input for table: user"
+input user_pk_columns_input {
+    "This id is generated by firebase."
+    id: String!
+}
+
+"input type for updating data in table \"user\""
+input user_set_input {
+    deleted_at: timestamptz
+    email: String
+    "This id is generated by firebase."
+    id: String
+    name: String
+    role_title: role_enum
+    usp_id: String
+}
+
+
+scalar float8
+
+scalar timestamptz

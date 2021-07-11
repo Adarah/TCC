@@ -1,0 +1,93 @@
+{
+  "name": "typescript-template",
+  "version": "1.0.5",
+  "description": "A template for starting new typescript projects",
+  "main": "./src/index.ts",
+  "type": "module",
+  "author": "Adarah <lucasyharada@gmail.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --experimental-specifier-resolution=node dist/index.js",
+    "start:dev": "tsc && concurrently -n 'tsc,nodemon' 'tsc -w' 'nodemon'",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --max-warnings=0",
+    "docker:build": "DOCKER_BUILDKIT=1 docker build -t <PROJECT_NAME> .",
+    "graphql-codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.21",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.10.0",
+    "graphql": "^15.5.1",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.21.6",
+    "@graphql-codegen/typescript": "1.22.4",
+    "@graphql-codegen/typescript-operations": "^1.18.3",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.0.2",
+    "@types/node-fetch": "^2.5.11",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "concurrently": "^6.2.0",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": [
+        "tsconfig.json"
+      ]
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "jest"
+    ],
+    "extends": [
+      "airbnb-typescript",
+      "prettier",
+      "plugin:jest/recommended"
+    ],
+    "env": {
+      "jest/globals": true
+    },
+    "rules": {
+      "no-param-reassign": "warn"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "generated"
+  ],
+  "jest": {
+    "preset": "ts-jest/presets/default-esm",
+    "testEnvironment": "node",
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    }
+  },
+  "nodemonConfig": {
+    "watch": [
+      "dist"
+    ],
+    "ext": "js,json",
+    "exec": "node --experimental-specifier-resolution=node dist/index.js"
+  }
+}

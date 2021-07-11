@@ -1,0 +1,10 @@
+# Ignore everything by defualt
+**
+
+# Except these files/directories
+!src
+!package*.json
+!tsconfig*.json
+
+# But still ignore test files (order matters in a .dockerignore file)
+**/*.test.?s
