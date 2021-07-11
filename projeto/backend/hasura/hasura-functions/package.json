@@ -1,7 +1,7 @@
 {
-  "name": "typescript-template",
+  "name": "hasura-functions",
   "version": "1.0.5",
-  "description": "A template for starting new typescript projects",
+  "description": "Endpoints for hasura to call when triggers or actions are invoked.",
   "main": "./src/index.ts",
   "type": "module",
   "author": "Adarah <lucasyharada@gmail.com>",
