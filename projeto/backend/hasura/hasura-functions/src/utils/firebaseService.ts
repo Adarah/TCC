@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 
-type UpdateClaimCallback = (claims: Record<string, any>) => void;
+type UpdateClaimCallback = (claims: Readonly<Record<string, any>>) => Record<string, any>;
 
 type HasuraCustomClaims = {
   "x-hasura-used-id": string;
@@ -28,11 +28,12 @@ class FirebaseService {
   ): Promise<void> {
     const customClaims = await FirebaseService.getCustomClaims(uid);
     const hasuraClaims = customClaims["https://hasura.io/jwt/claims"];
-    updateClaim(hasuraClaims);
-    await admin.auth().setCustomUserClaims(uid, {
+    const updatedHasuraClaims = updateClaim(hasuraClaims);
+    const newCustomClaims = {
       ...customClaims,
-      "https://hasura.io/jwt/claims": hasuraClaims,
-    });
+      "https://hasura.io/jwt/claims": {...hasuraClaims, ...updatedHasuraClaims},
+    };
+    await admin.auth().setCustomUserClaims(uid, newCustomClaims);
     await FirebaseService.refreshToken(uid);
   }
 
@@ -42,6 +43,11 @@ class FirebaseService {
     // Set the refresh time to the current UTC timestamp.
     // This will be captured on the client to force a token refresh.
     return metadataRef.set({ refreshTime: new Date().getTime() });
+  }
+
+  static async deleteUser(uid: string): Promise<void> {
+      await admin.auth().deleteUser(uid);
+      return FirebaseService.refreshToken(uid);
   }
 }
 

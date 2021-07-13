@@ -5,17 +5,20 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
     command:
     - postgres
     - -c
     - "shared_preload_libraries=timescaledb"
     volumes:
     - db_data:/var/lib/postgresql/data
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql:Z
+    - ./postgres-initdb:/docker-entrypoint-initdb.d:Z
   graphql-engine:
     image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
-    ports:
-    - "8080:8080"
+    network_mode: host
+#    ports:
+#    - "8080:8080"
     depends_on:
     - "timescale"
     restart: always
@@ -28,6 +31,12 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       # uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_JWT_SECRET: |-
+        {
+          "jwk_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
+          "audience": "poli-lab0",
+          "issuer": "https://securetoken.google.com/poli-lab0"
+        }
     volumes:
     - ./migrations:/hasura-migrations:Z
     - ./metadata:/hasura-metadata:Z

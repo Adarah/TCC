@@ -8,6 +8,20 @@ object_relationships:
 - name: user
   using:
     foreign_key_constraint_on: operator_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      _and:
+      - user:
+          role_title:
+            _eq: lab_operator
+      - lab_id:
+          _in: X-Hasura-Allowed-Lab-Ids
+    columns:
+    - lab_id
+    - operator_id
+  role: lab_operator
 select_permissions:
 - permission:
     columns:
@@ -18,3 +32,16 @@ select_permissions:
     - updated_at
     filter: {}
   role: lab_operator
+event_triggers:
+- definition:
+    delete:
+      columns: "*"
+    enable_manual: false
+    insert:
+      columns: "*"
+  name: add-or-remove-operator-to-lab
+  retry_conf:
+    interval_sec: 300
+    num_retries: 5
+    timeout_sec: 60
+  webhook: http://localhost:3001/AddOrRemoveOperatorToLab

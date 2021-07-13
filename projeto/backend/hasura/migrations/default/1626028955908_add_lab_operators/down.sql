@@ -1,3 +1,6 @@
+
+alter table "public"."lab_operator" drop constraint "lab_operator_operator_id_lab_id_key";
+
 ALTER TABLE "public"."smart_plug" DROP COLUMN "deleted_at";
 
 ALTER TABLE "public"."lab_station" DROP COLUMN "deleted_at";

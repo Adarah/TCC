@@ -1,0 +1,21 @@
+table:
+  name: smart_plug_status
+  schema: public
+object_relationships:
+- name: smart_plug
+  using:
+    manual_configuration:
+      column_mapping:
+        chip_id: chip_id
+      insertion_order: null
+      remote_table:
+        name: smart_plug
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - chip_id
+    - last_message_timestamp
+    - status
+    filter: {}
+  role: lab_operator

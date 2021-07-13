@@ -1,4 +1,5 @@
 
+
 alter table "public"."user_role" rename to "role";
 
 UPDATE role
@@ -36,3 +37,5 @@ alter table "public"."lab_station" add column "deleted_at" timestamptz
 
 alter table "public"."smart_plug" add column "deleted_at" timestamptz
  null;
+
+alter table "public"."lab_operator" add constraint "lab_operator_operator_id_lab_id_key" unique ("operator_id", "lab_id");

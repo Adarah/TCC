@@ -27,6 +27,7 @@ select_permissions:
     - email
     - id
     - name
+    - role_title
     - usp_id
     filter:
       deleted_at:
@@ -46,11 +47,14 @@ select_permissions:
   role: student
 update_permissions:
 - permission:
-    check: {}
+    check:
+      role_title:
+        _neq: anonymous
     columns:
     - deleted_at
     - email
     - name
+    - role_title
     - usp_id
     filter: {}
   role: lab_operator
@@ -73,3 +77,25 @@ update_permissions:
       - deleted_at:
           _is_null: false
   role: student
+event_triggers:
+- definition:
+    enable_manual: false
+    update:
+      columns:
+      - role_title
+  name: change-user-role
+  retry_conf:
+    interval_sec: 10
+    num_retries: 5
+    timeout_sec: 60
+  webhook: http://localhost:3001/ChangeUserRole
+- definition:
+    delete:
+      columns: "*"
+    enable_manual: false
+  name: delete-user
+  retry_conf:
+    interval_sec: 10
+    num_retries: 5
+    timeout_sec: 60
+  webhook: http://localhost:3001/DeleteUser
