@@ -1,0 +1,6 @@
+{
+  "hasura": {
+    "admin_secret": "myadminsecretkey",
+    "url": "http://localhost:8080/v1/graphql"
+  }
+}
