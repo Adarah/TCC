@@ -29,6 +29,7 @@ select_permissions:
     filter: {}
   role: anonymous
 - permission:
+    allow_aggregations: true
     columns:
     - id
     - lab_id

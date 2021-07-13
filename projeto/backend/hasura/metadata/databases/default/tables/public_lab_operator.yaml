@@ -24,6 +24,7 @@ insert_permissions:
   role: lab_operator
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - id
     - operator_id
