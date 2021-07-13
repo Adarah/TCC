@@ -5,7 +5,6 @@ import {
     Edit,
     Filter,
     List,
-    minLength,
     required,
     Show,
     SimpleForm,
@@ -13,7 +12,7 @@ import {
     TextField,
     TextInput
 } from 'react-admin';
-import {PessimisticToolbar} from "./PessimisticToolbar";
+import {PessimisticToolbar} from "../components/PessimisticToolbar";
 
 const LabFilter = (props: any) => (
     <Filter {...props}>

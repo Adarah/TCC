@@ -3,6 +3,7 @@ schema:
   - "http://localhost:8080/v1/graphql":
       headers:
         "x-hasura-admin-secret": myadminsecretkey
+        "x-hasura-role": "lab_operator"
 
 documents:
   - "src/**/!(*.d).{ts,tsx}"
@@ -16,3 +17,5 @@ generates:
   src/generated/introspection.json:
     plugins:
       - 'introspection'
+    config:
+      minify: false

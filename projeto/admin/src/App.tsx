@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import buildHasuraProvider from 'ra-data-hasura';
 import {Admin, Resource, Loading, EditGuesser, ShowGuesser, ListGuesser} from 'react-admin';
-import {LabCreate, LabEdit, LabList, LabShow} from "./components/lab";
-import {LabStationCreate, LabStationEdit, LabStationList, LabStationShow,} from "./components/labStation";
-import {SmartPlugCreate, SmartPlugEdit, SmartPlugList, SmartPlugShow} from "./components/smartPlugs";
+import {LabCreate, LabEdit, LabList, LabShow} from "./pages/lab";
+import {LabStationCreate, LabStationEdit, LabStationList, LabStationShow,} from "./pages/labStation";
+import {SmartPlugCreate, SmartPlugEdit, SmartPlugList, SmartPlugShow} from "./pages/smartPlugs";
 import Dashboard from "./pages/dashboard";
 import CustomLoginPage from "./pages/login";
 import firebaseAuthProvider from "./utils/firebase-auth-provider";

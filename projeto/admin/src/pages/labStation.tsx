@@ -6,7 +6,8 @@ import {
     Filter,
     List,
     ReferenceField,
-    ReferenceInput, required,
+    ReferenceInput,
+    required,
     SelectInput,
     Show,
     SimpleForm,
@@ -14,43 +15,44 @@ import {
     TextField,
     TextInput
 } from 'react-admin';
-import {PessimisticToolbar} from "./PessimisticToolbar";
+import {PessimisticToolbar} from "../components/PessimisticToolbar";
 
-const SmartPlugFilter = (props: any) => (
+const LabStationFilter = (props: any) => (
     <Filter {...props}>
+        <TextInput label="Lab" source="lab.name"/>
         <TextInput label="Name" source="name"/>
     </Filter>
 );
 
-export const SmartPlugList = (props: any) => (
-    <List filters={<SmartPlugFilter/>}{...props}>
+export const LabStationList = (props: any) => (
+    <List filters={<LabStationFilter/>} {...props}>
         <Datagrid rowClick="show">
             <TextField source="id"/>
-            <ReferenceField source="lab_station_id" reference="lab_station" link="show">
+            <TextField source="name"/>
+            <ReferenceField source="lab_id" reference="lab" link="show">
                 <TextField source="name"/>
             </ReferenceField>
-            <TextField source="name"/>
         </Datagrid>
     </List>
 );
 
-export const SmartPlugCreate = (props: any) => (
+export const LabStationCreate = (props: any) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="name" validate={required()}/>
-            <ReferenceInput reference="lab_station" source="lab_station_id" validate={required()}>
+            <ReferenceInput reference="lab" source="lab_id" validate={required()}>
                 <SelectInput/>
             </ReferenceInput>
         </SimpleForm>
     </Create>
 );
 
-export const SmartPlugShow = (props: any) => (
+export const LabStationShow = (props: any) => (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="id"/>
             <TextField source="name"/>
-            <ReferenceField source="lab_station_id" reference="lab_station" link="show">
+            <ReferenceField source="lab_id" reference="lab" link="show">
                 <TextField source="name"/>
             </ReferenceField>
             <DateField source="created_at"/>
@@ -59,13 +61,13 @@ export const SmartPlugShow = (props: any) => (
     </Show>
 );
 
-export const SmartPlugEdit = (props: any) => (
+export const LabStationEdit = (props: any) => (
     <Edit {...props}>
         <SimpleForm toolbar={<PessimisticToolbar/>}>
             <TextInput source="id" disabled/>
             <TextInput source="name" validate={required()}/>
-            <ReferenceInput source="lab_station_id" reference="lab_station" validate={required()}>
-                <SelectInput/>
+            <ReferenceInput source="lab_id" reference="lab" validate={required()}>
+                <SelectInput />
             </ReferenceInput>
         </SimpleForm>
     </Edit>

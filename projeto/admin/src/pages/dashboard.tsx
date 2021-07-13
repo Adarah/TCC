@@ -2,47 +2,67 @@ import React from 'react';
 import {Card, CardContent} from '@material-ui/core';
 import {Title} from 'react-admin';
 import {gql, useSubscription} from "@apollo/client";
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from "recharts";
+import {
+    LineChart,
+    Line,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ReferenceLine,
+    Legend
+} from "recharts";
 import {MySubscriptionSubscription} from "../generated/graphql";
+import fromUnixTime from 'date-fns/fromUnixTime';
+import parseISO from 'date-fns/parseISO';
+import lightFormat from 'date-fns/lightFormat';
+import PowerChart from "../components/power-chart";
 
 
-const POWER_TIME_SERIES = gql`
-    subscription MySubscription($time: timestamptz!) {
-        smart_plug_metrics(order_by: {time: asc}, where: {time: {_gt: $time}}) {
-            power
-            smart_plug_chip_id
-            time
-        }
-    }
-`;
 
 function Dashboard() {
-    const fiveMinutesAgo = new Date(Date.now() - 1000 * 10).toISOString().slice(0, 19);
-    const {data, loading} = useSubscription<MySubscriptionSubscription>(
-        POWER_TIME_SERIES,
-        {variables: {time: fiveMinutesAgo}},
-    );
-    console.log(data);
-    if (loading) {
-        return <div>Loading...</div>
-    }
-    console.log('data: ', data);
+    // const legitData = data!.smart_plug_metrics.map(v => {
+    //     const newTime = parseISO(v.time);
+    //     return {
+    //         ...v,
+    //         time: newTime.getTime(),
+    //     }
+    // });
+    // console.log('data is: ', legitData);
     return (
         <Card>
             <Title title="Hello, world"/>
             <CardContent>
-                <LineChart width={800} height={400} data={data?.smart_plug_metrics}>
-                    <Line type="monotone" dataKey="power" isAnimationActive={false}/>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis
-                        dataKey="time"
-                        type="number"
-                        // tickFormatter={time => time.slice(11, 19)}
-                        interval="preserveStartEnd"
-                    />
-                    <YAxis/>
-                    <Tooltip/>
-                </LineChart>
+                <PowerChart smartPlugId={"c88e35"}/>
+                    {/*<LineChart*/}
+                    {/*    data={legitData}*/}
+                    {/*    margin={{ left: 20, bottom: 20 }}*/}
+                    {/*    height={400}*/}
+                    {/*    width={700}*/}
+                    {/*>*/}
+                    {/*    <Line type="monotone" dataKey="power" isAnimationActive={false}/>*/}
+                    {/*    <ReferenceLine y={0}/>*/}
+                    {/*    <CartesianGrid strokeDasharray="3 3"/>*/}
+                    {/*    <XAxis*/}
+                    {/*        dataKey="time"*/}
+                    {/*        type="number"*/}
+                    {/*        scale="time"*/}
+                    {/*        tickCount={5}*/}
+                    {/*        allowDataOverflow={true}*/}
+                    {/*        domain={[Date.now() - 1000 * 10, Date.now()]}*/}
+                    {/*        tickFormatter={(v) => lightFormat(fromUnixTime(v / 1000), 'HH:mm:ss')}*/}
+                    {/*        interval="preserveStartEnd"*/}
+                    {/*        label={{value: 'Time', position: 'bottom'}}*/}
+                    {/*    />*/}
+                    {/*    <YAxis*/}
+                    {/*        label={{value: 'Power', angle: -90, position: 'left'}}*/}
+                    {/*        domain={[0, 5]}*/}
+                    {/*        unit={"W"}*/}
+                    {/*        ticks={[0, 1, 2, 3, 4, 5]}*/}
+                    {/*    />*/}
+                    {/*    <Tooltip/>*/}
+                    {/*    <Legend verticalAlign="top"/>*/}
+                    {/*</LineChart>*/}
             </CardContent>
         </Card>
     );

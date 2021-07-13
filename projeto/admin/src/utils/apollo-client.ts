@@ -49,7 +49,6 @@ const splitLink = split(
 
 const authLink = setContext(async req => {
     const token = await firebaseAuthProvider.getJWTToken();
-    console.log('token in authlink: ', token);
     return {
         headers: {
             Authorization: `Bearer ${token ?? ''}`,
