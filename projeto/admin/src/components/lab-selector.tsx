@@ -3,9 +3,7 @@ import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import {ListItemIcon} from "@material-ui/core";
+import {Dialog, DialogTitle, ListItemIcon} from "@material-ui/core";
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -20,11 +18,21 @@ const useStyles = makeStyles({
 });
 
 const options = [
-    'Escolha um lab',
     'Laboratio digital PCS poli 2021',
     'Lab com nome extramamente longo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     'Lab 4',
-    '',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
+    'Laboratio digital PCS poli 2021',
 ];
 
 const ITEM_HEIGHT = 48;
@@ -36,22 +44,18 @@ interface LabSelectorProps {
 const LabSelector = (props: LabSelectorProps) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
         setOpen(true);
     };
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
         setSelectedIndex(index);
-        setAnchorEl(null);
         setOpen(false);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
         setOpen(false);
     };
 
@@ -74,29 +78,26 @@ const LabSelector = (props: LabSelectorProps) => {
                         disableTypography
                         primary={options[selectedIndex]}
                     />
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                    {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
             </List>
-            <Menu
-                id="lock-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                style={{maxHeight: ITEM_HEIGHT * 9,}}
-            >
-                {options.map((option, index) => (
-                    <MenuItem
-                        key={option}
-                        disabled={index === 0}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
-                        style={{whiteSpace: 'normal'}}
-                    >
-                        {option}
-                    </MenuItem>
-                ))}
-            </Menu>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Choose a lab</DialogTitle>
+                <List
+                    style={{maxHeight: ITEM_HEIGHT * 9,}}
+                >
+                    {options.map((option, index) => (
+                        <ListItem
+                            key={option}
+                            selected={index === selectedIndex}
+                            onClick={(event) => handleMenuItemClick(event, index)}
+                            style={{whiteSpace: 'normal'}}
+                        >
+                            {option}
+                        </ListItem>
+                    ))}
+                </List>
+            </Dialog>
         </div>
     );
 }

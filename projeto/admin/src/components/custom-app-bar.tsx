@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppBar, UserMenu, useLogout} from "react-admin";
 import {useTheme, makeStyles} from '@material-ui/core/styles';
-import {useMediaQuery, Typography, IconButton} from "@material-ui/core";
+import {useMediaQuery, Typography, IconButton, Modal, Paper, Fade} from "@material-ui/core";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LabSelector from "./lab-selector";
 
@@ -15,13 +15,35 @@ const useStyles = makeStyles({
 const CustomUserMenu = (props: any) => {
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const logout = useLogout();
+
     console.log(props.logout);
     return (isSm ?
             <UserMenu {...props}/>
-            : <IconButton onClick={logout}>
-                <ExitToAppIcon/>
-            </IconButton>
+            :
+            <>
+                <IconButton onClick={handleOpen}>
+                    <ExitToAppIcon/>
+                </IconButton>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-title"
+                    aria-describedby="modal-description"
+                >
+                    <Fade in={open}>
+                        <Paper>
+                            <div style={{top: "50%", padding: "8px", margin: "auto"}}>
+                                <h2>Are you sure you want to quit?</h2>
+                                <p>Logout</p>
+                            </div>
+                        </Paper>
+                    </Fade>
+                </Modal>
+            </>
     );
 }
 
