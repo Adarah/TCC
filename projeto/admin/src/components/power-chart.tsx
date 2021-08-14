@@ -18,7 +18,6 @@ type PowerChatProps = {
     smartPlugId: string;
 }
 
-
 function PowerChart({smartPlugId}: PowerChatProps) {
     // actually 10 seconds ago
     const fiveMinutesAgo = new Date(Date.now() - 1000 * 10).toISOString().slice(0, 19);

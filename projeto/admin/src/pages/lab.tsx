@@ -12,7 +12,7 @@ import {
     TextField,
     TextInput
 } from 'react-admin';
-import {PessimisticToolbar} from "../components/PessimisticToolbar";
+import {PessimisticToolbar} from "../components/pessimistic-toolbar";
 
 const LabFilter = (props: any) => (
     <Filter {...props}>

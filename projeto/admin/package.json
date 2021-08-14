@@ -18,6 +18,7 @@
     "date-fns": "^2.22.1",
     "firebase": "^7.24.0",
     "graphql": "^15.5.1",
+    "lodash": "^4.17.21",
     "ra-data-hasura": "^0.1.0",
     "react": "^17.0.2",
     "react-admin": "^3.16.3",
@@ -60,6 +61,7 @@
     "@graphql-codegen/introspection": "^1.18.2",
     "@graphql-codegen/typescript": "1.22.4",
     "@graphql-codegen/typescript-operations": "1.18.3",
-    "@graphql-codegen/typescript-react-apollo": "2.3.0"
+    "@graphql-codegen/typescript-react-apollo": "2.3.0",
+    "@types/lodash": "^4.14.172"
   }
 }

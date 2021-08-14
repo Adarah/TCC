@@ -1,21 +1,6 @@
 import React from 'react';
 import {Card, CardContent} from '@material-ui/core';
 import {Title} from 'react-admin';
-import {gql, useSubscription} from "@apollo/client";
-import {
-    LineChart,
-    Line,
-    CartesianGrid,
-    XAxis,
-    YAxis,
-    Tooltip,
-    ReferenceLine,
-    Legend
-} from "recharts";
-import {MySubscriptionSubscription} from "../generated/graphql";
-import fromUnixTime from 'date-fns/fromUnixTime';
-import parseISO from 'date-fns/parseISO';
-import lightFormat from 'date-fns/lightFormat';
 import PowerChart from "../components/power-chart";
 
 
@@ -31,7 +16,7 @@ function Dashboard() {
     // console.log('data is: ', legitData);
     return (
         <Card>
-            <Title title="Hello, world"/>
+            <Title title="Dashboard"/>
             <CardContent>
                 <PowerChart smartPlugId={"c88e35"}/>
                     {/*<LineChart*/}
