@@ -1,56 +1,45 @@
-import React from 'react';
-import {Card, CardContent} from '@material-ui/core';
-import {Title} from 'react-admin';
+import { useContext } from 'react';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { Button, Link, Title } from 'react-admin';
 import PowerChart from "../components/power-chart";
+import { observer } from 'mobx-react-lite';
+import { CurrentLabContext } from '../globals/current-lab';
+import NoMeetingRoomIcon from '@material-ui/icons/NoMeetingRoom';
+import { LAB_CREATE } from '../constants';
 
 
-
-function Dashboard() {
-    // const legitData = data!.smart_plug_metrics.map(v => {
-    //     const newTime = parseISO(v.time);
-    //     return {
-    //         ...v,
-    //         time: newTime.getTime(),
-    //     }
-    // });
-    // console.log('data is: ', legitData);
+const Dashboard = observer(() => {
+    const currentLab = useContext(CurrentLabContext);
+    console.log("in dashboard", currentLab.id);
     return (
         <Card>
-            <Title title="Dashboard"/>
-            <CardContent>
-                <PowerChart smartPlugId={"c88e35"}/>
-                    {/*<LineChart*/}
-                    {/*    data={legitData}*/}
-                    {/*    margin={{ left: 20, bottom: 20 }}*/}
-                    {/*    height={400}*/}
-                    {/*    width={700}*/}
-                    {/*>*/}
-                    {/*    <Line type="monotone" dataKey="power" isAnimationActive={false}/>*/}
-                    {/*    <ReferenceLine y={0}/>*/}
-                    {/*    <CartesianGrid strokeDasharray="3 3"/>*/}
-                    {/*    <XAxis*/}
-                    {/*        dataKey="time"*/}
-                    {/*        type="number"*/}
-                    {/*        scale="time"*/}
-                    {/*        tickCount={5}*/}
-                    {/*        allowDataOverflow={true}*/}
-                    {/*        domain={[Date.now() - 1000 * 10, Date.now()]}*/}
-                    {/*        tickFormatter={(v) => lightFormat(fromUnixTime(v / 1000), 'HH:mm:ss')}*/}
-                    {/*        interval="preserveStartEnd"*/}
-                    {/*        label={{value: 'Time', position: 'bottom'}}*/}
-                    {/*    />*/}
-                    {/*    <YAxis*/}
-                    {/*        label={{value: 'Power', angle: -90, position: 'left'}}*/}
-                    {/*        domain={[0, 5]}*/}
-                    {/*        unit={"W"}*/}
-                    {/*        ticks={[0, 1, 2, 3, 4, 5]}*/}
-                    {/*    />*/}
-                    {/*    <Tooltip/>*/}
-                    {/*    <Legend verticalAlign="top"/>*/}
-                    {/*</LineChart>*/}
-            </CardContent>
+            {
+                currentLab.id === null ?
+                    <>
+                        <NoMeetingRoomIcon style={{ fontSize: 160 }} />
+                        <Typography>No Lab selected</Typography>
+                        <Typography>Select one on the top left or </Typography>
+                        <Button
+                            component={Link}
+                            to={{
+                                pathname: LAB_CREATE,
+                            }}
+                        >
+                            <Typography>
+                                Click here to create a new one
+                            </Typography>
+                        </Button>
+                    </>
+                    :
+                    <>
+                        <Title title="Dashboard" />
+                        <CardContent>
+                            <PowerChart smartPlugId={"c88e35"} />
+                        </CardContent>
+                    </>
+            }
         </Card>
     );
-}
+})
 
 export default Dashboard;

@@ -18,9 +18,7 @@ const CustomUserMenu = (props: any) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const logout = useLogout();
 
-    console.log(props.logout);
     return (isSm ?
             <UserMenu {...props}/>
             :
@@ -38,6 +36,7 @@ const CustomUserMenu = (props: any) => {
                         <Paper>
                             <div style={{top: "50%", padding: "8px", margin: "auto"}}>
                                 <h2>Are you sure you want to quit?</h2>
+                                {/*TODO: Add real logout functionality to this modal */}
                                 <p>Logout</p>
                             </div>
                         </Paper>

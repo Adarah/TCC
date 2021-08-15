@@ -15,7 +15,6 @@ import poliTheme from "./components/poli-theme";
 
 const App = () => {
     const [dataProvider, setDataProvider] = useState<any>(null);
-    // const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
         const buildDataProvider = async () => {
@@ -40,7 +39,6 @@ const App = () => {
         >
             <Resource
                 name="lab"
-                list={LabList}
                 create={LabCreate}
                 show={LabShow}
                 edit={LabEdit}
