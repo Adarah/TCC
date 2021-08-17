@@ -1,2 +1,0 @@
-alter table "public"."command" drop constraint "recurring_event_must_have_recurrence_pattern_and_no_scheduled_time";
-alter table "public"."command" add constraint "recurring_event_must_have_recurrence_pattern" check (CHECK (is_recurring AND recurrence_pattern IS NOT NULL));

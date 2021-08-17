@@ -1,1 +1,0 @@
-CREATE TABLE "public"."command_selector" ("id" serial NOT NULL, "command_id" integer NOT NULL, "target" ltree NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("command_id") REFERENCES "public"."command"("id") ON UPDATE cascade ON DELETE cascade);

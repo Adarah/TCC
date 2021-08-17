@@ -1,1 +1,0 @@
-comment on TABLE "public"."user" is E'The only entity allowed to create users in this table is our backend, which gets activated by Firebase, otherwise we risk running into syncing issues between the auth provider and our own user table.';

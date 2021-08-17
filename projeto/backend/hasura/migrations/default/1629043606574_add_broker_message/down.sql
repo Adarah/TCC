@@ -1,9 +1,0 @@
--- Could not auto-generate a down migration.
--- Please write an appropriate down migration for the SQL below:
--- CREATE TABLE student_group_metrics (
---     time TIMESTAMP WITH TIME ZONE NOT NULL,
---     topic TEXT NOT NULL,
---     content TEXT NOT NULL
--- );
---
--- SELECT create_hypertable('student_group_metrics', 'time');
