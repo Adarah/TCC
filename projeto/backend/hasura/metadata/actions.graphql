@@ -1,15 +1,25 @@
 type Mutation {
-  AddOperatorToLab (
-    operatorId: String!
-    labId: Int!
-  ): AddOperatorToLabOutput
+  CreateCommand (
+    name: String!
+    type: CreateCommandCommandTypeEnum!
+    is_recurring: Boolean!
+    recurrence_pattern: String
+    scheduled_time: timestamptz
+    selectors: [String!]!
+  ): CreateCommandOutput
 }
 
-type AddOperatorToLabOutput {
-  id : Int!
+enum CreateCommandCommandTypeEnum {
+  sleep
+  wake_up
 }
 
-type AddNewOperatorOutput {
+enum Command_Type_Enum {
+  sleep
+  wake_up
+}
+
+type CreateCommandOutput {
   id : Int!
 }
 

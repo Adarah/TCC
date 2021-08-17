@@ -1,0 +1,11 @@
+table:
+  name: command_type
+  schema: public
+is_enum: true
+select_permissions:
+- permission:
+    columns:
+    - comment
+    - type
+    filter: {}
+  role: user

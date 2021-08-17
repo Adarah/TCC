@@ -1,0 +1,7 @@
+table:
+  name: broker_accounts
+  schema: public
+object_relationships:
+- name: lab
+  using:
+    foreign_key_constraint_on: lab_id

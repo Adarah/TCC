@@ -1,25 +1,43 @@
 import express from "express";
 import admin from "firebase-admin";
-import errorHandler from "./error-handler";
-import addOrRemoveOperatorToLab from "./triggers/add-or-remove-operator-to-lab";
-import changeUserRole from "./triggers/change-user-role";
-import deleteUser from "./triggers/delete-user";
+import jwt from 'express-jwt';
+import jwksRsa from 'jwks-rsa';
+
+import errorHandler from "./utils/error-handler";
+import deleteUser from "./endpoints/users/delete-user";
+import authWebhookHandler from "./endpoints/auth/auth-webhook-handler";
+import createFirebaseUser from "./endpoints/users/create-firebase-user";
+import env from "./config";
+import createCommand from "./endpoints/commands/create-command";
 
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: "https://poli-lab0-default-rtdb.firebaseio.com",
+    credential: admin.credential.applicationDefault(),
+    databaseURL: "https://poli-lab0-default-rtdb.firebaseio.com",
 });
 
 const app = express();
+
+app.get('/authWebhookHandler', jwt({
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com',
+    }),
+    audience: 'poli-lab0',
+    issuer: 'https://securetoken.google.com/poli-lab0',
+    algorithms: ['RS256']
+}), authWebhookHandler);
+
 app.use(express.json());
 
-app.post("/AddOrRemoveOperatorToLab", addOrRemoveOperatorToLab);
-app.post('/ChangeUserRole', changeUserRole);
+app.post('/CreateFirebaseUser', createFirebaseUser);
 app.post('/DeleteUser', deleteUser);
+app.post('/CreateCommand', createCommand);
 
 
 app.use(errorHandler);
-app.listen(3001, () => {
-  // eslint-disable-next-line no-console
-  console.log("Listening on http://localhost:3001");
+app.listen(env.PORT, () => {
+    // eslint-disable-next-line no-console
+    console.info(`Listening on ${env.SELF_URL}:${env.PORT}`);
 });

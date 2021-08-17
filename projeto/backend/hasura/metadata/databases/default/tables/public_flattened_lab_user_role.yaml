@@ -1,0 +1,3 @@
+table:
+  name: flattened_lab_user_role
+  schema: public

@@ -15,7 +15,7 @@ object_relationships:
         name: smart_plug_status
         schema: public
 array_relationships:
-- name: smart_plug_metrics
+- name: metrics
   using:
     foreign_key_constraint_on:
       column: smart_plug_chip_id
@@ -25,34 +25,104 @@ array_relationships:
 insert_permissions:
 - permission:
     backend_only: false
-    check: {}
+    check:
+      _and:
+      - lab_station:
+          lab_id:
+            _eq: X-Hasura-lab-Id
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin
     columns:
+    - chip_id
     - lab_station_id
+    - model
     - name
-  role: lab_operator
+  role: user
 select_permissions:
 - permission:
     columns:
-    - lab_station_id
-    - name
-    filter: {}
-  role: anonymous
-- permission:
-    allow_aggregations: true
-    columns:
+    - chip_id
+    - created_at
     - id
     - lab_station_id
+    - model
     - name
-    - created_at
     - updated_at
-    filter: {}
-  role: lab_operator
+    filter:
+      _and:
+      - lab_station:
+          lab_id:
+            _eq: X-Hasura-lab-Id
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor.viewer
+    limit: 100
+  role: user
 update_permissions:
 - permission:
     check: null
     columns:
-    - deleted_at
-    - lab_station_id
+    - chip_id
+    - model
     - name
-    filter: {}
-  role: lab_operator
+    filter:
+      _and:
+      - lab_station:
+          lab_id:
+            _eq: X-Hasura-lab-Id
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      _and:
+      - lab_station:
+          lab_id:
+            _eq: X-Hasura-lab-Id
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin
+  role: user

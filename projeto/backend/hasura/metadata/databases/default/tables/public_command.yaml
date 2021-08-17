@@ -1,0 +1,116 @@
+table:
+  name: command
+  schema: public
+object_relationships:
+- name: command_type
+  using:
+    foreign_key_constraint_on: type
+- name: lab
+  using:
+    foreign_key_constraint_on: lab_id
+array_relationships:
+- name: command_selectors
+  using:
+    foreign_key_constraint_on:
+      column: command_id
+      table:
+        name: command_selector
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      _exists:
+        _table:
+          name: lab_user_role
+          schema: public
+        _where:
+          _and:
+          - lab_id:
+              _eq: X-Hasura-lab-id
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - role:
+              path:
+                _ancestor: owner.admin
+    columns:
+    - is_recurring
+    - recurrence_pattern
+    - type
+    set:
+      lab_id: x-hasura-lab-id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - created_at
+    - id
+    - is_recurring
+    - lab_id
+    - recurrence_pattern
+    - type
+    - updated_at
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor.viewer
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+    limit: 100
+  role: user
+update_permissions:
+- permission:
+    check: {}
+    columns:
+    - is_recurring
+    - recurrence_pattern
+    - type
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+  role: user

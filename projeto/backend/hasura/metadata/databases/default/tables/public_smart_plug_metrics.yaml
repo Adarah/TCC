@@ -8,16 +8,27 @@ object_relationships:
 select_permissions:
 - permission:
     columns:
+    - time
     - power
     - smart_plug_chip_id
-    - time
-    filter: {}
-  role: anonymous
-- permission:
-    allow_aggregations: true
-    columns:
-    - power
-    - smart_plug_chip_id
-    - time
-    filter: {}
-  role: lab_operator
+    filter:
+      _and:
+      - smart_plug:
+          lab_station:
+            lab_id:
+              _eq: X-Hasura-lab-Id
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor.viewer
+    limit: 100
+  role: user

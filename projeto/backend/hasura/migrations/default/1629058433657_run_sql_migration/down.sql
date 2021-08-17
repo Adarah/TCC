@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- create index smart_plug_tag_index on smart_plug_tag using gist (path);

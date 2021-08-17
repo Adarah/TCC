@@ -15,7 +15,7 @@ services:
     - db_data:/var/lib/postgresql/data
     - ./postgres-initdb:/docker-entrypoint-initdb.d:Z
   graphql-engine:
-    image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
+    image: hasura/graphql-engine:v2.0.6.cli-migrations-v3
     network_mode: host
 #    ports:
 #    - "8080:8080"
@@ -31,12 +31,7 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       # uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
-      HASURA_GRAPHQL_JWT_SECRET: |-
-        {
-          "jwk_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
-          "audience": "poli-lab0",
-          "issuer": "https://securetoken.google.com/poli-lab0"
-        }
+      HASURA_GRAPHQL_AUTH_HOOK: http://localhost:3001/authWebhookHandler
     volumes:
     - ./migrations:/hasura-migrations:Z
     - ./metadata:/hasura-metadata:Z

@@ -16,40 +16,92 @@ array_relationships:
 insert_permissions:
 - permission:
     backend_only: false
-    check: {}
+    check:
+      _exists:
+        _table:
+          name: lab_user_role
+          schema: public
+        _where:
+          _and:
+          - lab_id:
+              _eq: X-Hasura-lab-Id
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - role:
+              path:
+                _ancestor: owner.admin
     columns:
-    - lab_id
     - name
-  role: lab_operator
+    set:
+      lab_id: x-hasura-lab-id
+  role: user
 select_permissions:
 - permission:
     columns:
-    - lab_id
-    - name
-    filter: {}
-  role: anonymous
-- permission:
-    allow_aggregations: true
-    columns:
+    - created_at
     - id
     - lab_id
     - name
-    - created_at
     - updated_at
-    filter: {}
-  role: lab_operator
-- permission:
-    columns:
-    - lab_id
-    - name
-    filter: {}
-  role: student
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor.viewer
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+    limit: 100
+  role: user
 update_permissions:
 - permission:
     check: {}
     columns:
-    - deleted_at
-    - lab_id
     - name
-    filter: {}
-  role: lab_operator
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin.editor
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      _and:
+      - _exists:
+          _table:
+            name: lab_user_role
+            schema: public
+          _where:
+            _and:
+            - lab_id:
+                _eq: X-Hasura-lab-Id
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                path:
+                  _ancestor: owner.admin
+      - lab_id:
+          _eq: X-Hasura-lab-Id
+  role: user

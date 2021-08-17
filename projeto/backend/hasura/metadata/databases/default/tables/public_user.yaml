@@ -1,94 +1,31 @@
 table:
   name: user
   schema: public
-object_relationships:
-- name: user_role
-  using:
-    foreign_key_constraint_on: role_title
-array_relationships:
-- name: lab_operators
-  using:
-    foreign_key_constraint_on:
-      column: operator_id
-      table:
-        name: lab_operator
-        schema: public
-- name: student_groups
-  using:
-    foreign_key_constraint_on:
-      column: student_id
-      table:
-        name: student_group
-        schema: public
 select_permissions:
 - permission:
     columns:
-    - deleted_at
-    - email
-    - id
-    - name
-    - role_title
-    - usp_id
-    filter:
-      deleted_at:
-        _is_null: true
-  role: lab_operator
-- permission:
-    columns:
     - email
     - name
-    - usp_id
-    filter:
-      _and:
-      - id:
-          _eq: X-Hasura-User-Id
-      - deleted_at:
-          _is_null: true
-  role: student
+    filter: {}
+    limit: 100
+  role: user
 update_permissions:
 - permission:
-    check:
-      role_title:
-        _neq: anonymous
+    check: null
     columns:
-    - deleted_at
     - email
     - name
-    - role_title
-    - usp_id
-    filter: {}
-  role: lab_operator
-- permission:
-    check:
-      _and:
-      - id:
-          _eq: X-Hasura-User-Id
-      - name:
-          _is_null: false
-      - usp_id:
-          _is_null: false
-    columns:
-    - name
-    - usp_id
     filter:
-      _and:
-      - id:
-          _eq: X-Hasura-User-Id
-      - deleted_at:
-          _is_null: false
-  role: student
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
 event_triggers:
-- definition:
-    enable_manual: false
-    update:
-      columns:
-      - role_title
-  name: change-user-role
-  retry_conf:
-    interval_sec: 10
-    num_retries: 5
-    timeout_sec: 60
-  webhook: http://localhost:3001/ChangeUserRole
 - definition:
     delete:
       columns: "*"

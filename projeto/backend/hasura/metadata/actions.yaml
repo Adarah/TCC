@@ -1,15 +1,29 @@
 actions:
-- name: AddOperatorToLab
+- name: CreateCommand
   definition:
     kind: synchronous
-    handler: http://localhost:3000/AddOperatorToLab
-    forward_client_headers: true
+    handler: http://localhost:3001/
   permissions:
-  - role: lab_operator
+  - role: user
 custom_types:
-  enums: []
+  enums:
+  - name: CreateCommandCommandTypeEnum
+    values:
+    - description: null
+      is_deprecated: null
+      value: sleep
+    - description: null
+      is_deprecated: null
+      value: wake_up
+  - name: Command_Type_Enum
+    values:
+    - description: null
+      is_deprecated: null
+      value: sleep
+    - description: null
+      is_deprecated: null
+      value: wake_up
   input_objects: []
   objects:
-  - name: AddOperatorToLabOutput
-  - name: AddNewOperatorOutput
+  - name: CreateCommandOutput
   scalars: []

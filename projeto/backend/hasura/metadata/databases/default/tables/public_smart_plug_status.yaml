@@ -11,11 +11,3 @@ object_relationships:
       remote_table:
         name: smart_plug
         schema: public
-select_permissions:
-- permission:
-    columns:
-    - chip_id
-    - last_message_timestamp
-    - status
-    filter: {}
-  role: lab_operator
