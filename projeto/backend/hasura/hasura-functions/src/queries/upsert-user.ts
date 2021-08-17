@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 
 const UPSERT_USER_MUTATION = gql`
 mutation UpsertFirebaseUser($id: String!, $name: String, $email: String!) {
