@@ -4,7 +4,7 @@ type Mutation {
     type: CreateCommandCommandTypeEnum!
     is_recurring: Boolean!
     recurrence_pattern: String
-    scheduled_time: timestamptz
+    scheduled_time_unix: Int
     selectors: [String!]!
   ): CreateCommandOutput
 }

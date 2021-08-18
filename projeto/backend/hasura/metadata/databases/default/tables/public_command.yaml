@@ -35,7 +35,9 @@ insert_permissions:
                 _ancestor: owner.admin
     columns:
     - is_recurring
+    - name
     - recurrence_pattern
+    - scheduled_time
     - type
     set:
       lab_id: x-hasura-lab-id

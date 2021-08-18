@@ -7,15 +7,15 @@ type Mutation {
     type: CreateCommandCommandTypeEnum!
     is_recurring: Boolean!
     recurrence_pattern: String
-    scheduled_time: timestamptz
+    scheduled_time_unix: Int
     selectors: [String!]!
   ): CreateCommandOutput
 }
 `;
 
 const INSERT_COMMAND_MUTATION = gql`
-mutation InsertCommand($name: String!, $type: command_type_enum!, $is_recurring: Boolean!, $recurrence_pattern: String, $selectors: [command_selector_insert_input!]!) {
-  insert_command_one(object: {name: $name, type: $type, is_recurring: $is_recurring, recurrence_pattern: $recurrence_pattern, command_selectors: {data: $selectors}}) {
+mutation InsertCommand($name: String!, $type: command_type_enum!, $is_recurring: Boolean!, $recurrence_pattern: String, $scheduled_time: timestamptz, $selectors: [command_selector_insert_input!]!) {
+  insert_command_one(object: {name: $name, type: $type, is_recurring: $is_recurring, recurrence_pattern: $recurrence_pattern, scheduled_time: $scheduled_time, command_selectors: {data: $selectors}}) {
     id
   }
 }

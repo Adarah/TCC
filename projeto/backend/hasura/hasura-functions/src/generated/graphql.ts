@@ -9,10 +9,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  float8: any;
   lquery: any;
   ltree: any;
   ltxtquery: any;
-  numeric: any;
   timestamptz: any;
 };
 
@@ -807,6 +807,20 @@ export type Command_Variance_Fields = {
   __typename?: 'command_variance_fields';
   id?: Maybe<Scalars['Float']>;
   lab_id?: Maybe<Scalars['Float']>;
+};
+
+
+/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+export type Float8_Comparison_Exp = {
+  _eq?: Maybe<Scalars['float8']>;
+  _gt?: Maybe<Scalars['float8']>;
+  _gte?: Maybe<Scalars['float8']>;
+  _in?: Maybe<Array<Scalars['float8']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['float8']>;
+  _lte?: Maybe<Scalars['float8']>;
+  _neq?: Maybe<Scalars['float8']>;
+  _nin?: Maybe<Array<Scalars['float8']>>;
 };
 
 /** columns and relationships of "lab" */
@@ -1853,7 +1867,7 @@ export type Mutation_RootCreateCommandArgs = {
   is_recurring: Scalars['Boolean'];
   name: Scalars['String'];
   recurrence_pattern?: Maybe<Scalars['String']>;
-  scheduled_time?: Maybe<Scalars['timestamptz']>;
+  scheduled_time_unix?: Maybe<Scalars['Int']>;
   selectors: Array<Scalars['String']>;
   type: CreateCommandCommandTypeEnum;
 };
@@ -2365,20 +2379,6 @@ export type Mutation_RootUpdate_UserArgs = {
 export type Mutation_RootUpdate_User_By_PkArgs = {
   _set?: Maybe<User_Set_Input>;
   pk_columns: User_Pk_Columns_Input;
-};
-
-
-/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
-export type Numeric_Comparison_Exp = {
-  _eq?: Maybe<Scalars['numeric']>;
-  _gt?: Maybe<Scalars['numeric']>;
-  _gte?: Maybe<Scalars['numeric']>;
-  _in?: Maybe<Array<Scalars['numeric']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['numeric']>;
-  _lte?: Maybe<Scalars['numeric']>;
-  _neq?: Maybe<Scalars['numeric']>;
-  _nin?: Maybe<Array<Scalars['numeric']>>;
 };
 
 /** column ordering options */
@@ -3187,7 +3187,7 @@ export type Smart_Plug_Max_Order_By = {
 /** columns and relationships of "smart_plug_metrics" */
 export type Smart_Plug_Metrics = {
   __typename?: 'smart_plug_metrics';
-  power: Scalars['numeric'];
+  power: Scalars['float8'];
   /** An object relationship */
   smart_plug: Smart_Plug;
   smart_plug_chip_id: Scalars['String'];
@@ -3260,7 +3260,7 @@ export type Smart_Plug_Metrics_Bool_Exp = {
   _and?: Maybe<Array<Smart_Plug_Metrics_Bool_Exp>>;
   _not?: Maybe<Smart_Plug_Metrics_Bool_Exp>;
   _or?: Maybe<Array<Smart_Plug_Metrics_Bool_Exp>>;
-  power?: Maybe<Numeric_Comparison_Exp>;
+  power?: Maybe<Float8_Comparison_Exp>;
   smart_plug?: Maybe<Smart_Plug_Bool_Exp>;
   smart_plug_chip_id?: Maybe<String_Comparison_Exp>;
   time?: Maybe<Timestamptz_Comparison_Exp>;
@@ -3268,12 +3268,12 @@ export type Smart_Plug_Metrics_Bool_Exp = {
 
 /** input type for incrementing numeric columns in table "smart_plug_metrics" */
 export type Smart_Plug_Metrics_Inc_Input = {
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
 };
 
 /** input type for inserting data into table "smart_plug_metrics" */
 export type Smart_Plug_Metrics_Insert_Input = {
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
   smart_plug?: Maybe<Smart_Plug_Obj_Rel_Insert_Input>;
   smart_plug_chip_id?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['timestamptz']>;
@@ -3282,7 +3282,7 @@ export type Smart_Plug_Metrics_Insert_Input = {
 /** aggregate max on columns */
 export type Smart_Plug_Metrics_Max_Fields = {
   __typename?: 'smart_plug_metrics_max_fields';
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
   smart_plug_chip_id?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['timestamptz']>;
 };
@@ -3297,7 +3297,7 @@ export type Smart_Plug_Metrics_Max_Order_By = {
 /** aggregate min on columns */
 export type Smart_Plug_Metrics_Min_Fields = {
   __typename?: 'smart_plug_metrics_min_fields';
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
   smart_plug_chip_id?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['timestamptz']>;
 };
@@ -3338,7 +3338,7 @@ export enum Smart_Plug_Metrics_Select_Column {
 
 /** input type for updating data in table "smart_plug_metrics" */
 export type Smart_Plug_Metrics_Set_Input = {
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
   smart_plug_chip_id?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['timestamptz']>;
 };
@@ -3379,7 +3379,7 @@ export type Smart_Plug_Metrics_Stddev_Samp_Order_By = {
 /** aggregate sum on columns */
 export type Smart_Plug_Metrics_Sum_Fields = {
   __typename?: 'smart_plug_metrics_sum_fields';
-  power?: Maybe<Scalars['numeric']>;
+  power?: Maybe<Scalars['float8']>;
 };
 
 /** order by sum() on columns of table "smart_plug_metrics" */
@@ -4950,6 +4950,7 @@ export type InsertCommandMutationVariables = Exact<{
   type: Command_Type_Enum;
   is_recurring: Scalars['Boolean'];
   recurrence_pattern?: Maybe<Scalars['String']>;
+  scheduled_time?: Maybe<Scalars['timestamptz']>;
   selectors: Array<Command_Selector_Insert_Input> | Command_Selector_Insert_Input;
 }>;
 
@@ -4959,6 +4960,23 @@ export type InsertCommandMutation = (
   & { insert_command_one?: Maybe<(
     { __typename?: 'command' }
     & Pick<Command, 'id'>
+  )> }
+);
+
+export type GetCommandAndSelectorsQueryVariables = Exact<{
+  command_id: Scalars['Int'];
+}>;
+
+
+export type GetCommandAndSelectorsQuery = (
+  { __typename?: 'query_root' }
+  & { command_by_pk?: Maybe<(
+    { __typename?: 'command' }
+    & Pick<Command, 'id' | 'type'>
+    & { command_selectors: Array<(
+      { __typename?: 'command_selector' }
+      & Pick<Command_Selector, 'selector'>
+    )> }
   )> }
 );
 

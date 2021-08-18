@@ -13,16 +13,9 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext(async (operation, prevContext) => {
-  console.log()
-  const t = {
-    ...prevContext.headers,
-    ...operation.context
-  };
-  console.log('in authLink', t);
   return {
     headers: {
       ...prevContext.headers,
-      ...operation.context
     },
   }
 });

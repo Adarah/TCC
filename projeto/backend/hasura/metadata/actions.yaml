@@ -2,7 +2,7 @@ actions:
 - name: CreateCommand
   definition:
     kind: synchronous
-    handler: http://localhost:3001/
+    handler: http://localhost:3001/CreateCommand
   permissions:
   - role: user
 custom_types:

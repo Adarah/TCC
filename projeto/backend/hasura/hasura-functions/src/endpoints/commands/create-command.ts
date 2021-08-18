@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import fetch from "node-fetch";
 import env from "../../config";
-import { Command_Type_Enum, InsertCommandMutation, InsertCommandMutationVariables, Mutation_RootCreateCommandArgs } from "../../generated/graphql";
+import { InsertCommandMutation, InsertCommandMutationVariables, Mutation_RootCreateCommandArgs } from "../../generated/graphql";
 import INSERT_COMMAND_MUTATION from "../../queries/create-command";
 import hasuraClient from "../../utils/hasuraClient";
 import cronValidate from 'cron-validate';
 import UserInputError from "../../exceptions/user-input-error";
-
+import 'express-async-errors';
 
 async function createCommand(req: Request, res: Response, next: NextFunction): Promise<void> {
     // get request input
-    const { name, type, is_recurring, recurrence_pattern, scheduled_time, selectors } = req.body.input as Mutation_RootCreateCommandArgs;
+    const { name, type, is_recurring, recurrence_pattern, scheduled_time_unix, selectors } = req.body.input as Mutation_RootCreateCommandArgs;
 
     // Commands should have at least one selector
     if (selectors.length === 0) {
@@ -22,28 +22,29 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
         throw new UserInputError('Invalid cron format');
     }
 
+    let scheduled_time;
+    if (scheduled_time_unix) {
+        if (scheduled_time_unix - (Date.now() / 1000) < 30) {
+            throw new UserInputError('Operation must be scheduled at least 30 seconds from now');
+        }
+        scheduled_time = new Date(scheduled_time_unix * 1000).toISOString();
+    }
+
 
     const formattedSelectors = selectors.map(s => ({ selector: s }));
     // Hasura does not reuse existing enums, instead it creates a new one for each action
     // https://github.com/hasura/graphql-engine/issues/5001
     // If they fix this, we won't need to do this casting anymore.
-    const convertedType = type as string as Command_Type_Enum;
-
 
     // execute the Hasura operation
-    let { data, errors } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
+    let { data } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
         {
             mutation: INSERT_COMMAND_MUTATION,
-            variables: { name, type: convertedType, is_recurring, recurrence_pattern, selectors: formattedSelectors },
-            context: { ...req.body.session_variables },
+            // @ts-ignore
+            variables: { name, type, is_recurring, recurrence_pattern, selectors: formattedSelectors, scheduled_time },
+            context: { headers: { ...req.body.session_variables } },
         }
     );
-
-    // if Hasura operation errors, then return the error
-    if (errors) {
-        res.status(400).json(errors[0]);
-        return;
-    }
 
     await scheduleTrigger({
         commandId: data!.insert_command_one!.id,
@@ -53,9 +54,10 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
         scheduledTime: scheduled_time,
     });
 
+    console.log(r);
     // success
     res.json({
-        ...data!.insert_command_one
+        id: data!.insert_command_one!.id
     });
 }
 
@@ -80,7 +82,7 @@ async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
                 retry_interval_seconds: 60,
             },
             include_in_metadata: false,
-            replace: true,
+            replace: false,
         },
     };
 
@@ -89,7 +91,7 @@ async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
         triggerOptions.args.schedule = recurrencePattern;
     } else if (!recurrencePattern && scheduledTime) {
         triggerOptions.type = 'create_scheduled_event';
-        triggerOptions.schedule_at = scheduledTime;
+        triggerOptions.args.schedule_at = scheduledTime;
     } else {
         // Should not be reachable as long as the DB constraint is upheld
         throw new Error('Either recurrencePattern or scheduledTime must be set');
@@ -98,7 +100,7 @@ async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
     return fetch(`${env.HASURA_URL}/v1/metadata`, {
         method: 'POST',
         body: JSON.stringify(triggerOptions),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'x-hasura-admin-secret': env.HASURA_ADMIN_SECRET },
     }).then(resp => resp.json());
 }
 

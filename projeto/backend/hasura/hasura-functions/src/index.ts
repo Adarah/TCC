@@ -9,6 +9,7 @@ import authWebhookHandler from "./endpoints/auth/auth-webhook-handler";
 import createFirebaseUser from "./endpoints/users/create-firebase-user";
 import env from "./config";
 import createCommand from "./endpoints/commands/create-command";
+import executeCommand from "./endpoints/commands/execute-command";
 
 admin.initializeApp({
     credential: admin.credential.applicationDefault(),
@@ -31,13 +32,15 @@ app.get('/authWebhookHandler', jwt({
 
 app.use(express.json());
 
+// These are all post request because Hasura only sends POSTs
 app.post('/CreateFirebaseUser', createFirebaseUser);
 app.post('/DeleteUser', deleteUser);
 app.post('/CreateCommand', createCommand);
+app.post('/ExecuteCommand', executeCommand);
 
 
 app.use(errorHandler);
-app.listen(env.PORT, () => {
+app.listen(env.SELF_PORT, () => {
     // eslint-disable-next-line no-console
-    console.info(`Listening on ${env.SELF_URL}:${env.PORT}`);
+    console.info(`Listening on ${env.SELF_URL}`);
 });

@@ -48,6 +48,8 @@ insert_permissions:
     - lab_station_id
     - model
     - name
+    set:
+      path: x-hasura-lab-id
   role: user
 select_permissions:
 - permission:
@@ -58,6 +60,7 @@ select_permissions:
     - lab_station_id
     - model
     - name
+    - path
     - updated_at
     filter:
       _and:

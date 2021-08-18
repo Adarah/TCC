@@ -1,0 +1,1 @@
+comment on TABLE "public"."smart_plug" is E'A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT. The "path" column is modified by a BEFORE INSERT trigger to correctly format it to <lab_id.lab_station_id.id>';

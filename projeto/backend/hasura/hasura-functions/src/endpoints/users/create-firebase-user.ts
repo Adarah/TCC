@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import admin from 'firebase-admin';
-import HttpForbidden from "../../exceptions/http-forbidden";
 import { UpsertFirebaseUserMutation, UpsertFirebaseUserMutationVariables } from "../../generated/graphql";
 import UPSERT_USER_MUTATION from "../../queries/upsert-user";
 import hasuraClient from "../../utils/hasuraClient";
@@ -14,15 +13,16 @@ async function createFirebaseUser(req: Request, res: Response): Promise<void> {
         return;
     }
 
-    // Save user into the hasura database
-    const { errors } = await hasuraClient.mutate<UpsertFirebaseUserMutation, UpsertFirebaseUserMutationVariables>({
-        mutation: UPSERT_USER_MUTATION,
-        variables: { id: user.uid, name: user.displayName, email: user.email },
-    });
-    if (errors) {
+    try {
+        // Save user into the hasura database
+        await hasuraClient.mutate<UpsertFirebaseUserMutation, UpsertFirebaseUserMutationVariables>({
+            mutation: UPSERT_USER_MUTATION,
+            variables: { id: user.uid, name: user.displayName, email: user.email },
+        });
+    } catch (err) {
         // Even if the operation fails, we want to return 200 to the firebase
         // hook so that it stops retrying
-        console.error(`New Firebase User insertion failed: ${JSON.stringify(errors)}`);
+        console.error(`New Firebase User insertion failed: ${JSON.stringify(err)}`);
         res.sendStatus(200);
         return;
     }

@@ -1,0 +1,1 @@
+DROP FUNCTION enrich_smart_plug_path CASCADE;
