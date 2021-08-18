@@ -1,20 +1,22 @@
 import mqtt from "async-mqtt";
+import env from "./config";
+import { COMMANDER_TEST_ROUTE, SMART_PLUG_POWER, STUDENT_GROUP_METRICS } from "./constants";
+import router from "./router";
 import writeSmartPlugMetricsToDb from "./write-smart-plug-metrics-to-db";
 
-const brokerUrl = process.env.MQTT_BROKER_URL ?? "tcp://3.141.193.238:80";
-async function main() {
-  const client = await mqtt.connectAsync(brokerUrl, {
-    username: "aluno0",
-    password: "testealuno",
-    clean: false,
-    clientId: 'mqtt-metrics-writer',
-  });
-  console.log("connected");
-  client.on("message", writeSmartPlugMetricsToDb);
-  await client.subscribe("+/+/power", {
-    qos: 1, // At least once delivery
-  });
-  console.log("subbed");
-}
+const client = await mqtt.connectAsync(env.MQTT_BROKER_URL, {
+  username: env.MQTT_BROKER_USERNAME,
+  password: env.MQTT_BROKER_PASSWORD,
+  clean: false,
+  clientId: 'mqtt-metrics-writer',
+});
 
-main();
+client.on("connect", () => console.log("Metrics writer successfully connected to broker"));
+client.on("message", router);
+
+const topics = [SMART_PLUG_POWER, COMMANDER_TEST_ROUTE];
+await Promise.all(topics.map(t => client.subscribe(t, { qos: 1 })));
+
+console.log("Subscribed to all topics");
+
+// TODO: Perguntar pro vitor sobre a possibilidade de adicionar um prefixo a todas rotas para subscription ser mais facil
