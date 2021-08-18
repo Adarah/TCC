@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import FirebaseService from "../../utils/firebaseService";
+import FirebaseService from "../../utils/firebase-service";
 
 async function deleteUser(req: Request, res: Response) {
     const {event: {op, data}, table} = req.body;

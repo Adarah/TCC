@@ -2992,7 +2992,7 @@ export type Role_Variance_Fields = {
 };
 
 /**
- * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT.
+ * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT. The "path" column is modified by a BEFORE INSERT trigger to correctly format it to <lab_id.lab_station_id.id>
  *
  *
  * columns and relationships of "smart_plug"
@@ -3012,6 +3012,7 @@ export type Smart_Plug = {
   metrics_aggregate: Smart_Plug_Metrics_Aggregate;
   model: Scalars['String'];
   name: Scalars['String'];
+  path: Scalars['ltree'];
   /** An object relationship */
   status?: Maybe<Smart_Plug_Status>;
   updated_at: Scalars['timestamptz'];
@@ -3019,7 +3020,7 @@ export type Smart_Plug = {
 
 
 /**
- * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT.
+ * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT. The "path" column is modified by a BEFORE INSERT trigger to correctly format it to <lab_id.lab_station_id.id>
  *
  *
  * columns and relationships of "smart_plug"
@@ -3034,7 +3035,7 @@ export type Smart_PlugMetricsArgs = {
 
 
 /**
- * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT.
+ * A smart plug is a device used to turn lab equipments into IoT-enabled devices. It receives commands and generates metrics via MQTT. The "path" column is modified by a BEFORE INSERT trigger to correctly format it to <lab_id.lab_station_id.id>
  *
  *
  * columns and relationships of "smart_plug"
@@ -3126,6 +3127,7 @@ export type Smart_Plug_Bool_Exp = {
   metrics?: Maybe<Smart_Plug_Metrics_Bool_Exp>;
   model?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  path?: Maybe<Ltree_Comparison_Exp>;
   status?: Maybe<Smart_Plug_Status_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -3134,6 +3136,8 @@ export type Smart_Plug_Bool_Exp = {
 export enum Smart_Plug_Constraint {
   /** unique or primary key constraint */
   SmartPlugChipIdKey = 'smart_plug_chip_id_key',
+  /** unique or primary key constraint */
+  SmartPlugPathKey = 'smart_plug_path_key',
   /** unique or primary key constraint */
   SmartPlugPkey = 'smart_plug_pkey'
 }
@@ -3155,6 +3159,7 @@ export type Smart_Plug_Insert_Input = {
   metrics?: Maybe<Smart_Plug_Metrics_Arr_Rel_Insert_Input>;
   model?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['ltree']>;
   status?: Maybe<Smart_Plug_Status_Obj_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -3169,6 +3174,7 @@ export type Smart_Plug_Max_Fields = {
   lab_station_id?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['ltree']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -3181,6 +3187,7 @@ export type Smart_Plug_Max_Order_By = {
   lab_station_id?: Maybe<Order_By>;
   model?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -3430,6 +3437,7 @@ export type Smart_Plug_Min_Fields = {
   lab_station_id?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['ltree']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -3442,6 +3450,7 @@ export type Smart_Plug_Min_Order_By = {
   lab_station_id?: Maybe<Order_By>;
   model?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -3479,6 +3488,7 @@ export type Smart_Plug_Order_By = {
   metrics_aggregate?: Maybe<Smart_Plug_Metrics_Aggregate_Order_By>;
   model?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
   status?: Maybe<Smart_Plug_Status_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -3505,6 +3515,8 @@ export enum Smart_Plug_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  Path = 'path',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
@@ -3517,6 +3529,7 @@ export type Smart_Plug_Set_Input = {
   lab_station_id?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['ltree']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -3879,6 +3892,8 @@ export enum Smart_Plug_Update_Column {
   Model = 'model',
   /** column name */
   Name = 'name',
+  /** column name */
+  Path = 'path',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -4972,11 +4987,24 @@ export type GetCommandAndSelectorsQuery = (
   { __typename?: 'query_root' }
   & { command_by_pk?: Maybe<(
     { __typename?: 'command' }
-    & Pick<Command, 'id' | 'type'>
+    & Pick<Command, 'type'>
     & { command_selectors: Array<(
       { __typename?: 'command_selector' }
       & Pick<Command_Selector, 'selector'>
     )> }
+  )> }
+);
+
+export type SmartPlugBySelectorQueryVariables = Exact<{
+  selectors: Array<Scalars['ltree']> | Scalars['ltree'];
+}>;
+
+
+export type SmartPlugBySelectorQuery = (
+  { __typename?: 'query_root' }
+  & { smart_plug: Array<(
+    { __typename?: 'smart_plug' }
+    & Pick<Smart_Plug, 'model' | 'chip_id'>
   )> }
 );
 

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node --experimental-specifier-resolution=node dist/index.js",
-    "start:dev": "tsc && concurrently -n 'tsc,nodemon' 'tsc -w' 'NODE_ENV=development nodemon'",
+    "start:dev": "tsc && concurrently -n 'tsc,nodemon' 'tsc -w' 'dotenv -- nodemon'",
     "test": "jest",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --max-warnings=0",
     "docker:build": "DOCKER_BUILDKIT=1 docker build -t <PROJECT_NAME> .",
@@ -18,6 +18,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.21",
     "apollo-server-errors": "^3.0.1",
+    "async-mqtt": "^2.6.1",
     "cron-validate": "^1.4.3",
     "envalid": "^7.2.1",
     "express": "^4.17.1",
@@ -39,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "concurrently": "^6.2.0",
+    "dotenv-cli": "^4.0.0",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",

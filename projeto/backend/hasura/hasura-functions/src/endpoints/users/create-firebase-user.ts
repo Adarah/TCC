@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import admin from 'firebase-admin';
 import { UpsertFirebaseUserMutation, UpsertFirebaseUserMutationVariables } from "../../generated/graphql";
 import UPSERT_USER_MUTATION from "../../queries/upsert-user";
-import hasuraClient from "../../utils/hasuraClient";
+import hasuraClient from "../../utils/hasura-client";
 
 async function createFirebaseUser(req: Request, res: Response): Promise<void> {
     // User must use an email from @usp.br domain

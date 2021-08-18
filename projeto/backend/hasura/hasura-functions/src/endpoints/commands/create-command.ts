@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import env from "../../config";
 import { InsertCommandMutation, InsertCommandMutationVariables, Mutation_RootCreateCommandArgs } from "../../generated/graphql";
 import INSERT_COMMAND_MUTATION from "../../queries/create-command";
-import hasuraClient from "../../utils/hasuraClient";
+import hasuraClient from "../../utils/hasura-client";
 import cronValidate from 'cron-validate';
 import UserInputError from "../../exceptions/user-input-error";
 import 'express-async-errors';
@@ -54,7 +54,6 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
         scheduledTime: scheduled_time,
     });
 
-    console.log(r);
     // success
     res.json({
         id: data!.insert_command_one!.id
@@ -76,7 +75,7 @@ async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
         args: {
             name: `${labId} - ${commandName}`,
             webhook: `${env.SELF_URL}/executeCommand`,
-            payload: { commandId },
+            payload: { command_id: commandId },
             retry_conf: {
                 num_retries: 10,
                 retry_interval_seconds: 60,
