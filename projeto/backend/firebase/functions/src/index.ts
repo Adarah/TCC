@@ -22,11 +22,6 @@ exports.processSignUp =
         return;
       }
 
-      if (!user.email?.endsWith("@usp.br")) {
-        console.info(`User with non-usp email tried to sign-up: ${user.email}`);
-        return;
-      }
-
       // If this fails, then an exception will be raised and the cloud function will be retried.
       await fetch(`${hasuraBackendUrl}/CreateFirebaseUser`, {
         method: 'POST',

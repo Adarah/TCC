@@ -12,14 +12,14 @@ type HasuraCustomClaims = {
 class FirebaseService {
   private static async getCustomClaims(
     uid: string
-  ): Promise<Record<string, any>> {
+  ): Promise<Record<string, any> | undefined> {
     const user = await admin.auth().getUser(uid);
-    return user.customClaims!;
+    return user.customClaims;
   }
 
-  static async getHasuraCustomClaims(uid: string): Promise<HasuraCustomClaims> {
+  static async getHasuraCustomClaims(uid: string): Promise<HasuraCustomClaims | undefined> {
     const user = await admin.auth().getUser(uid);
-    return user.customClaims!["https://hasura.io/jwt/claims"];
+    return user.customClaims?.["https://hasura.io/jwt/claims"];
   }
 
   static async updateHasuraCustomClaims(
@@ -27,11 +27,11 @@ class FirebaseService {
     updateClaim: UpdateClaimCallback
   ): Promise<void> {
     const customClaims = await FirebaseService.getCustomClaims(uid);
-    const hasuraClaims = customClaims["https://hasura.io/jwt/claims"];
+    const hasuraClaims = customClaims?.["https://hasura.io/jwt/claims"];
     const updatedHasuraClaims = updateClaim(hasuraClaims);
     const newCustomClaims = {
       ...customClaims,
-      "https://hasura.io/jwt/claims": {...hasuraClaims, ...updatedHasuraClaims},
+      "https://hasura.io/jwt/claims": { ...hasuraClaims, ...updatedHasuraClaims },
     };
     await admin.auth().setCustomUserClaims(uid, newCustomClaims);
     await FirebaseService.refreshToken(uid);
@@ -46,8 +46,8 @@ class FirebaseService {
   }
 
   static async deleteUser(uid: string): Promise<void> {
-      await admin.auth().deleteUser(uid);
-      return FirebaseService.refreshToken(uid);
+    await admin.auth().deleteUser(uid);
+    return FirebaseService.refreshToken(uid);
   }
 }
 

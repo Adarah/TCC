@@ -10,6 +10,11 @@ import 'express-async-errors';
 
 async function createCommand(req: Request, res: Response, next: NextFunction): Promise<void> {
     // get request input
+    const { 'x-hasura-lab-id': labId } = req.body['session_variables'];
+    if (!labId) {
+        throw new UserInputError('x-hasura-lab-id header missing!');
+    }
+
     const { name, type, is_recurring, recurrence_pattern, scheduled_time_unix, selectors } = req.body.input as Mutation_RootCreateCommandArgs;
 
     // Commands should have at least one selector
@@ -31,7 +36,13 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
     }
 
 
-    const formattedSelectors = selectors.map(s => ({ selector: s }));
+    const formattedSelectors = selectors.map(s => {
+        let selector = labId;
+        if (s !== '*') {
+            selector += '.' + s;
+        }
+        return { selector };
+    });
     // Hasura does not reuse existing enums, instead it creates a new one for each action
     // https://github.com/hasura/graphql-engine/issues/5001
     // If they fix this, we won't need to do this casting anymore.

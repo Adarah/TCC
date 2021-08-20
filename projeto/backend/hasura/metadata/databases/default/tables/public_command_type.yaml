@@ -4,8 +4,9 @@ table:
 is_enum: true
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - comment
-    - type
+    - id
     filter: {}
   role: user

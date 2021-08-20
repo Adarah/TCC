@@ -9,6 +9,13 @@ array_relationships:
       table:
         name: lab_station
         schema: public
+- name: lab_user_roles
+  using:
+    foreign_key_constraint_on:
+      column: lab_id
+      table:
+        name: lab_user_role
+        schema: public
 - name: student_groups
   using:
     foreign_key_constraint_on:
@@ -27,6 +34,7 @@ insert_permissions:
   role: user
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - created_at
     - description
@@ -35,22 +43,13 @@ select_permissions:
     - name
     - updated_at
     filter:
-      _and:
-      - _exists:
-          _table:
-            name: lab_user_role
-            schema: public
-          _where:
-            _and:
-            - lab_id:
-                _eq: X-Hasura-lab-Id
-            - user_id:
-                _eq: X-Hasura-User-Id
-            - role:
-                path:
-                  _ancestor: owner.admin.editor.viewer
-      - id:
-          _eq: X-Hasura-lab-Id
+      lab_user_roles:
+        _and:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - role:
+            path:
+              _ancestor: owner.admin.editor.viewer
     limit: 100
   role: user
 update_permissions:

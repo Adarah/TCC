@@ -11,3 +11,17 @@ object_relationships:
       remote_table:
         name: smart_plug
         schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - chip_id
+    - status
+    - last_message_timestamp
+    filter:
+      smart_plug:
+        lab_station:
+          lab_id:
+            _eq: X-Hasura-lab-Id
+    limit: 100
+  role: user

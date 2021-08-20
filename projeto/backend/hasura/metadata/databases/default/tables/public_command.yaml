@@ -44,12 +44,15 @@ insert_permissions:
   role: user
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - created_at
     - id
     - is_recurring
     - lab_id
+    - name
     - recurrence_pattern
+    - scheduled_time
     - type
     - updated_at
     filter:

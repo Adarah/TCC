@@ -2,7 +2,6 @@ import mqtt from "async-mqtt";
 import env from "./config";
 import { COMMANDER_TEST_ROUTE, SMART_PLUG_POWER, STUDENT_GROUP_METRICS } from "./constants";
 import router from "./router";
-import writeSmartPlugMetricsToDb from "./write-smart-plug-metrics-to-db";
 
 const client = await mqtt.connectAsync(env.MQTT_BROKER_URL, {
   username: env.MQTT_BROKER_USERNAME,

@@ -4,8 +4,8 @@ async function writeSmartPlugMetrics(topic: string, message: Buffer): Promise<vo
   // topic has the format "model/chipId/measure"
   // where measure can be metrics such as power.
   const [model, chipId, measure] = topic.split("/");
-  // const measurement = message.toString('utf-8');
-  const measurement = (5 * Math.random()).toString();
+  const measurement = message.toString('utf-8');
+  // const measurement = (5 * Math.random()).toString();
 
   const client = await pool.connect();
   try {
@@ -16,11 +16,11 @@ async function writeSmartPlugMetrics(topic: string, message: Buffer): Promise<vo
 `, // TODO: Have the MQTT broker send the timestamp instead of using the receiver's timestamp
       [new Date(), chipId, measurement]
     );
-  } finally {
+  } catch (err) {
+  }
+  finally {
     client.release();
   }
-  console.log(Date.now(), model, chipId, measure);
-  console.log(topic, message);
 }
 
 export default writeSmartPlugMetrics;

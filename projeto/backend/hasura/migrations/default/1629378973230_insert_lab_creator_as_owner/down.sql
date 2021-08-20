@@ -1,0 +1,1 @@
+DROP FUNCTION insert_lab_creator_as_owner() CASCADE;

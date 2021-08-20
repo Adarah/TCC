@@ -5,7 +5,7 @@ async function router(topic: string, message: Buffer): Promise<void> {
     const m = message.toString('utf-8');
     if (isSmartPlugMetrics(topic)) {
         await writeSmartPlugMetrics(topic, message);
-    } else (isStudentGroupMetrics(topic)) {
+    } else if (isStudentGroupMetrics(topic)) {
         await writeStudentGroupMetrics(topic, message);
     } else {
         console.info(`Unknown message format: 

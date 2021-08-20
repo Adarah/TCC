@@ -15,6 +15,6 @@ BEFORE INSERT ON "smart_plug"
 FOR EACH ROW
 EXECUTE PROCEDURE enrich_smart_plug_path();
 
-COMMENT ON FUNCTION audit.audit_table(regclass) IS $body$
+COMMENT ON FUNCTION enrich_smart_plug_path IS $body$
 This function assumes the contents of path is the lab_id given by x-hasura-lab-id
 $body$;

@@ -12,6 +12,7 @@ import createCommand from "./endpoints/commands/create-command";
 import executeCommand from "./endpoints/commands/execute-command";
 
 admin.initializeApp({
+    projectId: 'poli-lab0',
     credential: admin.credential.applicationDefault(),
     databaseURL: "https://poli-lab0-default-rtdb.firebaseio.com",
 });
@@ -27,7 +28,7 @@ app.get('/authWebhookHandler', jwt({
     }),
     audience: 'poli-lab0',
     issuer: 'https://securetoken.google.com/poli-lab0',
-    algorithms: ['RS256']
+    algorithms: [env.FIREBASE_SIGNING_ALG],
 }), authWebhookHandler);
 
 app.use(express.json());

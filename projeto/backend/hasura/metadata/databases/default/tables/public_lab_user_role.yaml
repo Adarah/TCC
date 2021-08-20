@@ -2,9 +2,15 @@ table:
   name: lab_user_role
   schema: public
 object_relationships:
+- name: lab
+  using:
+    foreign_key_constraint_on: lab_id
 - name: role
   using:
     foreign_key_constraint_on: role_id
+- name: user
+  using:
+    foreign_key_constraint_on: user_id
 insert_permissions:
 - permission:
     backend_only: false
@@ -48,6 +54,7 @@ insert_permissions:
   role: user
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - id
     - lab_id
@@ -55,22 +62,20 @@ select_permissions:
     - role_id
     - created_at
     filter:
-      _and:
-      - _exists:
-          _table:
-            name: lab_user_role
-            schema: public
-          _where:
-            _and:
-            - lab_id:
-                _eq: X-Hasura-lab-Id
-            - user_id:
-                _eq: X-Hasura-User-Id
-            - role:
-                path:
-                  _ancestor: owner.admin.editor.viewer
-      - lab_id:
-          _eq: X-Hasura-lab-Id
+      _or:
+      - _and:
+        - lab_id:
+            _eq: X-Hasura-lab-Id
+        - lab:
+            lab_user_roles:
+              _and:
+              - user_id:
+                  _eq: X-Hasura-User-Id
+              - role:
+                  path:
+                    _ancestor: owner.admin.editor.viewer
+      - user_id:
+          _eq: X-Hasura-User-Id
     limit: 100
   role: user
 update_permissions:
