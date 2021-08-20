@@ -1,40 +1,37 @@
-import React, {useState} from 'react';
-import {gql, useSubscription} from "@apollo/client";
-import {MySubscriptionSubscription} from "../generated/graphql";
-import {Line} from 'react-chartjs-2';
+import { useSubscription } from "@apollo/client";
+import { SmartPlugPowerSubscription } from "../graphql/generated/types";
+import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-
-const POWER_TIME_SERIES = gql`
-    subscription MySubscription($time: timestamptz!, $id: String!) {
-        smart_plug_metrics(order_by: {time: asc}, where: {time: {_gt: $time}, smart_plug_chip_id: {_eq: $id}}) {
-            power
-            smart_plug_chip_id
-            time
-        }
-    }
-`;
+import POWER_TIME_SERIES from '../graphql/queries/power-time-series';
+import { CircularProgress } from "@material-ui/core";
+import ErrorIcon from '@material-ui/icons/Error';
 
 type PowerChatProps = {
-    smartPlugId: string;
+    smartPlugChipId: string;
 }
 
-function PowerChart({smartPlugId}: PowerChatProps) {
+function PowerChart({ smartPlugChipId }: PowerChatProps) {
     // actually 10 seconds ago
     const fiveMinutesAgo = new Date(Date.now() - 1000 * 10).toISOString().slice(0, 19);
-    const {data, loading} = useSubscription<MySubscriptionSubscription>(
+    console.log(fiveMinutesAgo);
+    const { loading, error, data } = useSubscription<SmartPlugPowerSubscription>(
         POWER_TIME_SERIES,
-        {variables: {time: fiveMinutesAgo, id: smartPlugId}},
+        { variables: { time: fiveMinutesAgo, id: smartPlugChipId } },
     );
+    data?.smart_plug_metrics.reverse();
 
     if (loading) {
-        return <div>Loading...</div>
+        return <CircularProgress />;
+    }
+    if (error) {
+        return <ErrorIcon />;
     }
     const labels = data?.smart_plug_metrics.map(v => v.time);
     const power = data?.smart_plug_metrics.map(v => v.power);
     const chartData = {
         labels,
         datasets: [{
-            label: smartPlugId,
+            label: smartPlugChipId,
             data: power,
             backgroundColor: 'rgb(0,200,0)'
         }]
@@ -81,7 +78,6 @@ function PowerChart({smartPlugId}: PowerChatProps) {
         <div>
             <Line
                 data={chartData}
-                type="line"
                 options={chartOptions}
                 width={800}
                 height={400}

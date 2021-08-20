@@ -1,6 +1,6 @@
 import { Sidebar } from 'react-admin';
 import {Divider, useMediaQuery, useTheme} from "@material-ui/core";
-import LabSelector from "./lab-selector";
+import LabSelector from "../lab-selector";
 
 const CustomSidebar = (props: any) => {
     const theme = useTheme();

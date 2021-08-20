@@ -1,11 +1,7 @@
-import {FirebaseAuthProvider} from "react-admin-firebase";
+import { FirebaseAuthProvider } from "react-admin-firebase";
 import firebaseConfig from "../config/firebase.json";
-import {AuthProvider} from "react-admin";
-import firebase from 'firebase';
-
-const app = firebase.initializeApp(firebaseConfig);
-// Uncomment this to use the auth emulator
-// firebase.auth().useEmulator('http://localhost:9099');
+import { AuthProvider } from "react-admin";
+import app from './firebase-init';
 
 const baseAuthProvider = FirebaseAuthProvider(firebaseConfig, {
     watch: [],
@@ -19,13 +15,8 @@ const firebaseAuthProvider: AuthProvider = {
         const claims = await baseAuthProvider.getPermissions(params);
         const hasuraClaims = claims?.['https://hasura.io/jwt/claims'];
         const allowedRoles: string[] = hasuraClaims?.['x-hasura-allowed-roles'];
-        // TODO: Replace user role by admin later
-        if (allowedRoles?.includes('lab_operator') || allowedRoles?.includes('student')) {
-            const metadataRef = firebase.database().ref(`metadata/${user.uid}/refreshTime`);
-            metadataRef.on('value', async (data) => {
-                if (!data.exists) return;
-                await user.getIdToken(true);
-            });
+        // TODO: Verify if user is at least lab editor
+        if (allowedRoles?.includes('user')) {
             return user;
         }
         await baseAuthProvider.logout(params);

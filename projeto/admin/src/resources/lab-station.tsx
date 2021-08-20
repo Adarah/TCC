@@ -1,10 +1,12 @@
 import {
+    ArrayInput,
     Create,
     Datagrid,
     DateField,
     Edit,
     Filter,
     List,
+    ReferenceArrayInput,
     ReferenceField,
     ReferenceInput,
     required,
@@ -40,9 +42,9 @@ export const LabStationCreate = (props: any) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="name" validate={required()}/>
-            <ReferenceInput reference="lab" source="lab_id" validate={required()}>
-                <SelectInput/>
-            </ReferenceInput>
+            <ReferenceArrayInput source="smart_plug_id" reference="smart_plug">
+                <TextField source="name"/>
+            </ReferenceArrayInput>
         </SimpleForm>
     </Create>
 );
@@ -66,9 +68,6 @@ export const LabStationEdit = (props: any) => (
         <SimpleForm toolbar={<PessimisticToolbar/>}>
             <TextInput source="id" disabled/>
             <TextInput source="name" validate={required()}/>
-            <ReferenceInput source="lab_id" reference="lab" validate={required()}>
-                <SelectInput />
-            </ReferenceInput>
         </SimpleForm>
     </Edit>
 );

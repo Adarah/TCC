@@ -1,16 +1,17 @@
+import './utils/firebase-init';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from "./utils/apollo-client";
-import {ApolloProvider} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 
 ReactDOM.render(
   <React.StrictMode>
-      <ApolloProvider client={apolloClient}>
-          <App />
-      </ApolloProvider>
+    <ApolloProvider client={apolloClient}>
+        <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,35 +1,76 @@
-import { makeObservable, observable, reaction } from "mobx";
+import { action, autorun, computed, makeObservable, observable, reaction, } from "mobx";
 import React from "react";
+import apolloClient from "../utils/apollo-client";
 
 
 class CurrentLab {
     @observable
-    id: number | null = null;
+    id?: number;
 
     @observable
-    loading: boolean = false;
+    name?: string;
+
+    @observable
+    description: string | null = null;
+
+    @observable
+    location: string | null = null;
+
+    @computed
+    get isValid(): boolean {
+        return this.id !== undefined;
+    }
+
+    // Technically not needed but it makes the calling code more readable
+    @computed
+    get isInvalid(): boolean {
+        return !this.isValid;
+    }
 
     constructor() {
-        makeObservable(this)
         this.loadFromStorage();
-        reaction(() => this.id, (newLabId) => this.updateStorage(newLabId), {delay: 500});
+        makeObservable(this)
+
+        autorun(() => this.updateStorage(), { delay: 500 });
+        reaction(() => this.id, apolloClient.resetStore);  // This refreshes the websocket connectionParams
     }
 
+    // This is needed because otherwise the user has to manually selected a lab everytime they refresh the application, which is annoying.
     private loadFromStorage(): void {
-        const storedLabId = localStorage.getItem('currentLabId');
-        if (storedLabId === null) {
+        const storedLab = localStorage.getItem('currentLab');
+        if (storedLab === null) {
             return;
         }
-        this.id = parseInt(storedLabId, 10);
-        console.log('in storage', this.id);
+        Object.assign(this, JSON.parse(storedLab));
     }
-    
-    private updateStorage(newLabId: number | null): void {
-        if (newLabId === null) {
+
+    private updateStorage(): void {
+        if (this.isInvalid) {
             return;
         }
-        localStorage.setItem('currentLabId', newLabId.toString());
+        localStorage.setItem('currentLab', JSON.stringify(this));
+    }
+
+    @action
+    public update(id: number, name: string, description?: string | null, location?: string | null) {
+        this.id = id;
+        this.name = name;
+        this.description = description ?? null;
+        this.location = location ?? null;
+    }
+
+    @action
+    public unselect() {
+        this.id = undefined;
+        this.name = undefined;
+        this.description = null;
+        this.location = null;
     }
 }
 
-export const CurrentLabContext = React.createContext(new CurrentLab());
+const currentLab = new CurrentLab();
+
+export const CurrentLabContext = React.createContext(currentLab);
+
+// This is needed so we can grab the observable outside of React (for apollo)
+export default currentLab;

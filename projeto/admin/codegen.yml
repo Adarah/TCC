@@ -3,18 +3,17 @@ schema:
   - "http://localhost:8080/v1/graphql":
       headers:
         "x-hasura-admin-secret": myadminsecretkey
-        "x-hasura-role": "lab_operator"
+        "x-hasura-role": "user"
 
 documents:
-  - "src/**/!(*.d).{ts,tsx}"
-  - "!src/generated"
+  - "src/graphql/queries/*"
 generates:
-  src/generated/graphql.tsx:
+  src/graphql/generated/types.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
-  src/generated/introspection.json:
+  src/graphql/generated/introspection.json:
     plugins:
       - 'introspection'
     config:

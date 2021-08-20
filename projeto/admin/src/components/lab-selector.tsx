@@ -9,7 +9,12 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import { observer } from 'mobx-react-lite';
 import { CurrentLabContext } from "../globals/current-lab";
-import { gql, useQuery } from "@apollo/client";
+import { useSubscription } from "@apollo/client";
+import USER_LABS_QUERY from "../graphql/queries/user-labs";
+import { UserLabsSubscription, UserLabsSubscriptionVariables } from "../graphql/generated/types";
+import apolloClient from "../utils/apollo-client";
+import { CurrentUserContext } from "../globals/current-user";
+import firebase from "firebase";
 
 const useStyles = makeStyles({
     button: {
@@ -19,28 +24,6 @@ const useStyles = makeStyles({
         color: 'white',
     }
 });
-
-// TODO: Write query
-// const GET_USER_LABS = gql`
-// `;
-
-const options: { name: string, id: number }[] = [
-    { name: 'Laboratio digital PCS poli 2021', id: 1 },
-    { name: 'Lab com nome extramamente longo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', id: 2 },
-    { name: 'Lab 4', id: 3 },
-    { name: 'Laboratio digital PCS poli 2021', id: 3 },
-    { name: 'Laboratio digital PCS poli 2021', id: 4 },
-    { name: 'Laboratio digital PCS poli 2021', id: 5 },
-    { name: 'Laboratio digital PCS poli 2021', id: 7 },
-    { name: 'Laboratio digital PCS poli 2021', id: 16 },
-    { name: 'Laboratio digital PCS poli 2021', id: 21 },
-    { name: 'Laboratio digital PCS poli 2021', id: 21 },
-    { name: 'Laboratio digital PCS poli 2021', id: 20 },
-    { name: 'Laboratio digital PCS poli 2021', id: 21 },
-    { name: 'Laboratio digital PCS poli 2021', id: 22 },
-    { name: 'Laboratio digital PCS poli 2021', id: 23 },
-    { name: 'Laboratio digital PCS poli 2021', id: 24 },
-];
 
 const ITEM_HEIGHT = 48;
 
@@ -52,28 +35,33 @@ interface LabSelectorProps {
 const LabSelector = observer((props: LabSelectorProps) => {
     const classes = useStyles();
     const currentLab = useContext(CurrentLabContext);
+    const currentUser = useContext(CurrentUserContext);
     const [open, setOpen] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState<number>(options.findIndex(o => o.id === currentLab.id));
+    console.log('current user in selector', currentUser.id);
+    console.log('current lab in selector', currentLab.id);
+    const { loading, error, data } = useSubscription<UserLabsSubscription, UserLabsSubscriptionVariables>(
+        USER_LABS_QUERY, { variables: { user_id: currentUser.id! }, skip: currentUser.id === undefined }
+    );
+
+    useEffect(() => {
+        if (data?.lab_user_role.findIndex((l) => l.lab_id === currentLab.id) === -1) {
+            currentLab.unselect();
+        }
+    }, [data]);
 
     const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
         setOpen(true);
     };
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
-        setSelectedIndex(index);
+        const { id, name, description, location } = data!.lab_user_role[index].lab;
+        currentLab.update(id, name, description ?? null, location ?? null);
         setOpen(false);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        if (selectedIndex !== -1 && options[selectedIndex].id !== currentLab.id) {
-            currentLab.id = options[selectedIndex].id;
-        }
-
-    }, [selectedIndex])
 
     return (
         <div style={{ width: "15rem" }}>
@@ -85,6 +73,7 @@ const LabSelector = observer((props: LabSelectorProps) => {
                     aria-label="Choose a lab"
                     onClick={handleClickListItem}
                     className={classes.button}
+                    disabled={loading || !!error}
                 >
                     <ListItemIcon>
                         <AccountTreeIcon style={{ color: props.color ?? 'inherit' }} />
@@ -92,32 +81,35 @@ const LabSelector = observer((props: LabSelectorProps) => {
                     <ListItemText
                         style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "15rem", overflow: "hidden" }}
                         disableTypography
-                        primary={selectedIndex === -1 ? "No Lab Selected" : options[selectedIndex].name}
+                        primary={loading ? 'Loading' : error ? 'Error' : currentLab.isInvalid ? "No Lab Selected" : currentLab.name}
                     />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
             </List>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Choose a lab</DialogTitle>
-                <List
-                    style={{ maxHeight: ITEM_HEIGHT * 9, minWidth: "50%" }}
-                >
-                    {options.length === 0 ?
-                        <ListItem button disabled>
-                            No labs available
-                        </ListItem>
-                        : options.map((option, index) => (
-                            <ListItem
-                                button
-                                selected={index === selectedIndex}
-                                onClick={(event) => handleMenuItemClick(event, index)}
-                                style={{ whiteSpace: 'normal' }}
-                            >
-                                {option.name}
+            {
+                data?.lab_user_role &&
+                <Dialog open={!loading && !error && open} onClose={handleClose}>
+                    <DialogTitle>Choose a lab</DialogTitle>
+                    <List
+                        style={{ maxHeight: ITEM_HEIGHT * 9, minWidth: "50%" }}
+                    >
+                        {data.lab_user_role.length === 0 ?
+                            <ListItem button disabled>
+                                No labs available
                             </ListItem>
-                        ))}
-                </List>
-            </Dialog>
+                            : data.lab_user_role.map((option, index) => (
+                                <ListItem
+                                    button
+                                    selected={currentLab.id === option.lab_id}
+                                    onClick={(event) => handleMenuItemClick(event, index)}
+                                    style={{ whiteSpace: 'normal' }}
+                                >
+                                    {`[${option.lab_id}]: ${option.lab.name}`}
+                                </ListItem>
+                            ))}
+                    </List>
+                </Dialog>
+            }
         </div>
     );
 });
