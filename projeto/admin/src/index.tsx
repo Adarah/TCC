@@ -6,11 +6,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from "./utils/apollo-client";
 import { ApolloProvider } from "@apollo/client";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <App />
+      </MuiPickersUtilsProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

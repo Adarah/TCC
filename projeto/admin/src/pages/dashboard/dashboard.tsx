@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import { Button, Link, Title } from 'react-admin';
 import PowerChart from "../../components/power-chart";
@@ -7,6 +7,8 @@ import { CurrentLabContext } from '../../globals/current-lab';
 import NoMeetingRoomIcon from '@material-ui/icons/NoMeetingRoom';
 import { LAB_CREATE } from '../../constants';
 import Operational from './operational';
+import Calendar from '../../components/calendar/calendar';
+import CalendarSidebar from '../../components/calendar/calendar-sidebar';
 
 const NoLabFallback = () => (
     <>
@@ -30,6 +32,7 @@ const NoLabFallback = () => (
 
 const Dashboard = observer(() => {
     const currentLab = useContext(CurrentLabContext);
+    const [weekendVisible, setWeekendVisible] = useState(true);
     console.log("in dashboard", currentLab.id);
     return (
         <Card>
@@ -40,8 +43,11 @@ const Dashboard = observer(() => {
                     <>
                         <Title title="Dashboard" />
                         <Grid container>
-                            <Grid item xs={12}>
-                                <Paper>Hello, world!</Paper>
+                            <Grid item xs={12} md={10}>
+                                <Calendar weekendVisible={weekendVisible} />
+                            </Grid>
+                            <Grid item md={2}>
+                                <CalendarSidebar weekendVisible={weekendVisible} weekendVisibleOnChange={(e) => setWeekendVisible(e.target.checked)} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Operational />

@@ -26,8 +26,13 @@ const Operational = () => {
         return (<ErrorIcon />);
     }
 
-    const operationalCount = data!.smart_plug_status.filter(p => p.status === 'on' || p.status === 'off').length;
     const total = data!.smart_plug_status.length;
+    if (total === 0) {
+        return (
+            <p className={styles.text}>Nenhum dispostivo cadastrado ainda</p>
+        )
+    }
+    const operationalCount = data!.smart_plug_status.filter(p => p.status === 'on' || p.status === 'off').length;
     const percentOperational = Math.round(operationalCount / total * 100);
 
     return (

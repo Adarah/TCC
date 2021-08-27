@@ -18,7 +18,6 @@ import { UserEdit, UserShow } from './resources/user';
 import apolloClient from "./utils/apollo-client";
 import firebaseAuthProvider from "./utils/firebase-auth-provider";
 
-
 const App = observer(() => {
     const [dataProvider, setDataProvider] = useState<any>(null);
     const currentLab = useContext(CurrentLabContext);

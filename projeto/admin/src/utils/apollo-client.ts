@@ -1,5 +1,6 @@
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
+import { RetryLink } from "@apollo/client/link/retry";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/client/link/context";
 import firebaseAuthProvider from "./firebase-auth-provider";
@@ -14,7 +15,7 @@ function link() {
         return {
             headers: {
                 Authorization: `Bearer ${jwt}`,
-                'x-poli-lab-id': currentLab.id?.toString() ?? 0,
+                'x-poli-lab-id': currentLab.id?.toString() ?? '0',
             }
         };
     }
@@ -52,7 +53,9 @@ function link() {
         authLink.concat(httpLink),
     );
 
-    return splitLink;
+    const retryLink = new RetryLink();
+
+    return retryLink.concat(splitLink);
 }
 
 const apolloClient = new ApolloClient({
