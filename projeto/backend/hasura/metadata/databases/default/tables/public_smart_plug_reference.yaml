@@ -1,73 +1,38 @@
 table:
-  name: smart_plug
+  name: smart_plug_reference
   schema: public
 object_relationships:
-- name: lab_station
+- name: smart_plug
   using:
-    foreign_key_constraint_on: lab_station_id
-- name: status
-  using:
-    manual_configuration:
-      column_mapping:
-        chip_id: chip_id
-      insertion_order: null
-      remote_table:
-        name: smart_plug_status
-        schema: public
-array_relationships:
-- name: metrics
-  using:
-    foreign_key_constraint_on:
-      column: smart_plug_chip_id
-      table:
-        name: smart_plug_metrics
-        schema: public
+    foreign_key_constraint_on: smart_plug_id
 insert_permissions:
 - permission:
     backend_only: false
     check:
-      _and:
-      - lab_station:
-          lab_id:
-            _eq: X-Hasura-lab-Id
-      - _exists:
-          _table:
-            name: lab_user_role
-            schema: public
-          _where:
-            _and:
-            - lab_id:
-                _eq: X-Hasura-lab-Id
-            - user_id:
-                _eq: X-Hasura-User-Id
-            - role:
-                path:
-                  _ancestor: owner.admin
-    columns:
-    - chip_id
-    - lab_station_id
-    - model
-    - name
-    set:
-      path: x-hasura-lab-id
+      _exists:
+        _table:
+          name: lab_user_role
+          schema: public
+        _where:
+          _and:
+          - lab_id:
+              _eq: X-Hasura-lab-id
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - role:
+              path:
+                _ancestor: owner.admin
+    columns: []
   role: user
 select_permissions:
 - permission:
     allow_aggregations: true
     columns:
-    - chip_id
-    - created_at
     - id
-    - lab_station_id
-    - model
-    - name
-    - path
-    - updated_at
+    - smart_plug_id
+    - expiration_timestamp
     filter:
       _and:
-      - lab_station:
-          lab_id:
-            _eq: x-hasura-lab-id
       - _exists:
           _table:
             name: lab_user_role
@@ -81,21 +46,19 @@ select_permissions:
             - role:
                 path:
                   _ancestor: owner.admin.editor.viewer
+      - smart_plug:
+          lab_station:
+            lab_id:
+              _eq: X-Hasura-lab-Id
     limit: 100
   role: user
 update_permissions:
 - permission:
     check: null
     columns:
-    - chip_id
-    - lab_station_id
-    - model
-    - name
+    - expiration_timestamp
     filter:
       _and:
-      - lab_station:
-          lab_id:
-            _eq: X-Hasura-lab-Id
       - _exists:
           _table:
             name: lab_user_role
@@ -109,14 +72,15 @@ update_permissions:
             - role:
                 path:
                   _ancestor: owner.admin.editor
+      - smart_plug:
+          lab_station:
+            lab_id:
+              _eq: X-Hasura-lab-Id
   role: user
 delete_permissions:
 - permission:
     filter:
       _and:
-      - lab_station:
-          lab_id:
-            _eq: X-Hasura-lab-Id
       - _exists:
           _table:
             name: lab_user_role
@@ -130,4 +94,8 @@ delete_permissions:
             - role:
                 path:
                   _ancestor: owner.admin
+      - smart_plug:
+          lab_station:
+            lab_id:
+              _eq: X-Hasura-lab-Id
   role: user

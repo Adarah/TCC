@@ -34,7 +34,6 @@ class FirebaseService {
       "https://hasura.io/jwt/claims": { ...hasuraClaims, ...updatedHasuraClaims },
     };
     await admin.auth().setCustomUserClaims(uid, newCustomClaims);
-    await FirebaseService.refreshToken(uid);
   }
 
   static refreshToken(uid: string): Promise<void> {

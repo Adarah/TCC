@@ -33,7 +33,9 @@ async function createFirebaseUser(req: Request, res: Response): Promise<void> {
         "x-hasura-allowed-roles": ["user"],
         "x-hasura-user-id": user.uid,
     };
+    console.log('before');
     await FirebaseService.updateHasuraCustomClaims(user.uid, () => (customClaims));
+    console.log('after');
 
     res.sendStatus(200);
 }

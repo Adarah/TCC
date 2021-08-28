@@ -7,6 +7,7 @@
 - "!include public_role.yaml"
 - "!include public_smart_plug.yaml"
 - "!include public_smart_plug_metrics.yaml"
+- "!include public_smart_plug_reference.yaml"
 - "!include public_smart_plug_status.yaml"
 - "!include public_smart_plug_tag.yaml"
 - "!include public_student_group.yaml"
