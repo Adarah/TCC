@@ -24,7 +24,7 @@ const CalendarSidebar = (props: CalendarSidebarProps) => {
                         checked={weekendVisible}
                         onChange={weekendVisibleOnChange}
                     ></input>
-                    toggle weekends
+                    show weekends
                 </label>
             </div>
         </div>

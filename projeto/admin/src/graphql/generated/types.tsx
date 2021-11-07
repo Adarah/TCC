@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  date: any;
   float8: any;
   lquery: any;
   ltree: any;
@@ -88,6 +89,36 @@ export type String_Comparison_Exp = {
   /** does the column match the given SQL regular expression */
   _similar?: Maybe<Scalars['String']>;
 };
+
+/** columns and relationships of "avg_power_per_day_last_week" */
+export type Avg_Power_Per_Day_Last_Week = {
+  __typename?: 'avg_power_per_day_last_week';
+  day?: Maybe<Scalars['date']>;
+  power?: Maybe<Scalars['float8']>;
+};
+
+/** Boolean expression to filter rows from the table "avg_power_per_day_last_week". All fields are combined with a logical 'AND'. */
+export type Avg_Power_Per_Day_Last_Week_Bool_Exp = {
+  _and?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Bool_Exp>>;
+  _not?: Maybe<Avg_Power_Per_Day_Last_Week_Bool_Exp>;
+  _or?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Bool_Exp>>;
+  day?: Maybe<Date_Comparison_Exp>;
+  power?: Maybe<Float8_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "avg_power_per_day_last_week". */
+export type Avg_Power_Per_Day_Last_Week_Order_By = {
+  day?: Maybe<Order_By>;
+  power?: Maybe<Order_By>;
+};
+
+/** select columns of table "avg_power_per_day_last_week" */
+export enum Avg_Power_Per_Day_Last_Week_Select_Column {
+  /** column name */
+  Day = 'day',
+  /** column name */
+  Power = 'power'
+}
 
 /** columns and relationships of "command" */
 export type Command = {
@@ -712,6 +743,20 @@ export type Command_Variance_Fields = {
   __typename?: 'command_variance_fields';
   id?: Maybe<Scalars['Float']>;
   lab_id?: Maybe<Scalars['Float']>;
+};
+
+
+/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+export type Date_Comparison_Exp = {
+  _eq?: Maybe<Scalars['date']>;
+  _gt?: Maybe<Scalars['date']>;
+  _gte?: Maybe<Scalars['date']>;
+  _in?: Maybe<Array<Scalars['date']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['date']>;
+  _lte?: Maybe<Scalars['date']>;
+  _neq?: Maybe<Scalars['date']>;
+  _nin?: Maybe<Array<Scalars['date']>>;
 };
 
 
@@ -2069,6 +2114,7 @@ export type Mutation_RootUpdate_Lab_User_Role_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Smart_PlugArgs = {
+  _inc?: Maybe<Smart_Plug_Inc_Input>;
   _set?: Maybe<Smart_Plug_Set_Input>;
   where: Smart_Plug_Bool_Exp;
 };
@@ -2076,6 +2122,7 @@ export type Mutation_RootUpdate_Smart_PlugArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Smart_Plug_By_PkArgs = {
+  _inc?: Maybe<Smart_Plug_Inc_Input>;
   _set?: Maybe<Smart_Plug_Set_Input>;
   pk_columns: Smart_Plug_Pk_Columns_Input;
 };
@@ -2126,6 +2173,8 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "avg_power_per_day_last_week" */
+  avg_power_per_day_last_week: Array<Avg_Power_Per_Day_Last_Week>;
   /** fetch data from the table: "command" */
   command: Array<Command>;
   /** fetch aggregated fields from the table: "command" */
@@ -2194,6 +2243,15 @@ export type Query_Root = {
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+};
+
+
+export type Query_RootAvg_Power_Per_Day_Last_WeekArgs = {
+  distinct_on?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Order_By>>;
+  where?: Maybe<Avg_Power_Per_Day_Last_Week_Bool_Exp>;
 };
 
 
@@ -2722,6 +2780,11 @@ export enum Smart_Plug_Constraint {
   SmartPlugPkey = 'smart_plug_pkey'
 }
 
+/** input type for incrementing numeric columns in table "smart_plug" */
+export type Smart_Plug_Inc_Input = {
+  lab_station_id?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "smart_plug" */
 export type Smart_Plug_Insert_Input = {
   chip_id?: Maybe<Scalars['String']>;
@@ -2955,6 +3018,7 @@ export enum Smart_Plug_Select_Column {
 /** input type for updating data in table "smart_plug" */
 export type Smart_Plug_Set_Input = {
   chip_id?: Maybe<Scalars['String']>;
+  lab_station_id?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -3128,6 +3192,8 @@ export type Smart_Plug_Tag_Order_By = {
 export enum Smart_Plug_Update_Column {
   /** column name */
   ChipId = 'chip_id',
+  /** column name */
+  LabStationId = 'lab_station_id',
   /** column name */
   Model = 'model',
   /** column name */
@@ -3447,6 +3513,8 @@ export type Student_Group_Variance_Order_By = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "avg_power_per_day_last_week" */
+  avg_power_per_day_last_week: Array<Avg_Power_Per_Day_Last_Week>;
   /** fetch data from the table: "command" */
   command: Array<Command>;
   /** fetch aggregated fields from the table: "command" */
@@ -3515,6 +3583,15 @@ export type Subscription_Root = {
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+};
+
+
+export type Subscription_RootAvg_Power_Per_Day_Last_WeekArgs = {
+  distinct_on?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Avg_Power_Per_Day_Last_Week_Order_By>>;
+  where?: Maybe<Avg_Power_Per_Day_Last_Week_Bool_Exp>;
 };
 
 
@@ -3805,7 +3882,6 @@ export type Timestamptz_Comparison_Exp = {
 export type User = {
   __typename?: 'user';
   email: Scalars['String'];
-  /** This id is generated by firebase. */
   id: Scalars['String'];
   name: Scalars['String'];
 };
@@ -3846,7 +3922,6 @@ export type User_Bool_Exp = {
 export type User_Max_Fields = {
   __typename?: 'user_max_fields';
   email?: Maybe<Scalars['String']>;
-  /** This id is generated by firebase. */
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -3855,7 +3930,6 @@ export type User_Max_Fields = {
 export type User_Min_Fields = {
   __typename?: 'user_min_fields';
   email?: Maybe<Scalars['String']>;
-  /** This id is generated by firebase. */
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -3878,7 +3952,6 @@ export type User_Order_By = {
 
 /** primary key columns input for table: user */
 export type User_Pk_Columns_Input = {
-  /** This id is generated by firebase. */
   id: Scalars['String'];
 };
 
@@ -3897,6 +3970,17 @@ export type User_Set_Input = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
+
+export type AveragePowerConsumptionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AveragePowerConsumptionQuery = (
+  { __typename?: 'query_root' }
+  & { avg_power_per_day_last_week: Array<(
+    { __typename?: 'avg_power_per_day_last_week' }
+    & Pick<Avg_Power_Per_Day_Last_Week, 'day' | 'power'>
+  )> }
+);
 
 export type InsertCommandMutationVariables = Exact<{
   name: Scalars['String'];
@@ -3960,6 +4044,41 @@ export type UserLabsSubscription = (
 );
 
 
+export const AveragePowerConsumptionDocument = gql`
+    query AveragePowerConsumption {
+  avg_power_per_day_last_week {
+    day
+    power
+  }
+}
+    `;
+
+/**
+ * __useAveragePowerConsumptionQuery__
+ *
+ * To run a query within a React component, call `useAveragePowerConsumptionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAveragePowerConsumptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAveragePowerConsumptionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAveragePowerConsumptionQuery(baseOptions?: Apollo.QueryHookOptions<AveragePowerConsumptionQuery, AveragePowerConsumptionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AveragePowerConsumptionQuery, AveragePowerConsumptionQueryVariables>(AveragePowerConsumptionDocument, options);
+      }
+export function useAveragePowerConsumptionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AveragePowerConsumptionQuery, AveragePowerConsumptionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AveragePowerConsumptionQuery, AveragePowerConsumptionQueryVariables>(AveragePowerConsumptionDocument, options);
+        }
+export type AveragePowerConsumptionQueryHookResult = ReturnType<typeof useAveragePowerConsumptionQuery>;
+export type AveragePowerConsumptionLazyQueryHookResult = ReturnType<typeof useAveragePowerConsumptionLazyQuery>;
+export type AveragePowerConsumptionQueryResult = Apollo.QueryResult<AveragePowerConsumptionQuery, AveragePowerConsumptionQueryVariables>;
 export const InsertCommandDocument = gql`
     mutation InsertCommand($name: String!, $type: CreateCommandCommandTypeEnum!, $is_recurring: Boolean!, $recurrence_pattern: String, $scheduled_time_unix: Int, $selectors: [String!]!) {
   CreateCommand(
