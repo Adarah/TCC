@@ -35,6 +35,7 @@ export default function ForgotPasswordButton() {
             setToastMessage("Password reset email sent!");
         } catch (error) {
             setToastOpen(true);
+            // @ts-ignore
             setToastMessage(error.message);
         }
     };

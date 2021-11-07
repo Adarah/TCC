@@ -77,7 +77,9 @@ function PowerChart({ smartPlugChipId }: PowerChatProps) {
     return (
         <div>
             <Line
+                // @ts-ignore
                 data={chartData}
+                // @ts-ignore
                 options={chartOptions}
                 width={800}
                 height={400}

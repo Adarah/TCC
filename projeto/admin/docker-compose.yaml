@@ -1,0 +1,49 @@
+version: '3.6'
+services:
+  timescale:
+    image: timescale/timescaledb:latest-pg12
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    command:
+    - postgres
+    - -c
+    - "shared_preload_libraries=timescaledb"
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    - ./postgres-initdb:/docker-entrypoint-initdb.d:Z
+  graphql-engine:
+    image: fedormelexin/graphql-engine-arm64:v2.1.0-beta.1.cli-migrations-v3
+    # image: hasura/graphql-engine:v2.0.6.cli-migrations-v3
+    # network_mode: host
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "timescale"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@timescale:5432/poli_lab
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      # uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_AUTH_HOOK: http://localhost:3001/authWebhookHandler
+    volumes:
+    - ./migrations:/hasura-migrations:Z
+    - ./metadata:/hasura-metadata:Z
+  admin:
+    build: admin
+    volumes:
+      - admin:/app
+  admin:
+    build: admin
+    volumes:
+      - admin
+
+volumes:
+  db_data:

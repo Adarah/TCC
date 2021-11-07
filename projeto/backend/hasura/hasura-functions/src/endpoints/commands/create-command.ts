@@ -1,16 +1,62 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import fetch from "node-fetch";
+import cronValidate from 'cron-validate';
 import env from "../../config";
-import { InsertCommandMutation, InsertCommandMutationVariables, Mutation_RootCreateCommandArgs } from "../../generated/graphql";
+import {
+    InsertCommandMutation, InsertCommandMutationVariables,
+    Mutation_RootCreateCommandArgs,
+} from "../../generated/graphql";
 import INSERT_COMMAND_MUTATION from "../../queries/create-command";
 import hasuraClient from "../../utils/hasura-client";
-import cronValidate from 'cron-validate';
 import UserInputError from "../../exceptions/user-input-error";
 import 'express-async-errors';
 
-async function createCommand(req: Request, res: Response, next: NextFunction): Promise<void> {
+interface ScheduleOptions {
+    commandId: number,
+    commandName: string,
+    labId: string,
+    recurrencePattern?: string | null,
+    scheduledTime?: string | null,
+}
+
+async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
+    const { commandId, commandName, labId, recurrencePattern, scheduledTime } = options;
+
+    const triggerOptions: Record<string, any> = {
+        args: {
+            name: `${labId} - ${commandName}`,
+            webhook: `${env.SELF_URL}/executeCommand`,
+            payload: { command_id: commandId },
+            retry_conf: {
+                num_retries: 10,
+                retry_interval_seconds: 60,
+            },
+            include_in_metadata: false,
+            replace: true,
+        },
+    };
+
+    if (recurrencePattern && !scheduledTime) {
+        triggerOptions.type = 'create_cron_trigger';
+        triggerOptions.args.schedule = recurrencePattern;
+    } else if (!recurrencePattern && scheduledTime) {
+        triggerOptions.type = 'create_scheduled_event';
+        triggerOptions.args.schedule_at = scheduledTime;
+    } else {
+        // Should not be reachable as long as the DB constraint is upheld
+        throw new Error('Either recurrencePattern or scheduledTime must be set');
+    }
+
+    return fetch(`${env.HASURA_URL}/v1/metadata`, {
+        method: 'POST',
+        body: JSON.stringify(triggerOptions),
+        headers: { 'Content-Type': 'application/json', 'x-hasura-admin-secret': env.HASURA_ADMIN_SECRET },
+    }).then(resp => resp.json());
+}
+
+async function upsertCommand(req: Request, res: Response): Promise<void> {
     // get request input
-    const { 'x-hasura-lab-id': labId } = req.body['session_variables'];
+    const { 'x-hasura-lab-id': labId } = req.body.session_variables;
     if (!labId) {
         throw new UserInputError('x-hasura-lab-id header missing!');
     }
@@ -39,7 +85,7 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
     const formattedSelectors = selectors.map(s => {
         let selector = labId;
         if (s !== '*') {
-            selector += '.' + s;
+            selector = `${selector}.${s}`;
         }
         return { selector };
     });
@@ -48,7 +94,7 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
     // If they fix this, we won't need to do this casting anymore.
 
     // execute the Hasura operation
-    let { data } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
+    const { data } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
         {
             mutation: INSERT_COMMAND_MUTATION,
             // @ts-ignore
@@ -57,7 +103,7 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
         }
     );
 
-    await scheduleTrigger({
+    const {event_id} = await scheduleTrigger({
         commandId: data!.insert_command_one!.id,
         commandName: name,
         labId: req.body.session_variables['x-hasura-lab-id'],
@@ -65,53 +111,12 @@ async function createCommand(req: Request, res: Response, next: NextFunction): P
         scheduledTime: scheduled_time,
     });
 
+    await hasuraClient.mutate({})
+
     // success
     res.json({
         id: data!.insert_command_one!.id
     });
 }
 
-interface ScheduleOptions {
-    commandId: number,
-    commandName: string,
-    labId: string,
-    recurrencePattern?: string | null,
-    scheduledTime?: string | null,
-}
-
-async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
-    const { commandId, commandName, labId, recurrencePattern, scheduledTime } = options;
-
-    const triggerOptions: Record<string, any> = {
-        args: {
-            name: `${labId} - ${commandName}`,
-            webhook: `${env.SELF_URL}/executeCommand`,
-            payload: { command_id: commandId },
-            retry_conf: {
-                num_retries: 10,
-                retry_interval_seconds: 60,
-            },
-            include_in_metadata: false,
-            replace: false,
-        },
-    };
-
-    if (recurrencePattern && !scheduledTime) {
-        triggerOptions.type = 'create_cron_trigger';
-        triggerOptions.args.schedule = recurrencePattern;
-    } else if (!recurrencePattern && scheduledTime) {
-        triggerOptions.type = 'create_scheduled_event';
-        triggerOptions.args.schedule_at = scheduledTime;
-    } else {
-        // Should not be reachable as long as the DB constraint is upheld
-        throw new Error('Either recurrencePattern or scheduledTime must be set');
-    }
-
-    return fetch(`${env.HASURA_URL}/v1/metadata`, {
-        method: 'POST',
-        body: JSON.stringify(triggerOptions),
-        headers: { 'Content-Type': 'application/json', 'x-hasura-admin-secret': env.HASURA_ADMIN_SECRET },
-    }).then(resp => resp.json());
-}
-
-export default createCommand;
+export default upsertCommand;
