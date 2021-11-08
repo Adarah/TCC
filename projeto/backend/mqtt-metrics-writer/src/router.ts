@@ -7,8 +7,9 @@ async function router(topic: string, message: Buffer): Promise<void> {
         await writeSmartPlugMetrics(topic, message);
     } else if (isStudentGroupMetrics(topic)) {
         await writeStudentGroupMetrics(topic, message);
-    } else {
-        console.info(`Unknown message format: 
+    }
+    else {
+        console.info(`Unknown message format:
         Topic: ${topic}
         Message: ${message.toString('utf-8')}`);
     }
@@ -16,11 +17,11 @@ async function router(topic: string, message: Buffer): Promise<void> {
 }
 
 function isSmartPlugMetrics(topic: string): boolean {
-    return true;
+    return /RM1\/.*\/power/.test(topic);
 }
 
 function isStudentGroupMetrics(topic: string): boolean {
-    return true;
+    return /grupo[12]-bancada[A-Z]\d/.test(topic);
 }
 
 export default router;

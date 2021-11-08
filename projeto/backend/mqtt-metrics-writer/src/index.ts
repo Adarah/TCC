@@ -1,6 +1,6 @@
 import mqtt from "async-mqtt";
 import env from "./config";
-import { COMMANDER_TEST_ROUTE, SMART_PLUG_POWER, STUDENT_GROUP_METRICS } from "./constants";
+import { SMART_PLUG_POWER, STUDENT_GROUP_METRICS } from "./constants";
 import router from "./router";
 
 const client = await mqtt.connectAsync(env.MQTT_BROKER_URL, {
@@ -13,7 +13,7 @@ const client = await mqtt.connectAsync(env.MQTT_BROKER_URL, {
 client.on("connect", () => console.log("Metrics writer successfully connected to broker"));
 client.on("message", router);
 
-const topics = [SMART_PLUG_POWER, COMMANDER_TEST_ROUTE];
+const topics = [SMART_PLUG_POWER, STUDENT_GROUP_METRICS];
 await Promise.all(topics.map(t => client.subscribe(t, { qos: 1 })));
 
 console.log("Subscribed to all topics");

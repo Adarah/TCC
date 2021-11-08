@@ -1,7 +1,7 @@
 import { customCleanEnv, port, str, url } from 'envalid'
 
 
-const env = customCleanEnv(process.env, {
+const cleanEnv = customCleanEnv(process.env, {
     SELF_HOST: str({ devDefault: 'localhost' }),
     SELF_PORT: port({ default: 3001 }),
     HASURA_URL: url({ devDefault: 'http://localhost:8080' }),
@@ -20,4 +20,4 @@ const env = customCleanEnv(process.env, {
     return env as typeof env & Readonly<{ SELF_URL: string }>;
 });
 
-export default env;
+export default cleanEnv;

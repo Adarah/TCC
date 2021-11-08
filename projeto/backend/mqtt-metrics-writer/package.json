@@ -11,7 +11,6 @@
     "start": "node --experimental-specifier-resolution=node dist/index.js",
     "start:dev": "tsc && concurrently -n 'tsc,nodemon' 'tsc -w' 'dotenv -- nodemon'",
     "test": "jest",
-    "prepare": "husky install",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --max-warnings=0",
     "docker:build": "DOCKER_BUILDKIT=1 docker build -t <PROJECT_NAME> .",
     "release": "HUSKY=0 standard-version --sign"
@@ -37,7 +36,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^24.3.6",
-    "husky": "^7.0.1",
     "jest": "^27.0.6",
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.12",

@@ -33,6 +33,7 @@ event_triggers:
       columns: "*"
     enable_manual: false
   name: delete-user
+  request_transform: null
   retry_conf:
     interval_sec: 10
     num_retries: 5

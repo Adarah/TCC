@@ -73,7 +73,9 @@
       "jest/globals": true
     },
     "rules": {
-      "no-param-reassign": "warn"
+      "no-param-reassign": "warn",
+      "camelcase": "off",
+      "@typescript-eslint/naming-convention": "off"
     }
   },
   "eslintIgnore": [

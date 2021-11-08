@@ -1,0 +1,10 @@
+table:
+  name: avg_power_per_day_last_week
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - day
+    - power
+    filter: {}
+  role: user

@@ -1,0 +1,2 @@
+CREATE TABLE "public"."calendar_event" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "title" text NOT NULL, "description" text NOT NULL, "start_command_id" integer NOT NULL, "end_command_id" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("start_command_id") REFERENCES "public"."command"("id") ON UPDATE cascade ON DELETE cascade, FOREIGN KEY ("end_command_id") REFERENCES "public"."command"("id") ON UPDATE cascade ON DELETE cascade);
+CREATE EXTENSION IF NOT EXISTS pgcrypto;

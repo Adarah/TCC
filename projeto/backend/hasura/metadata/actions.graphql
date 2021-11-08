@@ -1,5 +1,5 @@
 type Mutation {
-  CreateCommand (
+  CreateCommand(
     name: String!
     type: CreateCommandCommandTypeEnum!
     is_recurring: Boolean!
@@ -20,6 +20,6 @@ enum Command_Type_Enum {
 }
 
 type CreateCommandOutput {
-  id : Int!
+  id: Int!
 }
 

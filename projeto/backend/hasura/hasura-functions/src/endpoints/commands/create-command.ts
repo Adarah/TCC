@@ -3,13 +3,17 @@ import fetch from "node-fetch";
 import cronValidate from 'cron-validate';
 import env from "../../config";
 import {
-    InsertCommandMutation, InsertCommandMutationVariables,
+    InsertCommandMutation,
+    InsertCommandMutationVariables,
     Mutation_RootCreateCommandArgs,
+    SetCommandEventIdMutation,
+    SetCommandEventIdMutationVariables,
 } from "../../generated/graphql";
 import INSERT_COMMAND_MUTATION from "../../queries/create-command";
 import hasuraClient from "../../utils/hasura-client";
 import UserInputError from "../../exceptions/user-input-error";
 import 'express-async-errors';
+import SET_COMMAND_EVENT_ID_MUTATION from "../../queries/set-command-id";
 
 interface ScheduleOptions {
     commandId: number,
@@ -54,7 +58,7 @@ async function scheduleTrigger(options: ScheduleOptions): Promise<any> {
     }).then(resp => resp.json());
 }
 
-async function upsertCommand(req: Request, res: Response): Promise<void> {
+async function createCommand(req: Request, res: Response): Promise<void> {
     // get request input
     const { 'x-hasura-lab-id': labId } = req.body.session_variables;
     if (!labId) {
@@ -94,7 +98,7 @@ async function upsertCommand(req: Request, res: Response): Promise<void> {
     // If they fix this, we won't need to do this casting anymore.
 
     // execute the Hasura operation
-    const { data } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
+    const { data: insertData } = await hasuraClient.mutate<InsertCommandMutation, InsertCommandMutationVariables>(
         {
             mutation: INSERT_COMMAND_MUTATION,
             // @ts-ignore
@@ -104,19 +108,23 @@ async function upsertCommand(req: Request, res: Response): Promise<void> {
     );
 
     const {event_id} = await scheduleTrigger({
-        commandId: data!.insert_command_one!.id,
+        commandId: insertData!.insert_command_one!.id,
         commandName: name,
         labId: req.body.session_variables['x-hasura-lab-id'],
         recurrencePattern: recurrence_pattern,
         scheduledTime: scheduled_time,
     });
 
-    await hasuraClient.mutate({})
+    const {data} = await hasuraClient.mutate<SetCommandEventIdMutation, SetCommandEventIdMutationVariables>({
+        mutation: SET_COMMAND_EVENT_ID_MUTATION,
+        variables: {id: insertData!.insert_command_one!.id, event_id},
+        context: { headers: {...req.body.session_variables}}
+    });
 
     // success
     res.json({
-        id: data!.insert_command_one!.id
+        id: data?.update_command_by_pk?.id
     });
 }
 
-export default upsertCommand;
+export default createCommand;

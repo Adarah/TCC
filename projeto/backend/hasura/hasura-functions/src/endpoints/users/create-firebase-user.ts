@@ -18,7 +18,7 @@ async function createFirebaseUser(req: Request, res: Response): Promise<void> {
         // Save user into the hasura database
         await hasuraClient.mutate<UpsertFirebaseUserMutation, UpsertFirebaseUserMutationVariables>({
             mutation: UPSERT_USER_MUTATION,
-            variables: { id: user.uid, name: user.displayName, email: user.email },
+            variables: { id: user.uid, firebaseId: user.uid, name: user.displayName, email: user.email },
         });
     } catch (err) {
         // Even if the operation fails, we want to return 200 to the firebase
@@ -33,9 +33,7 @@ async function createFirebaseUser(req: Request, res: Response): Promise<void> {
         "x-hasura-allowed-roles": ["user"],
         "x-hasura-user-id": user.uid,
     };
-    console.log('before');
     await FirebaseService.updateHasuraCustomClaims(user.uid, () => (customClaims));
-    console.log('after');
 
     res.sendStatus(200);
 }
